@@ -9,7 +9,7 @@ public class firstApi {
 
     @GetMapping("api")
     public String getString() {
-        return "{\"value\": \"string\"}"; // Return a JSON object with the string value
+        return "{\"value\": \"ASWE\"}"; // Return a JSON object with the string value
     }
     
 }
