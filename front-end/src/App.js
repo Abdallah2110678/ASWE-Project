@@ -11,7 +11,7 @@ import Footer from "./components/common/footer/Footer"
 import Home from "./components/home/Home"
 import Aside_Admin from './components/common/asidebar-admin/asidebar';
 import Dashboard from "./components/admin-dashboaerd/Dashboard";
-import { Students } from './components/admin-dashboaerd/Students';
+import { AddStudent, EditStudent, Students } from './components/admin-dashboaerd/Students';
 function App() {
 
   return (
@@ -23,6 +23,8 @@ function App() {
         </>}>
           <Route path="dashboard" element={ < Dashboard /> } />
           <Route path="students" element={<Students/>} />
+          <Route path="student-add" element={<AddStudent/>} />
+          <Route path="student-edit" element={<EditStudent/>} />
         </Route>
         <Route
           path="/"
