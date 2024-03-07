@@ -11,6 +11,7 @@ import Footer from "./components/common/footer/Footer"
 import Home from "./components/home/Home"
 import Aside_Admin from './components/common/asidebar-admin/asidebar';
 import Dashboard from "./components/admin-dashboaerd/Dashboard";
+import { Students } from './components/admin-dashboaerd/Students';
 function App() {
 
   return (
@@ -21,6 +22,7 @@ function App() {
           <Outlet />
         </>}>
           <Route path="dashboard" element={ < Dashboard /> } />
+          <Route path="students" element={<Students/>} />
         </Route>
         <Route
           path="/"
