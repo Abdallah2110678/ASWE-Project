@@ -21,34 +21,33 @@ function App() {
     <>
     <Router>
       <Routes>
-      <Footer />
-        <Route path="/admin" element={<><Aside_Admin/>
-          <Outlet />
-        </>}>
-          <Route path="dashboard" element={ < Dashboard /> } />
-          <Route path="students" element={<Students/>} />
-          <Route path="student-add" element={<AddStudent/>} />
-          <Route path="student-edit" element={<EditStudent/>} />
-        </Route>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Outlet />
-              <Footer />
-            </>
-          }
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<CourseHome />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/journal" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route exact path='/sign-up' element={<SIGNUP />}/>
-        </Route>
+          <Route path="/admin" element={<><Aside_Admin/>
+            <Outlet />
+          </>}>
+            <Route path="dashboard" element={ < Dashboard /> } />
+            <Route path="students" element={<Students/>} />
+            <Route path="student-add" element={<AddStudent/>} />
+            <Route path="student-edit" element={<EditStudent/>} />
+          </Route>
+          <Route
+            path="/"
+            element={
+              <>
+                <Header />
+                <Outlet />
+                <Footer />
+              </>
+            }
+          >
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/courses" element={<CourseHome />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/journal" element={<Blog />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route exact path='/sign-up' element={<SIGNUP />}/>
+          </Route>
       </Routes>
     </Router>
   </>
