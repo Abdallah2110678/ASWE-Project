@@ -21,14 +21,34 @@ const SIGNUP = () => {
     const [displayErrors, setDisplayErrors] = useState(false);
 
     const handleSignup = () => {
+        setDisplayErrors(true);
+    
+        if (firstName.trim() === "") {
+            return;
+        }
+    
+        if (lastName.trim() === "") {
+            return;
+        }
+    
+        // Date of Birth validation (you can add your own rules)
+        if (dateOfBirth === "") {
+            return;
+        }
+    
+        // Gender validation (you can add your own rules)
+        if (gender === "") {
+            return;
+        }
+    
         // Email validation
-        if (!email.includes("@") && !email.includes(".com")) {
+        if (!email.includes("@") || !email.includes(".com")) {
             setEmailError("Invalid email format (e.g., user@example.com)");
             return;
         } else {
             setEmailError("");
         }
-
+    
         // Password validation
         if (password.length < 8) {
             setPasswordError("Password must be at least 8 characters");
@@ -36,7 +56,7 @@ const SIGNUP = () => {
         } else {
             setPasswordError("");
         }
-
+    
         // Phone number validation (add your validation rules)
         if (!phoneNumber.match(/^\d{11}$/)) {
             setPhoneError("Invalid phone number (11 digits required)");
@@ -44,7 +64,7 @@ const SIGNUP = () => {
         } else {
             setPhoneError("");
         }
-
+    
         // If email, password, and phone number are valid, proceed with signup
         console.log("First Name:", firstName);
         console.log("Last Name:", lastName);
@@ -53,7 +73,7 @@ const SIGNUP = () => {
         console.log("Phone Number:", phoneNumber);
         console.log("Date of Birth:", dateOfBirth);
         console.log("Gender:", gender);
-    };
+    };    
 
     const canSwitchToLogin = () => {
         if (action === "Sign Up") {
@@ -63,12 +83,24 @@ const SIGNUP = () => {
                 lastName.trim() !== "" &&
                 email.trim() !== "" &&
                 password.trim() !== "" &&
+                email.includes("@") &&
+                email.includes(".com") &&
+                password.length >= 8 &&
                 emailError === "" &&
                 passwordError === "" &&
                 phoneError === ""
             );
         }
-        return email.trim() !== "" && password.trim() !== "" && emailError === "" && passwordError === "" && phoneError === "";
+        return (
+        email.trim() !== "" &&
+        password.trim() !== "" &&
+        email.includes("@") &&
+        email.includes(".com") &&
+        password.length >= 8 &&
+        emailError === "" &&
+        passwordError === "" &&
+        phoneError === ""
+    );
     };
 
     const handleLogin = () => {
@@ -128,15 +160,32 @@ const SIGNUP = () => {
 
                     <div className="input">
                         <img src={email_icon} alt="" />
-                        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        {displayErrors && emailError !== "" && <div className="field-message">{emailError}</div>}
+                        {action === "Sign Up" && (
+                            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        )}
+                        {action === "Login" && (
+                            <input type="email" placeholder="Email" value="" onChange={(e) => setEmail("")} />
+                        )}
+                        {displayErrors && email.trim() === "" && <div className="field-message">Invalid email format (e.g., user@example.com)</div>}
                     </div>
                     <div className="input">
                         <img src={password_icon} alt="" />
-                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        {displayErrors && passwordError !== "" && <div className="field-message">{passwordError}</div>}
+                        {action === "Sign Up" && (
+                            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        )}
+                        {action === "Login" && (
+                            <input type="password" placeholder="Password" value="" onChange={(e) => setPassword("")} />
+                        )}
+                        {displayErrors && password.trim() === "" && <div className="field-message">Password must be at least 8 characters</div>}
                     </div>
                 </div>
+
+                {action === "Sign Up" && (
+                    <div>
+                        <button className="submit-button" onClick={handleSignup}>Submit</button>
+                    </div>
+                )}
+
                 {action === "Sign Up" ? <div></div> : <div className="forgot-password">Forgot password? <span>Click Here!</span></div>}
                 <div className="submit-container">
                     <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>

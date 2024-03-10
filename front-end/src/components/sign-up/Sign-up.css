@@ -94,3 +94,23 @@
     font-size: 14px;
     margin-top: 5px;
 }
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: #1eb2a6;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 200px;
+}
+
+.submit.gray {
+    background: #eaeaea;
+    color: #676767;
+}
