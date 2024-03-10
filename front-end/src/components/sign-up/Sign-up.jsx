@@ -153,7 +153,7 @@ const SIGNUP = () => {
                     <div className="Text">Sign Up</div>
                     <div className="underline"></div>
                 </div>
-                <div className="inputs">
+                <form className="inputs">
                     <div className="input">
                         <img src={user_icon} alt="" />
                         <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -200,7 +200,7 @@ const SIGNUP = () => {
                         )}
                         {displayErrors && password.trim() === "" && <div className="field-message">Password must be at least 8 characters</div>}
                     </div>
-                </div>
+                </form>
 
                 {action === "Sign Up" && (
                     <div>
