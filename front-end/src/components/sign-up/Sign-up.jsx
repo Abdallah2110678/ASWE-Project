@@ -6,6 +6,37 @@ import user_icon from '../../assets/person.png';
 import email_icon from '../../assets/email.png';
 import password_icon from '../../assets/password.png';
 
+export function LOGIN() {
+    return (
+        <>
+            <Back title='LOG IN' />
+            <div className="Container">
+                <div className="Header">
+                    <div className="Text">Log In</div>
+                    <div className="underline"></div>
+                </div>
+                <div className="inputs">
+                    <div className="input">
+                        <img src={email_icon} alt="" />
+                        <input type="email" placeholder="Email" />
+                    </div>
+
+                    <div className="input">
+                        <img src={password_icon} alt="" />
+                        <input type="password" placeholder="Password" />
+                    </div>
+
+                    <div className="forgot-password">Forgot password? <span>Click Here!</span></div>
+
+                    
+                    <div className="Login" >Login</div>
+                    
+                </div>
+            </div>
+        </>
+    );
+}
+
 const SIGNUP = () => {
     const [action, setAction] = useState("Sign Up");
     const [firstName, setFirstName] = useState("");
@@ -107,13 +138,11 @@ const SIGNUP = () => {
         setDisplayErrors(true);
 
         if (!canSwitchToLogin()) {
-            // Display an error message or take appropriate action
             console.error("Please complete the required fields in the sign-up form");
             return;
         }
 
-        setAction("Login");
-        handleSignup();
+        window.location.href = "/LOGIN";
     };
 
     return (
@@ -121,43 +150,36 @@ const SIGNUP = () => {
             <Back title='SIGN UP' />
             <div className="Container">
                 <div className="Header">
-                    <div className="Text">{action}</div>
+                    <div className="Text">Sign Up</div>
                     <div className="underline"></div>
                 </div>
                 <div className="inputs">
-                    {action === "Login" ? (
-                        <div></div>
-                    ) : (
-                        <>
-                            <div className="input">
-                                <img src={user_icon} alt="" />
-                                <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                {displayErrors && firstName.trim() === "" && <div className="field-message">Please enter your First Name</div>}
-                            </div>
-                            <div className="input">
-                                <img src={user_icon} alt="" />
-                                <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                {displayErrors && lastName.trim() === "" && <div className="field-message">Please enter your Last Name</div>}
-                            </div>
-                            <div className="input">
-                                <i className='far fa-calendar-alt'></i>
-                                <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
-                            </div>
-                            <div className="input">
-                                <label>Gender:</label>
-                                <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            <div className="input">
-                                <i className='fa fa-phone'></i>
-                                <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                                {displayErrors && phoneError !== "" && <div className="field-message">{phoneError}</div>}
-                            </div>
-                        </>
-                    )}
-
+                    <div className="input">
+                        <img src={user_icon} alt="" />
+                        <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                        {displayErrors && firstName.trim() === "" && <div className="field-message">Please enter your First Name</div>}
+                    </div>
+                    <div className="input">
+                        <img src={user_icon} alt="" />
+                        <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                        {displayErrors && lastName.trim() === "" && <div className="field-message">Please enter your Last Name</div>}
+                    </div>
+                    <div className="input">
+                        <i className='far fa-calendar-alt'></i>
+                        <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
+                    </div>
+                    <div className="input">
+                        <label>Gender:</label>
+                        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div className="input">
+                        <i className='fa fa-phone'></i>
+                        <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                        {displayErrors && phoneError !== "" && <div className="field-message">{phoneError}</div>}
+                    </div>
                     <div className="input">
                         <img src={email_icon} alt="" />
                         {action === "Sign Up" && (
@@ -186,10 +208,8 @@ const SIGNUP = () => {
                     </div>
                 )}
 
-                {action === "Sign Up" ? <div></div> : <div className="forgot-password">Forgot password? <span>Click Here!</span></div>}
                 <div className="submit-container">
-                    <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
-                    <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={handleLogin}>Login</div>
+                    <div className="submit-login" onClick={handleLogin}>Login</div>
                 </div>
             </div>
         </>

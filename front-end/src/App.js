@@ -9,7 +9,7 @@ import Blog from "./components/blog/Blog"
 import Contact from "./components/contact/Contact"
 import Footer from "./components/common/footer/Footer"
 import Home from "./components/home/Home"
-import SIGNUP from "./components/sign-up/Sign-up"
+import SIGNUP, { LOGIN } from "./components/sign-up/Sign-up"
 
 import Aside_Admin from './components/common/asidebar-admin/asidebar';
 import Dashboard from "./components/admin-dashboaerd/Dashboard";
@@ -47,6 +47,7 @@ function App() {
             <Route path="/journal" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route exact path='/sign-up' element={<SIGNUP />}/>
+            <Route exact path='/LOGIN' element={<LOGIN />}/>
           </Route>
       </Routes>
     </Router>
