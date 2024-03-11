@@ -52,9 +52,6 @@ const Header = () => {
               <Link to='/contact'>{str}</Link>
             </li>
             <li>
-              <Link to='/Sign-up'>Signup</Link>
-            </li>
-            <li>
               <Link to='/LOGIN'>Login</Link>
             </li>
           </ul>
