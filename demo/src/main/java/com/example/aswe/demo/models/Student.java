@@ -19,11 +19,14 @@ public class Student {
     private String gender;
     private LocalDate dob;
     private String email;
+    private String phone;
+    private String usertype;
+
 
     public Student() {
     }
 
-    public Student(Long id, String Fname, String Lname, String password, String gender, LocalDate dob, String email) {
+    public Student(Long id, String Fname, String Lname, String password, String gender, LocalDate dob, String email, String phone, String usertype) {
         this.id = id;
         this.Fname = Fname;
         this.Lname = Lname;
@@ -31,6 +34,8 @@ public class Student {
         this.gender = gender;
         this.dob = dob;
         this.email = email;
+        this.phone = phone;
+        this.usertype = usertype;
     }
 
     public Long getId() {
@@ -77,8 +82,8 @@ public class Student {
         return this.dob;
     }
 
-    public void setDob(LocalDate dob2) {
-        this.dob = dob2;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
     public String getEmail() {
@@ -87,6 +92,22 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getUsertype() {
+        return this.usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
 
     public Student id(Long id) {
@@ -124,6 +145,16 @@ public class Student {
         return this;
     }
 
+    public Student phone(String phone) {
+        setPhone(phone);
+        return this;
+    }
+
+    public Student usertype(String usertype) {
+        setUsertype(usertype);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -132,12 +163,12 @@ public class Student {
             return false;
         }
         Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(Fname, student.Fname) && Objects.equals(Lname, student.Lname) && Objects.equals(password, student.password) && Objects.equals(gender, student.gender) && Objects.equals(dob, student.dob) && Objects.equals(email, student.email);
+        return Objects.equals(id, student.id) && Objects.equals(Fname, student.Fname) && Objects.equals(Lname, student.Lname) && Objects.equals(password, student.password) && Objects.equals(gender, student.gender) && Objects.equals(dob, student.dob) && Objects.equals(email, student.email) && Objects.equals(phone, student.phone) && Objects.equals(usertype, student.usertype);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, Fname, Lname, password, gender, dob, email);
+        return Objects.hash(id, Fname, Lname, password, gender, dob, email, phone, usertype);
     }
 
     @Override
@@ -150,8 +181,9 @@ public class Student {
             ", gender='" + getGender() + "'" +
             ", dob='" + getDob() + "'" +
             ", email='" + getEmail() + "'" +
+            ", phone='" + getPhone() + "'" +
+            ", usertype='" + getUsertype() + "'" +
             "}";
     }
-
 
 }

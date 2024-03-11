@@ -6,13 +6,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.aswe.demo.models.Student;
 import com.example.aswe.demo.repositry.StudentRepository;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -30,25 +26,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("student")
+@RequestMapping("/Student")
 
 public class StudentControllers {
     @Autowired
     private StudentRepository studentRepository;
-
-    @GetMapping("") 
-    public ResponseEntity<?> getUsers() {
-    Collection<Student> users = this.studentRepository.findAll();
-    if (!users.isEmpty()) {
-        // Convert the collection of users to a list before returning
-        List<Student> userList = new ArrayList<>(users);
-        return ResponseEntity.ok(userList);
-    } else {
-        return ResponseEntity.notFound().build();
+    
+    @GetMapping("")
+    public ModelAndView getUsers() {
+        ModelAndView mav = new ModelAndView("list-Student.html");
+        List<Student>users = this.studentRepository.findAll();
+        mav.addObject("users", users);
+        return mav;
     }
-    }
-   
-
 
     @GetMapping("Registration")
     public ModelAndView addUser() {
@@ -125,23 +115,18 @@ public String editAccount(@ModelAttribute Student student) {
     dbStudent.setGender(student.getGender());
     dbStudent.setDob(student.getDob());
     dbStudent.setPassword(student.getPassword()); // Assuming password is plain text for demonstration purposes
+    dbStudent.setPhone(student.getPhone());
+    dbStudent.setUsertype(student.getUsertype());
 
     studentRepository.save(dbStudent);
     return "Account updated";
 }
 
 
-
-
-@GetMapping("/{id}")
-public Optional<Student> getStudent (@PathVariable long id) {
-    return this.studentRepository.findById(id);
-}  
-
 @PostMapping("/create")
-    public ResponseEntity<?> postMethodName(@RequestBody Student studentData) {
+    public ResponseEntity<?> create(@RequestBody Student user) {
         try {
-            Student savedUser = studentRepository.save(studentData);
+            Student savedUser = studentRepository.save(user);
             return ResponseEntity.ok(savedUser);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -149,15 +134,20 @@ public Optional<Student> getStudent (@PathVariable long id) {
     }
 
     @PutMapping("update/{id}")
-public ResponseEntity<?> putMethodName(@PathVariable Long id, @RequestBody Student updatedStudent) {
+public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody Student updatedStudent) {
     try {
         Optional<Student> userOptional = studentRepository.findById(id);
         if (!userOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-       
 
-        Student savedUser = studentRepository.save(updatedStudent);
+        Student existingStudent = userOptional.get();
+        // Update existing user with the fields from updatedUser
+        existingStudent.setEmail(updatedStudent.getEmail());
+        existingStudent.setPassword(updatedStudent.getPassword());
+        // Update other fields as needed
+
+        Student savedUser = studentRepository.save(existingStudent);
         return ResponseEntity.ok(savedUser);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -178,4 +168,3 @@ public ResponseEntity<?> putMethodName(@PathVariable Long id, @RequestBody Stude
     }
 } 
 }
-
