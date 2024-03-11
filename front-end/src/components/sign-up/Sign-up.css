@@ -65,6 +65,26 @@
     gap: 30px;
     margin: 60px auto;
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+.forgot-password span:hover {
+    color: #134b46; 
+}
+.create-account-link{
+    padding-left: 62px;
+    margin-top: 5px;
+    color: #797979;
+    font-size: 18px;
+}
+.create-account-link a{
+    color: #1eb2a6;
+    gap: 30px;
+    margin: 60px auto;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.create-account-link a:hover {
+    color: #134b46; 
 }
 .submit-container{
     gap: 30px;
