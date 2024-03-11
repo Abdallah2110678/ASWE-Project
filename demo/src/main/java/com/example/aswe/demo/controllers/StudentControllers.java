@@ -134,7 +134,7 @@ public String editAccount(@ModelAttribute Student student) {
     }
 
     @PutMapping("update/{id}")
-public ResponseEntity<?> putMethodName(@PathVariable long id, @RequestBody Student updatedStudent) {
+public ResponseEntity<?> putMethodName(@PathVariable Long id, @RequestBody Student updatedStudent) {
     try {
         Optional<Student> userOptional = studentRepository.findById(id);
         if (!userOptional.isPresent()) {
