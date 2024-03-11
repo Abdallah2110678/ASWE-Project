@@ -4,20 +4,26 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.aswe.demo.models.Student;
-import com.example.aswe.demo.repositories.StudentRepository;
+import com.example.aswe.demo.repositry.StudentRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -117,33 +123,49 @@ public String editAccount(@ModelAttribute Student student) {
 }
 
 
+@PostMapping("/create")
+    public ResponseEntity<?> postMethodName(@RequestBody Student student) {
+        try {
+            Student savedUser = studentRepository.save(student);
+            return ResponseEntity.ok(savedUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
+    @PutMapping("update/{id}")
+public ResponseEntity<?> putMethodName(@PathVariable long id, @RequestBody Student updatedStudent) {
+    try {
+        Optional<Student> userOptional = studentRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
+        Student existingStudent = userOptional.get();
+        // Update existing user with the fields from updatedUser
+        existingStudent.setEmail(updatedStudent.getEmail());
+        existingStudent.setPassword(updatedStudent.getPassword());
+        // Update other fields as needed
 
+        Student savedUser = studentRepository.save(existingStudent);
+        return ResponseEntity.ok(savedUser);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
 
-    // @PostMapping("addStudent")
-    // public String addStudent(
-    //         @RequestParam("id") Long id,
-    //         @RequestParam("Fname") String Fname,
-    //         @RequestParam("Lname") String Lname,
-    //         @RequestParam("password") String password,
-    //         @RequestParam("gender") String gender,
-    //         @RequestParam("dob") LocalDate dob,
-    //         @RequestParam("email") String email) {
-    //     Student student = new Student();
-    //     student.setId(id);
-    //     student.setFname(Fname);
-    //     student.setLname(Lname);
-    //     String encodedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
-    //     student.setPassword(encodedPassword);
-    //     student.setGender(gender);
-    //     student.setDob(dob);
-    //     student.setEmail(email);
-    //     this.studentRepository.save(student);
-    //     return "Student Added Successfully";
-    // }
-    
-
-    
+     @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+    try {
+        studentRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    } catch (EmptyResultDataAccessException ex) {
+        // If the user with the specified ID does not exist
+        return ResponseEntity.notFound().build();
+    } catch (Exception e) {
+        // Other unexpected errors
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+} 
 }
 
