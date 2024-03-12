@@ -6,6 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.aswe.demo.models.Student;
 import com.example.aswe.demo.repositry.StudentRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,11 +28,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/Student")
+@RequestMapping("student")
 
 public class StudentControllers {
     @Autowired
     private StudentRepository studentRepository;
+    
+    @GetMapping("") 
+    public ResponseEntity<?> getUser() {
+    Collection<Student> users = this.studentRepository.findAll();
+    if (!users.isEmpty()) {
+        // Convert the collection of users to a list before returning
+        List<Student> userList = new ArrayList<>(users);
+        return ResponseEntity.ok(userList);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+    }
     
     @GetMapping("")
     public ModelAndView getUsers() {
