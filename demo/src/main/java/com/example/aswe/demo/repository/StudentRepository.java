@@ -1,4 +1,4 @@
-package com.example.aswe.demo.repositry;
+package com.example.aswe.demo.repository;
 
 import com.example.aswe.demo.models.Student;
 import org.springframework.data.jpa.repository.JpaRepository;

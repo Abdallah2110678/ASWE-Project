@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.aswe.demo.models.Student;
-import com.example.aswe.demo.repositry.StudentRepository;
+import com.example.aswe.demo.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
