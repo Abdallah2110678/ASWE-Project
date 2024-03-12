@@ -53,56 +53,7 @@ public class StudentControllers {
         mav.addObject("users", users);
         return mav;
     }
-
-    @GetMapping("Registration")
-    public ModelAndView addUser() {
-        ModelAndView mav = new ModelAndView("Registration.html");
-        Student newUser = new Student();
-        mav.addObject("Student", newUser); ////////
-        return mav;
-    }
-    
-    @PostMapping("Registration")
-    public String saveUser(@ModelAttribute Student Student) {
-        // String encodedPassword = BCrypt.hashpw(Student.getPassword(), BCrypt.gensalt(12));
-        // Student.setPassword(encodedPassword);
-        this.studentRepository.save(Student);
-        return "Added";
-    }
-
-    @GetMapping("Login")
-    public ModelAndView login() {
-        ModelAndView mav = new ModelAndView("login.html");
-        Student newstudent = new Student();
-        mav.addObject("Student", newstudent);
-        return mav;
-    }
-    
-    @PostMapping("Login")
-    public String LoginProcess(@RequestParam("email") String email, @RequestParam("password") String password) {
-    //    Student dbStudent= this.studentRepository.findByEmail(email);
-    //    if(dbStudent == null) return "Login Failed";
-    //    Boolean isPasswordMatched = this.checkpw(password, dbStudent.getPassword());
-    //    if(isPasswordMatched)
-    //     return "Welcome " + dbStudent.getFname();
-    //     else
-    //     return "Login Failed";
-
-
-
-    Student dbStudent = this.studentRepository.findByEmail(email);
-    if (dbStudent == null) {
-        return "Login Failed";
-    }
-
-    if (dbStudent.getPassword().equals(password)) {
-        return "Welcome " + dbStudent.getFname();
-    } else {
-        return "Login Failed";
-    }
-
-    }
-
+          
     @GetMapping("Edit/{id}")
 public ModelAndView editAccount(@PathVariable("id") Long id) {
     ModelAndView mav = new ModelAndView("Edit.html");
