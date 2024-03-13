@@ -52,6 +52,14 @@ const Aside_Admin = () => {
               <span className="title">Add Student</span>
             </a>
           </li>
+          <li onClick={handleMouseOver}>
+            <a href="/admin/instructors">
+              <span className="iconn">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+              <span className="title">Instructors</span>
+            </a>
+          </li>
           {/* Add more list items here */}
         </ul>
       </div>
