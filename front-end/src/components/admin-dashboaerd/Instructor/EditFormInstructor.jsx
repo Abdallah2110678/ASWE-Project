@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
-const CreateNewInstractor = () => {
-  const [active, setActive] = useState(false);
+const EditFormInstructor = () => {
+  const { id } = useParams();
   const [successMessage, setSuccessMessage] = useState("");
-  const [errors, setErrors] = useState({});
-  const [InstractorData, setInstractorData] = useState({
+  const [InstructorInfo, setInstructorInfo] = useState({});
+
+  const [InstructorData, setInstructorData] = useState({
     fname: "",
     lname: "",
     password: "",
@@ -15,8 +14,19 @@ const CreateNewInstractor = () => {
     dob: "",
     email: "",
     phone: "",
-    usertype: "instractor",
   });
+
+  const [errors, setErrors] = useState({
+    fname: "",
+    lname: "",
+    password: "",
+    gender: "",
+    dob: "",
+    email: "",
+    phone: "",
+  });
+
+  const [active, setActive] = useState(false);
 
   const toggleMenu = () => {
     setActive(!active);
@@ -29,22 +39,25 @@ const CreateNewInstractor = () => {
     return () => clearTimeout(timer);
   }, [successMessage]);
 
-  const emptyInstractorData = () => {
-    setInstractorData({
-      fname: "",
-      lname: "",
-      password: "",
-      gender: "",
-      dob: "",
-      email: "",
-      phone: "",
-      usertype: InstractorData.usertype,
-    });
+  const validateEmptyPassword = () => {
+    if (!InstructorData.password.trim()) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "Password must not be empty.",
+      }));
+      return true;
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "",
+      }));
+      return false;
+    }
   };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
-    setInstractorData({ ...InstractorData, [name]: value });
+    setInstructorData({ ...InstructorData, [name]: value });
     let error = "";
 
     switch (name) {
@@ -75,8 +88,8 @@ const CreateNewInstractor = () => {
         const currentDate = new Date();
         const selectedDate = new Date(value);
         const age = currentDate.getFullYear() - selectedDate.getFullYear();
-        if (age < 26) {
-          error = "You must be at least 26 years old.";
+        if (age < 15) {
+          error = "You must be at least 15 years old.";
         }
         break;
       case "email":
@@ -86,10 +99,15 @@ const CreateNewInstractor = () => {
         }
         try {
           const response = await axios.get(
-            `/instractor/checkEmail?email=${value}`
+            `/Instructor/checkEmail?email=${value}`
           );
-          if (response.data) {
+          if (response.data && response.data.id != id) {
             error = "Email is already in use.";
+            console.log(response.data.id !== id);
+            console.log(response.data.id);
+            console.log(id);
+          } else {
+            error = ""; // Reset error if the email belongs to the current user
           }
         } catch (error) {
           console.error("Error checking email:", error);
@@ -100,49 +118,45 @@ const CreateNewInstractor = () => {
         break;
     }
     setErrors({ ...errors, [name]: error });
-    setInstractorData({ ...InstractorData, [name]: value });
+    setInstructorData({ ...InstructorData, [name]: value });
   };
 
-  const validateEmptyFields = () => {
-    let isEmpty = false;
-    const newErrors = {};
-    for (const key in InstractorData) {
-      if (InstractorData.hasOwnProperty(key)) {
-        if (!InstractorData[key].trim()) {
-          newErrors[key] = "Field must not be empty.";
-          isEmpty = true;
-        } else {
-          newErrors[key] = "";
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/instructor/${id}`);
+        const updatedInstructorData = { ...response.data, password: "" };
+        setInstructorData(updatedInstructorData);
+        setInstructorInfo(updatedInstructorData);
+      } catch (error) {
+        console.error("Error fetching Instructor data:", error);
       }
-    }
-    setErrors({ ...errors, ...newErrors });
-    return isEmpty;
-  };
+    };
+    fetchData();
+  }, []);
 
-  const handleInstractorCreation = () => {
-    
+  const handleInstructorUpdate = () => {
     axios
-      .post("/instractor/create", InstractorData)
+      .put(`/instructor/update/${id}`, InstructorData)
       .then((response) => {
-        console.log("Instractor created:", response.data);
-        setSuccessMessage("added  new Instractor in the system.");
-        emptyInstractorData();
+        console.log("Instructor updated successfully:", response.data);
+        setSuccessMessage(
+          `update Instructor ${InstructorData.fname}  ${InstructorData.lname} in the system system.`
+        );
+        setInstructorInfo(InstructorData);
       })
       .catch((error) => {
-        console.error("Error creating Instractor:", error);
-
-
+        console.error("Error updating Instructor:", error);
       });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const hasErrors = Object.values(errors).some((error) => error);
-    if (!hasErrors && !validateEmptyFields()) {
-      handleInstractorCreation();
+    if (!hasErrors && !validateEmptyPassword()) {
+      handleInstructorUpdate();
     }
   };
+
   return (
     <div className={`main ${active ? "active" : ""}`}>
       <div className="topbar">
@@ -160,12 +174,12 @@ const CreateNewInstractor = () => {
           <img src="assets/imgs/customer01.jpg" alt="" />
         </div>
       </div>
-      <div className="detailss ">
-        <div className="recentOrderss">
+      <div className="details">
+        <div class="recentOrders">
           <div class="cardHeader">
-            <h2>Create New Instractor</h2>
-            <Link to="/admin/instractors" className="btn">
-              All Instractors
+            <h2>Edit Instructor {InstructorInfo.fname}</h2>
+            <Link to="/admin/Instructors" className="btn">
+              All Instructors
             </Link>
           </div>
           <form onSubmit={handleSubmit}>
@@ -178,7 +192,7 @@ const CreateNewInstractor = () => {
                 className="form-control"
                 id="firstName"
                 name="fname"
-                value={InstractorData.fname}
+                value={InstructorData.fname}
                 onChange={handleChange}
               />
             </div>
@@ -194,7 +208,7 @@ const CreateNewInstractor = () => {
                 className="form-control"
                 id="lastName"
                 name="lname"
-                value={InstractorData.lname}
+                value={InstructorData.lname}
                 onChange={handleChange}
               />
             </div>
@@ -203,14 +217,14 @@ const CreateNewInstractor = () => {
             )}
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
-                Password:
+                New Password
               </label>
               <input
                 type="password"
                 className="form-control"
                 id="password"
                 name="password"
-                value={InstractorData.password}
+                value={InstructorData.password}
                 onChange={handleChange}
               />
             </div>
@@ -226,7 +240,7 @@ const CreateNewInstractor = () => {
                 className="form-control"
                 id="email"
                 name="email"
-                value={InstractorData.email}
+                value={InstructorData.email}
                 onChange={handleChange}
               />
             </div>
@@ -242,7 +256,7 @@ const CreateNewInstractor = () => {
                 className="form-control"
                 id="phone"
                 name="phone"
-                value={InstractorData.phone}
+                value={InstructorData.phone}
                 onChange={handleChange}
               />
             </div>
@@ -257,7 +271,7 @@ const CreateNewInstractor = () => {
                 className="form-select"
                 id="gender"
                 name="gender"
-                value={InstractorData.gender}
+                value={InstructorData.gender}
                 onChange={handleChange}
               >
                 <option value="">Select Gender</option>
@@ -277,7 +291,7 @@ const CreateNewInstractor = () => {
                 className="form-control"
                 id="dob"
                 name="dob"
-                value={InstractorData.dob}
+                value={InstructorData.dob}
                 onChange={handleChange}
               />
             </div>
@@ -285,17 +299,50 @@ const CreateNewInstractor = () => {
               <div className="error text-danger">{errors.dob}</div>
             )}
             <button type="submit" className="btn btn-primary">
-              Add Instractor
+              Update Instructor
             </button>
             {successMessage && (
-              <div className="alert alert-success mt-3">{successMessage}</div>
+              <div className="alert alert-success">{successMessage}</div>
             )}
           </form>
-          <div></div>
+        </div>
+        <Ins InstructorData={InstructorInfo} />
+      </div>
+    </div>
+  );
+};
+
+const Ins = ({ InstructorData }) => {
+  const { fname, lname, phone, email } = InstructorData;
+
+  return (
+    <div className="recentCustomerss">
+      <div className="cardHeader">
+        <h2>Instructor Info</h2>
+      </div>
+      <div className="cardBody">
+        <p>
+          <strong>First Name:</strong> {fname}
+        </p>
+        <p>
+          <strong>Last Name:</strong> {lname}
+        </p>
+        <p>
+          <strong>Phone:</strong> {phone}
+        </p>
+        <p>
+          <strong>Email:</strong> {email}
+        </p>
+        <div>
+          <h3>Courses :</h3>
+          <ol>
+            <li>SWE</li>
+            <li>OS</li>
+          </ol>
         </div>
       </div>
     </div>
   );
 };
 
-export default CreateNewInstractor;
+export default EditFormInstructor;

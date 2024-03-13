@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const All_Instractor = () => {
+const All_Instructor = () => {
   const [active, setActive] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [Instractor, setInstractor] = useState([]);
@@ -131,4 +131,4 @@ const All_Instractor = () => {
     </div>
   );
 };
-export default All_Instractor;
+export default All_Instructor;

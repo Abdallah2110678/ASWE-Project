@@ -16,8 +16,10 @@ import Dashboard from "./components/admin-dashboaerd/Dashboard";
 import EditFormStudent from './components/admin-dashboaerd/Students/EditFormStudent';
 import AllStudents from './components/admin-dashboaerd/Students/AllStudent';
 import CreateNewStudent from './components/admin-dashboaerd/Students/CreateNewStudent';
-import AllInstractor from './components/admin-dashboaerd/Instructor/All_Instractor';
-import CreateNewInstractor from './components/admin-dashboaerd/Instructor/CreateNewInstractor';
+
+import All_Instructor from './components/admin-dashboaerd/Instructor/All_Instructor';
+import CreateNewInstructor from './components/admin-dashboaerd/Instructor/CreateNewInstructor';
+import EditFormInstructor from './components/admin-dashboaerd/Instructor/EditFormInstructor';
 
 function App() {
 
@@ -32,8 +34,9 @@ function App() {
             <Route path="students" element={<AllStudents/>} />
             <Route path="student-add" element={<CreateNewStudent />} />
             <Route path="student-edit/:id" element={<EditFormStudent/>} />
-            <Route path="instructors" element={<AllInstractor/>} />
-            <Route path="instructor-add" element={<CreateNewInstractor />} />
+            <Route path="instructors" element={<All_Instructor/>} />
+            <Route path="instructor-add" element={<CreateNewInstructor />} />
+            <Route path="instructor-edit/:id" element={<EditFormInstructor/>} />
           </Route>
           <Route
             path="/"
