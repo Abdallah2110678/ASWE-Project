@@ -37,7 +37,6 @@ public class StudentControllers {
     public ResponseEntity<?> getAllStudents() {
         Collection<Student> users = this.studentRepository.findAll();
         if (!users.isEmpty()) {
-            // Convert the collection of users to a list before returning
             List<Student> userList = new ArrayList<>(users);
             return ResponseEntity.ok(userList);
         } else {

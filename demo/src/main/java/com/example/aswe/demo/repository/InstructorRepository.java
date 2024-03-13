@@ -7,6 +7,6 @@ import com.example.aswe.demo.models.Instructor;
 
 @Repository
 public interface InstructorRepository extends JpaRepository <Instructor, Long>{
-        Instructor findByEmail(String email);
+        boolean existsByEmail(String email);
 
 }
