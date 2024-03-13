@@ -13,7 +13,9 @@ import SIGNUP, { LOGIN } from "./components/sign-up/Sign-up"
 
 import Aside_Admin from './components/common/asidebar-admin/asidebar';
 import Dashboard from "./components/admin-dashboaerd/Dashboard";
-import { AddStudent, EditStudent, Students } from './components/admin-dashboaerd/Students';
+import EditFormStudent from './components/admin-dashboaerd/Students/EditFormStudent';
+import AllStudents from './components/admin-dashboaerd/Students/AllStudent';
+import CreateNewStudent from './components/admin-dashboaerd/Students/CreateNewStudent';
 
 function App() {
 
@@ -25,9 +27,9 @@ function App() {
             <Outlet />
           </>}>
             <Route path="dashboard" element={ < Dashboard /> } />
-            <Route path="students" element={<Students/>} />
-            <Route path="student-add" element={<AddStudent/>} />
-            <Route path="student-edit/:id" element={<EditStudent/>} />
+            <Route path="students" element={<AllStudents/>} />
+            <Route path="student-add" element={<CreateNewStudent />} />
+            <Route path="student-edit/:id" element={<EditFormStudent/>} />
           </Route>
           <Route
             path="/"

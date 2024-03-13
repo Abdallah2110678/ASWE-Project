@@ -279,6 +279,30 @@ body {
   border-radius: 20px;
 }
 
+.detailss .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.detailss {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  
+  grid-gap: 30px;
+  /* margin-top: 10px; */
+}
+
+.detailss .recentOrderss {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
 .details .cardHeader {
   display: flex;
   justify-content: space-between;
