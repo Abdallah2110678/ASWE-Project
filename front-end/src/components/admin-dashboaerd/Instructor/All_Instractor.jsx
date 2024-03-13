@@ -20,7 +20,7 @@ const All_Instractor = () => {
       const response = await axios.delete(`/instructor/delete/${id}`);
 
       if (response.status === 200) {
-        setSuccessMessage(`Student deleted successfully`);
+        setSuccessMessage(`Instractor deleted successfully`);
 
         console.log("Instractor deleted successfully");
         
