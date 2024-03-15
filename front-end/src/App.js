@@ -12,7 +12,7 @@ import Home from "./components/home/Home"
 import SIGNUP, { LOGIN } from "./components/sign-up/Sign-up"
 
 import Aside_Instructor from './components/common/asidebar-instructor/asidebar';
-import instructor_dashboard from "./components/instructor-dashboard/Dashboard";
+import DASHBOARD from "./components/instructor-dashboard/Dashboard";
 
 
 import Aside_Admin from './components/common/asidebar-admin/asidebar';
@@ -47,7 +47,7 @@ function App() {
          <Route path="/instructor" element={<><Aside_Instructor/>
               <Outlet />
              </>}>
-             <Route path="dashboard" element={<instructor_dashboard/>} />
+             <Route path="dashboard" element={ < DASHBOARD/> } />
            </Route>
 
 

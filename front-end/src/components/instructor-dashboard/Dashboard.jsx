@@ -121,8 +121,6 @@ const Dashboard = () => {
   const toggleMenu = () => {
     setActive(!active);
   };
-
-
   return (
     <div>
       {/* Main Content */}
