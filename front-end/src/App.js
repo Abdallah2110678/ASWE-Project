@@ -51,13 +51,6 @@ function App() {
            </Route>
 
 
-
-
-
-
-
-
-
           <Route
             path="/"
             element={
@@ -87,20 +80,3 @@ function App() {
 }
 
 export default App;
-
-
-
-// </Route>
-//           {/* Instructor Routes */}
-//           <Route path="/instructor" element={
-//             <>
-//               {/* Render instructor sidebar */}
-//               <Aside_Instructor />
-//               {/* Render outlet for instructor routes */}
-//               <Outlet />
-//             </>
-//           }>
-//             {/* Define instructor routes */}
-//             <Route path="dashboard" element={<dashboard />} />
-//             {/* Add more instructor routes as needed */}
-//           </Route>

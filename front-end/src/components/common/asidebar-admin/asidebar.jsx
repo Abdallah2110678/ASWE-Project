@@ -21,7 +21,7 @@ const Aside_Admin = () => {
       <div className={`navigation ${active ? "active" : ""}`}>
         <ul>
           <li onClick={handleMouseOver}>
-            <a href="#">
+            <a href="">
               <span className="iconn">
                 <ion-icon name="logo-apple"></ion-icon>
               </span>
@@ -34,6 +34,14 @@ const Aside_Admin = () => {
                 
               </span>
               <span className="title">Dashboard</span>
+            </a>
+          </li>
+          <li onClick={handleMouseOver}>
+            <a href="#">
+              <span className="iconn">
+                <ion-icon name="document-text-outline"></ion-icon>
+              </span>
+              <span className="title">Profile</span>
             </a>
           </li>
           <li onClick={handleMouseOver}>
@@ -60,7 +68,22 @@ const Aside_Admin = () => {
               <span className="title">Instructors</span>
             </a>
           </li>
-          {/* Add more list items here */}
+          <li onClick={handleMouseOver}>
+            <a href="/admin/instructor-add">
+              <span className="iconn">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+              <span className="title">Add Instructor</span>
+            </a>
+          </li>
+          <li onClick={handleMouseOver}>
+            <a href="#">
+              <span className="iconn">
+                <ion-icon name="log-out-outline"></ion-icon>
+              </span>
+              <span className="title">Log Out</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
