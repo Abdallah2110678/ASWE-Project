@@ -137,7 +137,7 @@ const Dashboard = () => {
           </div>
 
           <div className="user">
-            <img src="assets/imgs/customer01.jpg" alt="" />
+           
           </div>
         </div>
 
@@ -145,9 +145,8 @@ const Dashboard = () => {
                 <div class="card">
                     <div>
                         <div class="numbers">1,504</div>
-                        <div class="cardName">Total Student</div>
+                        <div class="cardName">Course Enrollment</div>
                     </div>
-
                     <div class="iconBx">
                         <ion-icon name="eye-outline"></ion-icon>
                     </div>
@@ -155,18 +154,7 @@ const Dashboard = () => {
 
                 <div class="card">
                     <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Total Instractor</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">284</div>
+                        <div class="numbers">25</div>
                         <div class="cardName">Courses</div>
                     </div>
 
@@ -187,29 +175,12 @@ const Dashboard = () => {
                 </div>
             </div>
 
-
-        {/* Order Details List */}
         <div className="details">
-          <div className="recentOrders">
-            <div className="cardHeader">
-              <h2>Accounts</h2>
-              
-            </div>
-            <ApexChart />
-            <table>
-              {/* Add your table structure here */}
-            </table>
-          </div>
-
-          {/* Recent Customers */}
           <div className="recentCustomers">
             <div className="cardHeader">
-              <h2>Most Courses Enroll</h2>
+              <h2>Most Courses Enrolled</h2>
             </div>
             <ApexChartt />
-            <table>
-              {/* Add your customer table structure here */}
-            </table>
           </div>
         </div>
       </div>
