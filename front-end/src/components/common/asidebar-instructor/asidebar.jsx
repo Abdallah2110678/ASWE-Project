@@ -39,13 +39,21 @@ const Aside_Instructor = () => {
               <span className="iconn">
                 <ion-icon name="document-text-outline"></ion-icon>
               </span>
-              <span className="title">Courses</span>
+              <span className="title">Profile</span>
             </a>
           </li>
           <li onClick={handleMouseOver}>
             <a href="#">
               <span className="iconn">
                 <ion-icon name="people-outline"></ion-icon>
+              </span>
+              <span className="title">Courses</span>
+            </a>
+          </li>
+          <li onClick={handleMouseOver}>
+            <a href="#">
+              <span className="iconn">
+                <ion-icon name="log-out-outline"></ion-icon>
               </span>
               <span className="title">Students</span>
             </a>
@@ -58,7 +66,6 @@ const Aside_Instructor = () => {
               <span className="title">Log Out</span>
             </a>
           </li>
-          {/* Add more list items here */}
         </ul>
       </div>
     </div>
