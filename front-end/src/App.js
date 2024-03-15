@@ -11,6 +11,10 @@ import Footer from "./components/common/footer/Footer"
 import Home from "./components/home/Home"
 import SIGNUP, { LOGIN } from "./components/sign-up/Sign-up"
 
+import Aside_Instructor from './components/common/asidebar-instructor/asidebar';
+import instructor_dashboard from "./components/instructor-dashboard/Dashboard";
+
+
 import Aside_Admin from './components/common/asidebar-admin/asidebar';
 import Dashboard from "./components/admin-dashboaerd/Dashboard";
 import EditFormStudent from './components/admin-dashboaerd/Students/EditFormStudent';
@@ -38,6 +42,22 @@ function App() {
             <Route path="instructor-add" element={<CreateNewInstructor />} />
             <Route path="instructor-edit/:id" element={<EditFormInstructor/>} />
           </Route>
+          
+
+         <Route path="/instructor" element={<><Aside_Instructor/>
+              <Outlet />
+             </>}>
+             <Route path="dashboard" element={<instructor_dashboard/>} />
+           </Route>
+
+
+
+
+
+
+
+
+
           <Route
             path="/"
             element={
@@ -48,6 +68,7 @@ function App() {
               </>
             }
           >
+            
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<CourseHome />} />
@@ -58,6 +79,7 @@ function App() {
             <Route exact path='/sign-up' element={<SIGNUP />}/>
             <Route exact path='/LOGIN' element={<LOGIN />}/>
           </Route>
+          
       </Routes>
     </Router>
   </>
@@ -65,3 +87,20 @@ function App() {
 }
 
 export default App;
+
+
+
+// </Route>
+//           {/* Instructor Routes */}
+//           <Route path="/instructor" element={
+//             <>
+//               {/* Render instructor sidebar */}
+//               <Aside_Instructor />
+//               {/* Render outlet for instructor routes */}
+//               <Outlet />
+//             </>
+//           }>
+//             {/* Define instructor routes */}
+//             <Route path="dashboard" element={<dashboard />} />
+//             {/* Add more instructor routes as needed */}
+//           </Route>
