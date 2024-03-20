@@ -21,81 +21,78 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping("instructor")
 
 public class InstructorControllers {
     @Autowired
     private InstructorRepository instructorRepository;
-   
-    @GetMapping("") 
+
+    @GetMapping("")
     public ResponseEntity<?> getAllInstractors() {
-    Collection<Instructor> instructors = this.instructorRepository.findAll();
-    if (!instructors.isEmpty()) {
-        List<Instructor> instructorList = new ArrayList<>(instructors);
-        return ResponseEntity.ok(instructorList);
-    } else {
-        return ResponseEntity.notFound().build();
+        Collection<Instructor> instructors = this.instructorRepository.findAll();
+        if (!instructors.isEmpty()) {
+            List<Instructor> instructorList = new ArrayList<>(instructors);
+            return ResponseEntity.ok(instructorList);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<?> CreateNewInstractor(@RequestBody Instructor instructor) {
+        try {
 
-}@PostMapping("/create")
-public ResponseEntity<?> CreateNewInstractor(@RequestBody Instructor instructor) {
-    try {
-
-        String encodedPassword = BCrypt.hashpw(instructor.getPassword(), BCrypt.gensalt(12));
-        instructor.setPassword(encodedPassword);
-        Instructor savedInstructor = instructorRepository.save(instructor);
-        return ResponseEntity.ok(savedInstructor);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            String encodedPassword = BCrypt.hashpw(instructor.getPassword(), BCrypt.gensalt(12));
+            instructor.setPassword(encodedPassword);
+            Instructor savedInstructor = instructorRepository.save(instructor);
+            return ResponseEntity.ok(savedInstructor);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-}
-
 
     @GetMapping("/{id}")
     public Optional<Instructor> getSpesicInstractor(@PathVariable Long id) {
         return this.instructorRepository.findById(id);
-    }   
+    }
 
-     @GetMapping("/checkEmail")
+    @GetMapping("/checkEmail")
     public ResponseEntity<?> checkEmailExists(@RequestParam String email) {
         boolean exists = instructorRepository.existsByEmail(email);
         return ResponseEntity.ok(exists);
     }
 
-
     @PutMapping("update/{id}")
-public ResponseEntity<?> updateInstractorData(@PathVariable Long id, @RequestBody Instructor updatedInstructor) {
-    try {
-        Optional<Instructor> InstructorOptional = instructorRepository.findById(id);
-        if (!InstructorOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<?> updateInstractorData(@PathVariable Long id, @RequestBody Instructor updatedInstructor) {
+        try {
+            Optional<Instructor> InstructorOptional = instructorRepository.findById(id);
+            if (!InstructorOptional.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
 
-        String encodedPassword = BCrypt.hashpw(updatedInstructor.getPassword(), BCrypt.gensalt(12));
+            String encodedPassword = BCrypt.hashpw(updatedInstructor.getPassword(), BCrypt.gensalt(12));
             updatedInstructor.setPassword(encodedPassword);
-    
+
             Instructor savedUser = instructorRepository.save(updatedInstructor);
             return ResponseEntity.ok(savedUser);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-}
-
-  @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteInstractor(@PathVariable Long id) {
-    try {
-        instructorRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    } catch (EmptyResultDataAccessException ex) {
-        // If the user with the specified ID does not exist
-        return ResponseEntity.notFound().build();
-    } catch (Exception e) {
-        // Other unexpected errors
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
-} 
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteInstractor(@PathVariable Long id) {
+        try {
+            instructorRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (EmptyResultDataAccessException ex) {
+            // If the user with the specified ID does not exist
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            // Other unexpected errors
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

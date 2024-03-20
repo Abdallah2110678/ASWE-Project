@@ -75,8 +75,8 @@ const CreateNewInstructor = () => {
         const currentDate = new Date();
         const selectedDate = new Date(value);
         const age = currentDate.getFullYear() - selectedDate.getFullYear();
-        if (age < 26) {
-          error = "You must be at least 26 years old.";
+        if (age < 24) {
+          error = "You must be at least 24 years old.";
         }
         break;
       case "email":
@@ -124,7 +124,7 @@ const CreateNewInstructor = () => {
     try {
         const response = await axios.post("/instructor/create", instructorData);
         console.log("Instructor created:", response.data);
-        setSuccessMessage("Added new instructor to the system.");
+        setSuccessMessage("instructor Added successfully.");
         emptyinstructorData();
     } catch (error) {
         console.error("Error creating instructor:", error);

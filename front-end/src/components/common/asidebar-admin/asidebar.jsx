@@ -29,6 +29,14 @@ const Aside_Admin = () => {
             </a>
           </li>
           <li onClick={handleMouseOver}>
+            <a href="/">
+              <span className="iconn">
+                
+              </span>
+              <span className="title">Home</span>
+            </a>
+          </li>
+          <li onClick={handleMouseOver}>
             <a href="/admin/dashboard">
               <span className="iconn">
                 
@@ -77,7 +85,7 @@ const Aside_Admin = () => {
             </a>
           </li>
           <li onClick={handleMouseOver}>
-            <a href="#">
+            <a href="/">
               <span className="iconn">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>

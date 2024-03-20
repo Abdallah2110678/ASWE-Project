@@ -125,7 +125,7 @@ const CreateNewStudent = () => {
       .post("/student/create", studentData)
       .then((response) => {
         console.log("Student created:", response.data);
-        setSuccessMessage("You added a new student to the system.");
+        setSuccessMessage("Student Added successfully.");
         emptyStudentData();
       })
       .catch((error) => {
