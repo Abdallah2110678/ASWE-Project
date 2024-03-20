@@ -44,13 +44,13 @@ For any inquiries or assistance, please feel free to reach out:
 
 [![Abdallah Hamdy](https://img.shields.io/badge/Abdallah%20Hamdy-Contact-blue)]
 (https://mail.google.com/mail/?view=cm&fs=1&to=abdallah2110678@miuegypt.edu.eg)
-[![Abdulrahman Abdelmoniem](https://img.shields.io/badge/Abdallah%20Hamdy-Contact-blue)]
+[![Abdulrahman Abdelmoniem](https://img.shields.io/badge/Abdulrahman%20Abdelmoniem-Contact-blue)]
 (https://mail.google.com/mail/?view=cm&fs=1&to=abdulrahman2111656@miuegypt.edu.eg)
-[![Ahmed Ayman](https://img.shields.io/badge/Abdallah%20Hamdy-Contact-blue)]
+[![Ahmed Ayman](https://img.shields.io/badge/Ahmed%20Ayman-Contact-blue)]
 (https://mail.google.com/mail/?view=cm&fs=1&to=ahmed2107685@miuegypt.edu.eg)
-[![Abdelrahman Abdelmegeed](https://img.shields.io/badge/Abdallah%20Hamdy-Contact-blue)]
+[![Abdelrahman Abdelmegeed](https://img.shields.io/badge/Abdelrahman%20Abdelmegeed-Contact-blue)]
 (https://mail.google.com/mail/?view=cm&fs=1&to=abdelrahman2007781@miuegypt.edu.eg)
-[![Esraa Hassan](https://img.shields.io/badge/Abdallah%20Hamdy-Contact-blue)]
+[![Esraa Hassan](https://img.shields.io/badge/Esraa%20Hassan-Contact-blue)]
 (https://mail.google.com/mail/?view=cm&fs=1&to=esraa2100758@miuegypt.edu.eg)
 
 
