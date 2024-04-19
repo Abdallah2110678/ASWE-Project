@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import user_icon from '../../assets/person.png';
 import email_icon from '../../assets/email.png';
 import password_icon from '../../assets/password.png';
+import { FormCreateStudent } from "../admin-dashboaerd/Students/CreateNewStudent";
 
 export function LOGIN() {
     return (
@@ -167,72 +168,12 @@ const SIGNUP = () => {
                     <div className="Text">Sign Up</div>
                     <div className="underline"></div>
                 </div>
-                <form className="inputs">
-                    <div className="input">
-                        <img src={user_icon} alt="" />
-                        <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                        {displayErrors && firstName.trim() === "" && <div className="field-message">Please enter your First Name</div>}
-                    </div>
-                    <div className="input">
-                        <img src={user_icon} alt="" />
-                        <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                        {displayErrors && lastName.trim() === "" && <div className="field-message">Please enter your Last Name</div>}
-                    </div>
-                    <div className="input">
-                        <i className='far fa-calendar-alt'></i>
-                        <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
-                    </div>
-                    <div className="input">
-                        <label>Gender:</label>
-                        <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </div>
-                    <div className="input">
-                        <label>User Type:</label>
-                        <select value={userType} onChange={(e) => setUserType(e.target.value)}>
-                            <option value="">Select User Type</option>
-                            <option value="student">Student</option>
-                            <option value="instructor">Instructor</option>
-                        </select>
-                        {displayErrors && userType === "" && <div className="field-message">Please select a user type</div>}
-                    </div>
-                    <div className="input">
-                        <i className='fa fa-phone'></i>
-                        <input type="tel" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                        {displayErrors && phoneError !== "" && <div className="field-message">Please enter your phone number</div>}
-                    </div>
-                    <div className="input">
-                        <img src={email_icon} alt="" />
-                        {action === "Sign Up" && (
-                            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        )}
-                        {action === "Login" && (
-                            <input type="email" placeholder="Email" value="" onChange={(e) => setEmail("")} />
-                        )}
-                        {displayErrors && email.trim() === "" && <div className="field-message">Invalid email format (e.g., user@example.com)</div>}
-                    </div>
-                    <div className="input">
-                        <img src={password_icon} alt="" />
-                        {action === "Sign Up" && (
-                            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        )}
-                        {action === "Login" && (
-                            <input type="password" placeholder="Password" value="" onChange={(e) => setPassword("")} />
-                        )}
-                        {displayErrors && password.trim() === "" && <div className="field-message">Password must be at least 8 characters</div>}
-                    </div>
-                </form>
-
-                {action === "Sign Up" && (
-                    <div>
-                        <button className="submit-button" onClick={handleSignup}>Submit</button>
-                    </div>
-                )}
-
+                
+                <FormCreateStudent state="Sign Up"/>
+                <br />
                 <div className="submit-container">
-                    <div className="submit-login" onClick={handleLogin}>Login</div>
+                    <button className="btn " style={{ background: "#1eb2a6" }}>
+                    <Link to="/LOGIN"  > Login</Link></button>
                 </div>
             </div>
         </>

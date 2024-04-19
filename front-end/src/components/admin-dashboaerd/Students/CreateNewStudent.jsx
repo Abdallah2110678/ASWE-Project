@@ -1,12 +1,51 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const CreateNewStudent = () => {
   const [active, setActive] = useState(false);
+  const toggleMenu = () => {
+    setActive(!active);
+  };
+  return (
+    <div className={`main ${active ? "active" : ""}`}>
+      <div className="topbar">
+        <div className="toggle" onClick={toggleMenu}>
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <div className="search">
+          <label>
+            <input type="text" placeholder="Search here" />
+            <ion-icon name="search-outline"></ion-icon>
+          </label>
+        </div>
+
+        <div className="user">
+          <img src="assets/imgs/customer01.jpg" alt="" />
+        </div>
+      </div>
+      <div className="detailss ">
+        <div className="recentOrderss">
+          <div class="cardHeader">
+            <h2>Create New Student</h2>
+            <Link to="/admin/students" className="btn">
+              All Students
+            </Link>
+          </div>
+          <FormCreateStudent state="Add student"/>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const FormCreateStudent = ({state}) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const location = useLocation();
   const [studentData, setStudentData] = useState({
     fname: "",
     lname: "",
@@ -16,11 +55,8 @@ const CreateNewStudent = () => {
     email: "",
     phone: "",
     usertype: "student",
+    major: "",
   });
-
-  const toggleMenu = () => {
-    setActive(!active);
-  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,6 +75,7 @@ const CreateNewStudent = () => {
       email: "",
       phone: "",
       usertype: studentData.usertype,
+      major: "",
     });
   };
 
@@ -59,6 +96,11 @@ const CreateNewStudent = () => {
         if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}/.test(value)) {
           error =
             "Password must contain at least one digit, one lowercase and one uppercase character, and be at least 3 characters long.";
+        }
+        break;
+      case "major":
+        if (!value) {
+          error = "Major is required.";
         }
         break;
       case "phone":
@@ -127,12 +169,21 @@ const CreateNewStudent = () => {
         console.log("Student created:", response.data);
         setSuccessMessage("Student Added successfully.");
         emptyStudentData();
+        NavigatePage();
       })
       .catch((error) => {
         console.error("Error creating student:", error);
       });
   };
-
+  
+  const NavigatePage=()=>{
+    const currentPath = location.pathname;
+    if (currentPath === '/sign-up') {
+      navigate('/admin/dashboard');
+    }
+     else {  
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const hasErrors = Object.values(errors).some((error) => error);
@@ -141,157 +192,152 @@ const CreateNewStudent = () => {
     }
   };
   return (
-    <div className={`main ${active ? "active" : ""}`}>
-      <div className="topbar">
-        <div className="toggle" onClick={toggleMenu}>
-          <ion-icon name="menu-outline"></ion-icon>
-        </div>
-        <div className="search">
-          <label>
-            <input type="text" placeholder="Search here" />
-            <ion-icon name="search-outline"></ion-icon>
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="firstName" className="form-label">
+            First Name:
           </label>
+          <input
+            type="text"
+            className="form-control"
+            id="firstName"
+            name="fname"
+            value={studentData.fname}
+            onChange={handleChange}
+          />
         </div>
-
-        <div className="user">
-          <img src="assets/imgs/customer01.jpg" alt="" />
+        {errors.fname && (
+          <div className="error text-danger">{errors.fname}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="lastName" className="form-label">
+            Last Name:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="lastName"
+            name="lname"
+            value={studentData.lname}
+            onChange={handleChange}
+          />
         </div>
-      </div>
-      <div className="detailss ">
-        <div className="recentOrderss">
-          <div class="cardHeader">
-            <h2>Create New Student</h2>
-            <Link to="/admin/students" className="btn">
-              All Students
-            </Link>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="firstName" className="form-label">
-                First Name:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="fname"
-                value={studentData.fname}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.fname && (
-              <div className="error text-danger">{errors.fname}</div>
-            )}
-            <div className="mb-3">
-              <label htmlFor="lastName" className="form-label">
-                Last Name:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="lastName"
-                name="lname"
-                value={studentData.lname}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.lname && (
-              <div className="error text-danger">{errors.lname}</div>
-            )}
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password:
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                value={studentData.password}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.password && (
-              <div className="error text-danger">{errors.password}</div>
-            )}
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email:
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                value={studentData.email}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.email && (
-              <div className="error text-danger">{errors.email}</div>
-            )}
-            <div className="mb-3">
-              <label htmlFor="phone" className="form-label">
-                Phone:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="phone"
-                name="phone"
-                value={studentData.phone}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.phone && (
-              <div className="error text-danger">{errors.phone}</div>
-            )}
-            <div className="mb-3">
-              <label htmlFor="gender" className="form-label">
-                Gender:
-              </label>
-              <select
-                className="form-select"
-                id="gender"
-                name="gender"
-                value={studentData.gender}
-                onChange={handleChange}
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-            {errors.gender && (
-              <div className="error text-danger">{errors.gender}</div>
-            )}
-            <div className="mb-3">
-              <label htmlFor="dob" className="form-label">
-                Date of Birth:
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="dob"
-                name="dob"
-                value={studentData.dob}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.dob && (
-              <div className="error text-danger">{errors.dob}</div>
-            )}
-            <button type="submit" className="btn btn-primary">
-              Add Student
-            </button>
-            {successMessage && (
-              <div className="alert alert-success mt-3">{successMessage}</div>
-            )}
-          </form>
-          <div></div>
+        {errors.lname && (
+          <div className="error text-danger">{errors.lname}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            name="password"
+            value={studentData.password}
+            onChange={handleChange}
+          />
         </div>
-      </div>
-    </div>
+        {errors.password && (
+          <div className="error text-danger">{errors.password}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email:
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            name="email"
+            value={studentData.email}
+            onChange={handleChange}
+          />
+        </div>
+        {errors.email && (
+          <div className="error text-danger">{errors.email}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="major" className="form-label">
+            Major:
+          </label>
+          <select
+            className="form-select"
+            id="major"
+            name="major"
+            value={studentData.major}
+            onChange={handleChange}
+          >
+            <option value="">Select Major</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Business Administration">
+              Business Administration
+            </option>
+            <option value="Psychology">Psychology</option>
+          </select>
+        </div>
+        {errors.major && (
+          <div className="error text-danger">{errors.major}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="phone" className="form-label">
+            Phone:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="phone"
+            name="phone"
+            value={studentData.phone}
+            onChange={handleChange}
+          />
+        </div>
+        {errors.phone && (
+          <div className="error text-danger">{errors.phone}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="gender" className="form-label">
+            Gender:
+          </label>
+          <select
+            className="form-select"
+            id="gender"
+            name="gender"
+            value={studentData.gender}
+            onChange={handleChange}
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        {errors.gender && (
+          <div className="error text-danger">{errors.gender}</div>
+        )}
+        <div className="mb-3">
+          <label htmlFor="dob" className="form-label">
+            Date of Birth:
+          </label>
+          <input
+            type="date"
+            className="form-control"
+            id="dob"
+            name="dob"
+            value={studentData.dob}
+            onChange={handleChange}
+          />
+        </div>
+        {errors.dob && <div className="error text-danger">{errors.dob}</div>}
+        <button type="submit" className="btn " style={{ background: "#1eb2a6" }}>
+          {state}
+        </button>
+        {successMessage && (
+          <div className="alert alert-success mt-3">{successMessage}</div>
+        )}
+      </form>
+    </>
   );
 };
 
