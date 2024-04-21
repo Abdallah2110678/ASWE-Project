@@ -7,8 +7,97 @@ import user_icon from '../../assets/person.png';
 import email_icon from '../../assets/email.png';
 import password_icon from '../../assets/password.png';
 import { FormCreateStudent } from "../admin-dashboaerd/Students/CreateNewStudent";
+import axios from "axios";
+
+
 
 export function LOGIN() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+             await axios.post("http://localhost:9090/lll", {
+                email,
+                password,
+            });
+            
+            // Handle successful login, e.g., redirect to dashboard
+            setError("");
+        } catch (error) {
+            console.error("Login failed:", error);
+            setError("Invalid email or password.");
+        }
+    };
+
+    return (
+        <>
+            <Back title="LOG IN" />
+            <div className="Container">
+                <div className="Header">
+                    <div className="Text">LOG IN</div>
+                    <div className="underline"></div>
+                </div>
+                <div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">
+                                Email
+                            </label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                placeholder="Enter email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <div className="forgot-password">
+                        Forgot password? <span>Click Here!</span>
+                    </div>
+
+                    <div className="create-account-link">
+                        Don't have an account? <Link to="/sign-up">Create One Here</Link>
+                    </div>
+
+                        <button type="submit" className="btn btn-primary">
+                            Login
+                        </button>
+                    </form>
+                    {error && <div className="alert alert-danger">{error}</div>}{" "}
+                    {/* Display error message */}
+                </div>
+            </div>
+        </>
+    );
+}
+
+
+
+/*
+export function LOGIN() {
+    const [role, setRole] = useState('Student');
+
+  const toggleRole = () => {
+    setRole(role === 'Student' ? 'Instructor' : 'Student');
+  };
     return (
         <>
             <Back title='LOG IN' />
@@ -16,6 +105,9 @@ export function LOGIN() {
                 <div className="Header">
                     <div className="Text">LOG IN</div>
                     <div className="underline"></div>
+                    <div className={`btn ${role === 'Instructor' ? 'btn-primary' : 'btn-secondary'}`}  onClick={toggleRole}>
+        {role}
+      </div>
                 </div>
                 <div className="inputs">
                     <div className="input">
@@ -42,7 +134,7 @@ export function LOGIN() {
         </>
     );
 }
-
+*/
 const SIGNUP = () => {
     const [action, setAction] = useState("Sign Up");
     const [firstName, setFirstName] = useState("");
@@ -173,7 +265,7 @@ const SIGNUP = () => {
                 <br />
                 <div className="submit-container">
                     <button className="btn " style={{ background: "#1eb2a6" }}>
-                    <Link to="/LOGIN"  > Login</Link></button>
+                    <Link to="/login"  > Login</Link></button>
                 </div>
             </div>
         </>

@@ -52,7 +52,7 @@ const Header = () => {
               <Link to='/contact'>{str}</Link>
             </li>
             <li>
-              <Link to='/LOGIN'>Login</Link>
+              <Link to='/login'>Login</Link>
             </li>
           </ul>
           <div className='start'>

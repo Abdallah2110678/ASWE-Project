@@ -179,7 +179,7 @@ export const FormCreateStudent = ({state}) => {
   const NavigatePage=()=>{
     const currentPath = location.pathname;
     if (currentPath === '/sign-up') {
-      navigate('/admin/dashboard');
+      navigate('/login');
     }
      else {  
     }
