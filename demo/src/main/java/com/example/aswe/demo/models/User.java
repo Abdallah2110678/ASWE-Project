@@ -16,28 +16,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-    private String FirstName;
-    private String LastName;
+    private String fname;
+    private String lname;
     private String gender;
-    private LocalDate DOB;
-    private String Phone;
+    private LocalDate dob;
+    private String phone;
     private String email;
     private String password;
-    private String UserType;
+    private String usertype;
 
     public User() {
     }
 
-    public User(Long Id, String FirstName, String LastName, String gender, LocalDate DOB, String Phone, String email, String password, String UserType) {
+    public User(Long Id, String fname, String lname, String gender, LocalDate dob, String phone, String email, String password, String usertype) {
         this.Id = Id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
+        this.fname = fname;
+        this.lname = lname;
         this.gender = gender;
-        this.DOB = DOB;
-        this.Phone = Phone;
+        this.dob = dob;
+        this.phone = phone;
         this.email = email;
         this.password = password;
-        this.UserType = UserType;
+        this.usertype = usertype;
     }
 
     public Long getId() {
@@ -48,20 +48,20 @@ public class User {
         this.Id = Id;
     }
 
-    public String getFirstName() {
-        return this.FirstName;
+    public String getFname() {
+        return this.fname;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 
-    public String getLastName() {
-        return this.LastName;
+    public String getLname() {
+        return this.lname;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getGender() {
@@ -72,20 +72,20 @@ public class User {
         this.gender = gender;
     }
 
-    public LocalDate getDOB() {
-        return this.DOB;
+    public LocalDate getDob() {
+        return this.dob;
     }
 
-    public void setDOB(LocalDate DOB) {
-        this.DOB = DOB;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
     public String getPhone() {
-        return this.Phone;
+        return this.phone;
     }
 
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -104,12 +104,12 @@ public class User {
         this.password = password;
     }
 
-    public String getUserType() {
-        return this.UserType;
+    public String getUsertype() {
+        return this.usertype;
     }
 
-    public void setUserType(String UserType) {
-        this.UserType = UserType;
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
 
     public User Id(Long Id) {
@@ -117,13 +117,13 @@ public class User {
         return this;
     }
 
-    public User FirstName(String FirstName) {
-        setFirstName(FirstName);
+    public User fname(String fname) {
+        setFname(fname);
         return this;
     }
 
-    public User LastName(String LastName) {
-        setLastName(LastName);
+    public User lname(String lname) {
+        setLname(lname);
         return this;
     }
 
@@ -132,13 +132,13 @@ public class User {
         return this;
     }
 
-    public User DOB(LocalDate DOB) {
-        setDOB(DOB);
+    public User dob(LocalDate dob) {
+        setDob(dob);
         return this;
     }
 
-    public User Phone(String Phone) {
-        setPhone(Phone);
+    public User phone(String phone) {
+        setPhone(phone);
         return this;
     }
 
@@ -152,8 +152,8 @@ public class User {
         return this;
     }
 
-    public User UserType(String UserType) {
-        setUserType(UserType);
+    public User usertype(String usertype) {
+        setUsertype(usertype);
         return this;
     }
 
@@ -165,28 +165,27 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(Id, user.Id) && Objects.equals(FirstName, user.FirstName) && Objects.equals(LastName, user.LastName) && Objects.equals(gender, user.gender) && Objects.equals(DOB, user.DOB) && Objects.equals(Phone, user.Phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(UserType, user.UserType);
+        return Objects.equals(Id, user.Id) && Objects.equals(fname, user.fname) && Objects.equals(lname, user.lname) && Objects.equals(gender, user.gender) && Objects.equals(dob, user.dob) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(usertype, user.usertype);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, FirstName, LastName, gender, DOB, Phone, email, password, UserType);
+        return Objects.hash(Id, fname, lname, gender, dob, phone, email, password, usertype);
     }
 
     @Override
     public String toString() {
         return "{" +
             " Id='" + getId() + "'" +
-            ", FirstName='" + getFirstName() + "'" +
-            ", LastName='" + getLastName() + "'" +
+            ", fname='" + getFname() + "'" +
+            ", lname='" + getLname() + "'" +
             ", gender='" + getGender() + "'" +
-            ", DOB='" + getDOB() + "'" +
-            ", Phone='" + getPhone() + "'" +
+            ", dob='" + getDob() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", email='" + getEmail() + "'" +
             ", password='" + getPassword() + "'" +
-            ", UserType='" + getUserType() + "'" +
+            ", usertype='" + getUsertype() + "'" +
             "}";
     }
-
 
 }

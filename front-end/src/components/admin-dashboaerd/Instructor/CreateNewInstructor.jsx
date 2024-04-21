@@ -86,7 +86,7 @@ const CreateNewInstructor = () => {
         }
         try {
           const response = await axios.get(
-            `/instructor/checkEmail?email=${value}`
+            `/admin/instructors/checkEmail?email=${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
@@ -122,7 +122,7 @@ const CreateNewInstructor = () => {
 
  const handleInstructorCreation = async () => {
     try {
-        const response = await axios.post("/instructor/create", instructorData);
+        const response = await axios.post("/admin/instructors/create", instructorData);
         console.log("Instructor created:", response.data);
         setSuccessMessage("instructor Added successfully.");
         emptyinstructorData();

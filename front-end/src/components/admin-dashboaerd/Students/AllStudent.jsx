@@ -18,7 +18,7 @@ const AllStudents = () => {
   const handleDelete = async (id) => {
     try {
       // Make a DELETE request to your server using Axios
-      const response = await axios.delete(`/student/delete/${id}`);
+      const response = await axios.delete(`/admin/student/delete/${id}`);
 
       // Check if the request was successful
       if (response.status === 200) {
@@ -38,7 +38,7 @@ const AllStudents = () => {
   };
 
   useEffect(() => {
-    fetch("/student")
+    fetch("/admin/students")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
