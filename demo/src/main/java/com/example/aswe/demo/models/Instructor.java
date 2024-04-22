@@ -1,158 +1,39 @@
 package com.example.aswe.demo.models;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+
 @Entity
-public class Instructor {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String Fname;
-    private String Lname;
-    private String password;
-    private String gender;
-    private LocalDate dob;
-    private String email;
-    private String phone;
-    private String usertype;
+public class Instructor extends User {
+
+
+    private String Expertise_area;
 
 
     public Instructor() {
     }
 
-    public Instructor(Long id, String Fname, String Lname, String password, String gender, LocalDate dob, String email, String phone, String usertype) {
-        this.id = id;
-        this.Fname = Fname;
-        this.Lname = Lname;
-        this.password = password;
-        this.gender = gender;
-        this.dob = dob;
-        this.email = email;
-        this.phone = phone;
-        this.usertype = usertype;
+    public Instructor(Long Id, String FirstName, String LastName, String gender, LocalDate DOB, String Phone, String Email, String password,String UserType,String Expertise_area) {
+        super(Id,FirstName, LastName, gender, DOB, Phone, Email, password,UserType);
+        this.Expertise_area=Expertise_area;
     }
 
-    public Long getId() {
-        return this.id;
+    public Instructor(String Expertise_area) {
+        this.Expertise_area = Expertise_area;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getExpertise_area() {
+        return this.Expertise_area;
     }
 
-    public String getFname() {
-        return this.Fname;
+    public void setExpertise_area(String Expertise_area) {
+        this.Expertise_area = Expertise_area;
     }
 
-    public void setFname(String Fname) {
-        this.Fname = Fname;
-    }
-
-    public String getLname() {
-        return this.Lname;
-    }
-
-    public void setLname(String Lname) {
-        this.Lname = Lname;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getGender() {
-        return this.gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public LocalDate getDob() {
-        return this.dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getUsertype() {
-        return this.usertype;
-    }
-
-    public void setUsertype(String usertype) {
-        this.usertype = usertype;
-    }
-
-    public Instructor id(Long id) {
-        setId(id);
-        return this;
-    }
-
-    public Instructor Fname(String Fname) {
-        setFname(Fname);
-        return this;
-    }
-
-    public Instructor Lname(String Lname) {
-        setLname(Lname);
-        return this;
-    }
-
-    public Instructor password(String password) {
-        setPassword(password);
-        return this;
-    }
-
-    public Instructor gender(String gender) {
-        setGender(gender);
-        return this;
-    }
-
-    public Instructor dob(LocalDate dob) {
-        setDob(dob);
-        return this;
-    }
-
-    public Instructor email(String email) {
-        setEmail(email);
-        return this;
-    }
-
-    public Instructor phone(String phone) {
-        setPhone(phone);
-        return this;
-    }
-
-    public Instructor usertype(String usertype) {
-        setUsertype(usertype);
+    public Instructor Expertise_area(String Expertise_area) {
+        setExpertise_area(Expertise_area);
         return this;
     }
 
@@ -164,27 +45,20 @@ public class Instructor {
             return false;
         }
         Instructor instructor = (Instructor) o;
-        return Objects.equals(id, instructor.id) && Objects.equals(Fname, instructor.Fname) && Objects.equals(Lname, instructor.Lname) && Objects.equals(password, instructor.password) && Objects.equals(gender, instructor.gender) && Objects.equals(dob, instructor.dob) && Objects.equals(email, instructor.email) && Objects.equals(phone, instructor.phone) && Objects.equals(usertype, instructor.usertype);
+        return Objects.equals(Expertise_area, instructor.Expertise_area);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, Fname, Lname, password, gender, dob, email, phone, usertype);
+        return Objects.hash(super.hashCode(), Expertise_area);
     }
+    
 
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", Fname='" + getFname() + "'" +
-            ", Lname='" + getLname() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", gender='" + getGender() + "'" +
-            ", dob='" + getDob() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", phone='" + getPhone() + "'" +
-            ", usertype='" + getUsertype() + "'" +
+            " Expertise_area='" + getExpertise_area() + "'" +
             "}";
     }
-    
+
 }

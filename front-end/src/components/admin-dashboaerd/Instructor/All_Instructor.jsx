@@ -17,7 +17,7 @@ const All_Instructor = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/instructor/delete/${id}`);
+      const response = await axios.delete(`/admin/instructors/delete/${id}`);
 
       if (response.status === 200) {
         setSuccessMessage(`Instractor deleted successfully`);
@@ -34,7 +34,7 @@ const All_Instructor = () => {
   };
 
   useEffect(() => {
-    fetch("/instructor")
+    fetch("/admin/instructors")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

@@ -128,7 +128,7 @@ export const FormCreateStudent = ({state}) => {
         }
         try {
           const response = await axios.get(
-            `/student/checkEmail?email=${value}`
+            `/students/checkEmail?email=${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
@@ -164,7 +164,7 @@ export const FormCreateStudent = ({state}) => {
 
   const handleStudentCreation = () => {
     axios
-      .post("/student/create", studentData)
+      .post("/admin/students/create", studentData)
       .then((response) => {
         console.log("Student created:", response.data);
         setSuccessMessage("Student Added successfully.");
