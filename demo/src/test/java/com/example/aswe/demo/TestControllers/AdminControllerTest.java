@@ -1,4 +1,4 @@
-package com.example.aswe.demo;
+package com.example.aswe.demo.TestControllers;
 
 import com.example.aswe.demo.controllers.AdminController;
 import com.example.aswe.demo.models.Instructor;
