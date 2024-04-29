@@ -24,8 +24,8 @@ public class Course {
 
 
     @ManyToOne
-    private Admin admin;
-    
+    private Instructor instructor;
+
     @ManyToOne
     private Category category;
 
@@ -34,15 +34,40 @@ public class Course {
     private List<CourseMaterial> courseMaterial;
 
 
-    public Course() {
-    }
 
-    public Course(Long id, String title, String description, Double price, Admin admin, Category category, List<CourseMaterial> courseMaterial) {
+    public Course(Long id, String title, String description, Double price, Instructor instructor, Category category, List<CourseMaterial> courseMaterial) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
-        this.admin = admin;
+        this.instructor = instructor;
+        this.category = category;
+        this.courseMaterial = courseMaterial;
+    }
+
+    public Instructor getInstructor() {
+        return this.instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
+    public Course instructor(Instructor instructor) {
+        setInstructor(instructor);
+        return this;
+    }
+    
+  
+    public Course() {
+    }
+
+    public Course(Long id, String title, String description, Double price, Category category, List<CourseMaterial> courseMaterial) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        
         this.category = category;
         this.courseMaterial = courseMaterial;
     }
@@ -79,13 +104,7 @@ public class Course {
         this.price = price;
     }
 
-    public Admin getadmin() {
-        return this.admin;
-    }
 
-    public void setadmin(Admin admin) {
-        this.admin = admin;
-    }
 
     public Category getCategory() {
         return this.category;
@@ -123,10 +142,7 @@ public class Course {
         return this;
     }
 
-    public Course admin(Admin admin) {
-        setadmin(admin);
-        return this;
-    }
+  
 
     public Course category(Category category) {
         setCategory(category);
@@ -146,12 +162,12 @@ public class Course {
             return false;
         }
         Course course = (Course) o;
-        return Objects.equals(id, course.id) && Objects.equals(title, course.title) && Objects.equals(description, course.description) && Objects.equals(price, course.price) && Objects.equals(admin, course.admin) && Objects.equals(category, course.category) && Objects.equals(courseMaterial, course.courseMaterial);
+        return Objects.equals(id, course.id) && Objects.equals(title, course.title) && Objects.equals(description, course.description) && Objects.equals(price, course.price) && Objects.equals(instructor, course.instructor) && Objects.equals(category, course.category) && Objects.equals(courseMaterial, course.courseMaterial);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, price, admin, category, courseMaterial);
+        return Objects.hash(id, title, description, price, instructor, category, courseMaterial);
     }
 
     @Override
@@ -161,11 +177,11 @@ public class Course {
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
             ", price='" + getPrice() + "'" +
-            ", admin='" + getadmin() + "'" +
+            ", instructor='" + getInstructor() + "'" +
             ", category='" + getCategory() + "'" +
             ", courseMaterial='" + getCourseMaterial() + "'" +
             "}";
     }
-    
+
 }
 
