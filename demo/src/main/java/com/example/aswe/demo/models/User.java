@@ -1,191 +1,108 @@
 package com.example.aswe.demo.models;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.Collection;
+import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User {
+@Table(name = "user")
+public class User implements UserDetails {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name="fname")
     private String fname;
+
+    @Column(name="lname")
     private String lname;
+
+    @Column(name="dob")
+    private LocalDate  dob;
+
+    @Column(name="gender")
     private String gender;
-    private LocalDate dob;
-    private String phone;
+
+    @Column(name="phone")
+    private int phone;
+
+    @Column(name="email",nullable = false,unique = true)
     private String email;
+
+    @Column(name="password")
     private String password;
-    private String usertype;
 
-    public User() {
-    }
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User(Long Id, String fname, String lname, String gender, LocalDate dob, String phone, String email, String password, String usertype) {
-        this.Id = Id;
-        this.fname = fname;
-        this.lname = lname;
-        this.gender = gender;
-        this.dob = dob;
-        this.phone = phone;
+    public User(String fname,String lname,int phone,LocalDate dob,String gender,String email, String password, Role role) {
+        this.fname=fname;
+        this.lname=lname;
+        this.phone=phone;
+        this.dob=dob;
+        this.gender=gender;
         this.email = email;
         this.password = password;
-        this.usertype = usertype;
-    }
-
-    public Long getId() {
-        return this.Id;
-    }
-
-    public void setId(Long Id) {
-        this.Id = Id;
-    }
-
-    public String getFname() {
-        return this.fname;
-    }
-
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public String getLname() {
-        return this.lname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
-    public String getGender() {
-        return this.gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public LocalDate getDob() {
-        return this.dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsertype() {
-        return this.usertype;
-    }
-
-    public void setUsertype(String usertype) {
-        this.usertype = usertype;
-    }
-
-    public User Id(Long Id) {
-        setId(Id);
-        return this;
-    }
-
-    public User fname(String fname) {
-        setFname(fname);
-        return this;
-    }
-
-    public User lname(String lname) {
-        setLname(lname);
-        return this;
-    }
-
-    public User gender(String gender) {
-        setGender(gender);
-        return this;
-    }
-
-    public User dob(LocalDate dob) {
-        setDob(dob);
-        return this;
-    }
-
-    public User phone(String phone) {
-        setPhone(phone);
-        return this;
-    }
-
-    public User email(String email) {
-        setEmail(email);
-        return this;
-    }
-
-    public User password(String password) {
-        setPassword(password);
-        return this;
-    }
-
-    public User usertype(String usertype) {
-        setUsertype(usertype);
-        return this;
+        this.role = role;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof User)) {
-            return false;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == Role.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+        } else if (this.role == Role.INSTRUCTOR) {
+            return List.of(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
         }
-        User user = (User) o;
-        return Objects.equals(Id, user.Id) && Objects.equals(fname, user.fname) && Objects.equals(lname, user.lname) && Objects.equals(gender, user.gender) && Objects.equals(dob, user.dob) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(usertype, user.usertype);
+        return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(Id, fname, lname, gender, dob, phone, email, password, usertype);
+    public String getUsername() {
+        return email;
     }
 
     @Override
-    public String toString() {
-        return "{" +
-            " Id='" + getId() + "'" +
-            ", fname='" + getFname() + "'" +
-            ", lname='" + getLname() + "'" +
-            ", gender='" + getGender() + "'" +
-            ", dob='" + getDob() + "'" +
-            ", phone='" + getPhone() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", usertype='" + getUsertype() + "'" +
-            "}";
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
