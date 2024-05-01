@@ -3,7 +3,7 @@ import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import {REST_API_BASE_URL} from "./../../../App"
 const AllStudents = () => {
   const [active, setActive] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -18,7 +18,7 @@ const AllStudents = () => {
   const handleDelete = async (id) => {
     try {
       // Make a DELETE request to your server using Axios
-      const response = await axios.delete(`/admin/student/delete/${id}`);
+      const response = await axios.delete(`${REST_API_BASE_URL}/user/student/delete/${id}`);
 
       // Check if the request was successful
       if (response.status === 200) {
@@ -38,7 +38,7 @@ const AllStudents = () => {
   };
 
   useEffect(() => {
-    fetch("/admin/students")
+    fetch('${REST_API_BASE_URL}/user/allstudents')
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

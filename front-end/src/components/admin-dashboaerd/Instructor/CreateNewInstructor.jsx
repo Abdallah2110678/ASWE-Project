@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {REST_API_BASE_URL} from "./../../../App"
 
 const CreateNewInstructor = () => {
   const [active, setActive] = useState(false);
@@ -15,7 +16,7 @@ const CreateNewInstructor = () => {
     dob: "",
     email: "",
     phone: "",
-    usertype: "instructor",
+    role: "INSTRUCTOR",
   });
 
   const toggleMenu = () => {
@@ -38,7 +39,7 @@ const CreateNewInstructor = () => {
       dob: "",
       email: "",
       phone: "",
-      usertype: instructorData.usertype,
+      usertype: instructorData.role,
     });
   };
 
@@ -86,7 +87,7 @@ const CreateNewInstructor = () => {
         }
         try {
           const response = await axios.get(
-            `/admin/instructors/checkEmail?email=${value}`
+            `${REST_API_BASE_URL}/user/check-email/instructor/?email=${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
@@ -122,7 +123,7 @@ const CreateNewInstructor = () => {
 
  const handleInstructorCreation = async () => {
     try {
-        const response = await axios.post("/admin/instructors/create", instructorData);
+        const response = await axios.post("${REST_API_BASE_URL}/user/instructors/create", instructorData);
         console.log("Instructor created:", response.data);
         setSuccessMessage("instructor Added successfully.");
         emptyinstructorData();

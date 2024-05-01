@@ -1,5 +1,8 @@
 package com.example.aswe.demo.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.UserRepository;
 import com.example.aswe.demo.service.AuthenticationService;
 
+@CrossOrigin(origins = "http://localhost:3030")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -43,6 +47,29 @@ public class UserController {
 
     // CRUD operations for instructors
 
+    @GetMapping("/allinstructors")
+    public List<HashMap<String, Object>> getAllInstructors() {
+        Iterable<User> instructors = userRepository.findAllByRole(Role.INSTRUCTOR);
+        return convertUserListToHashMapList(instructors);
+    }
+
+    @GetMapping("/instructor/{id}")
+    public ResponseEntity<User> getInstructor(@PathVariable Long id) {
+        User instructor = userRepository.findById(id).orElse(null);
+        if (instructor != null && instructor.getRole() == Role.INSTRUCTOR) {
+            return ResponseEntity.ok(instructor);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/instructors/create")
+    public ResponseEntity<User> createInstructor(@RequestBody User instructor) {
+        instructor.setRole(Role.INSTRUCTOR);
+        instructor.setPassword(passwordEncoder.encode(instructor.getPassword()));
+        User savedInstructor = userRepository.save(instructor);
+        return ResponseEntity.ok(savedInstructor);
+    }
+
     @PutMapping("/instructors/{id}")
     public ResponseEntity<User> updateInstructor(@RequestBody User instructor, @PathVariable Long id) {
         User repoInstructor = userRepository.findById(id).orElse(null);
@@ -61,24 +88,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/instructors/{id}")
-    public ResponseEntity<User> getInstructor(@PathVariable Long id) {
-        User instructor = userRepository.findById(id).orElse(null);
-        if (instructor != null && instructor.getRole() == Role.INSTRUCTOR) {
-            return ResponseEntity.ok(instructor);
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PostMapping("/instructors")
-    public ResponseEntity<User> createInstructor(@RequestBody User instructor) {
-        instructor.setRole(Role.INSTRUCTOR);
-        instructor.setPassword(passwordEncoder.encode(instructor.getPassword()));
-        User savedInstructor = userRepository.save(instructor);
-        return ResponseEntity.ok(savedInstructor);
-    }
-
-    @DeleteMapping("/instructors/{id}")
+    @DeleteMapping("/instructors/delete/{id}")
     public ResponseEntity<Void> deleteInstructor(@PathVariable Long id) {
         User instructor = userRepository.findById(id).orElse(null);
         if (instructor != null && instructor.getRole() == Role.INSTRUCTOR) {
@@ -88,25 +98,18 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-@GetMapping("/check-email/instructor/{email}")
-public ResponseEntity<Boolean> checkInstructorEmailExists(@PathVariable String email) {
-    Optional<User> instructor = userRepository.findByEmailAndRole(email, Role.INSTRUCTOR);
-    return ResponseEntity.ok(instructor.isPresent());
-}
-
-@GetMapping("/instructors")
-public ResponseEntity<Iterable<User>> getAllInstructors() {
-    Iterable<User> instructors = userRepository.findAllByRole(Role.INSTRUCTOR);
-    return ResponseEntity.ok(instructors);
-}
-
+    @GetMapping("/check-email/instructor/{email}")
+    public ResponseEntity<Boolean> checkInstructorEmailExists(@PathVariable String email) {
+        Optional<User> instructor = userRepository.findByEmailAndRole(email, Role.INSTRUCTOR);
+        return ResponseEntity.ok(instructor.isPresent());
+    }
 
     // CRUD operations for students
 
     @GetMapping("/allstudents")
-    public ResponseEntity<Iterable<User>> getAllStudents() {
+    public List<HashMap<String, Object>> getAllStudents() {
         Iterable<User> students = userRepository.findAllByRole(Role.STUDENT);
-        return ResponseEntity.ok(students);
+        return convertUserListToHashMapList(students);
     }
 
     @GetMapping("/getstudent/{id}")
@@ -126,7 +129,7 @@ public ResponseEntity<Iterable<User>> getAllInstructors() {
         return ResponseEntity.ok(savedStudent);
     }
 
-    @GetMapping("/check-email/student/{email}")
+    @GetMapping("/check-email/students/{email}")
     public ResponseEntity<Boolean> checkStudentEmailExists(@PathVariable String email) {
         Optional<User> student = userRepository.findByEmailAndRole(email, Role.STUDENT);
         return ResponseEntity.ok(student.isPresent());
@@ -158,5 +161,13 @@ public ResponseEntity<Iterable<User>> getAllInstructors() {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private List<HashMap<String, Object>> convertUserListToHashMapList(Iterable<User> users) {
+        List<HashMap<String, Object>> list = new ArrayList<>();
+        for (User user : users) {
+            list.add(user.toHashMap());
+        }
+        return list;
     }
 }

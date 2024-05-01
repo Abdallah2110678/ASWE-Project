@@ -2,6 +2,7 @@ package com.example.aswe.demo.models;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +22,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -105,4 +107,15 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public HashMap<String, Object> toHashMap() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("id", this.id);
+        map.put("first name", this.fname);
+        map.put("last name", this.lname);
+        map.put("email", this.email);
+        map.put("role", this.role);
+        return map;
+    }
+
 }

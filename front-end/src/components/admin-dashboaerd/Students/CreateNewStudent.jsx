@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {REST_API_BASE_URL} from "./../../../App";
 
 const CreateNewStudent = () => {
   const [active, setActive] = useState(false);
@@ -33,7 +34,7 @@ const CreateNewStudent = () => {
               All Students
             </Link>
           </div>
-          <FormCreateStudent state="Add student"/>
+          <FormCreateStudent state="Add student" />
           <div></div>
         </div>
       </div>
@@ -41,7 +42,7 @@ const CreateNewStudent = () => {
   );
 };
 
-export const FormCreateStudent = ({state}) => {
+export const FormCreateStudent = ({ state }) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -54,8 +55,7 @@ export const FormCreateStudent = ({state}) => {
     dob: "",
     email: "",
     phone: "",
-    usertype: "student",
-    major: "",
+    role: "STUDENT",
   });
 
   useEffect(() => {
@@ -74,8 +74,7 @@ export const FormCreateStudent = ({state}) => {
       dob: "",
       email: "",
       phone: "",
-      usertype: studentData.usertype,
-      major: "",
+      role: studentData.role,
     });
   };
 
@@ -96,11 +95,6 @@ export const FormCreateStudent = ({state}) => {
         if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{3,}/.test(value)) {
           error =
             "Password must contain at least one digit, one lowercase and one uppercase character, and be at least 3 characters long.";
-        }
-        break;
-      case "major":
-        if (!value) {
-          error = "Major is required.";
         }
         break;
       case "phone":
@@ -128,7 +122,7 @@ export const FormCreateStudent = ({state}) => {
         }
         try {
           const response = await axios.get(
-            `/students/checkEmail?email=${value}`
+            `${REST_API_BASE_URL}/user/check-email/students?email=${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
@@ -164,7 +158,7 @@ export const FormCreateStudent = ({state}) => {
 
   const handleStudentCreation = () => {
     axios
-      .post("/admin/students/create", studentData)
+      .post('${REST_API_BASE_URL}/user/register', studentData)
       .then((response) => {
         console.log("Student created:", response.data);
         setSuccessMessage("Student Added successfully.");
@@ -175,15 +169,14 @@ export const FormCreateStudent = ({state}) => {
         console.error("Error creating student:", error);
       });
   };
-  
-  const NavigatePage=()=>{
+
+  const NavigatePage = () => {
     const currentPath = location.pathname;
-    if (currentPath === '/sign-up') {
-      navigate('/login');
+    if (currentPath === "/sign-up") {
+      navigate("/login");
+    } else {
     }
-     else {  
-    }
-  }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const hasErrors = Object.values(errors).some((error) => error);
@@ -259,29 +252,6 @@ export const FormCreateStudent = ({state}) => {
           <div className="error text-danger">{errors.email}</div>
         )}
         <div className="mb-3">
-          <label htmlFor="major" className="form-label">
-            Major:
-          </label>
-          <select
-            className="form-select"
-            id="major"
-            name="major"
-            value={studentData.major}
-            onChange={handleChange}
-          >
-            <option value="">Select Major</option>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Engineering">Engineering</option>
-            <option value="Business Administration">
-              Business Administration
-            </option>
-            <option value="Psychology">Psychology</option>
-          </select>
-        </div>
-        {errors.major && (
-          <div className="error text-danger">{errors.major}</div>
-        )}
-        <div className="mb-3">
           <label htmlFor="phone" className="form-label">
             Phone:
           </label>
@@ -330,7 +300,11 @@ export const FormCreateStudent = ({state}) => {
           />
         </div>
         {errors.dob && <div className="error text-danger">{errors.dob}</div>}
-        <button type="submit" className="btn " style={{ background: "#1eb2a6" }}>
+        <button
+          type="submit"
+          className="btn "
+          style={{ background: "#1eb2a6" }}
+        >
           {state}
         </button>
         {successMessage && (

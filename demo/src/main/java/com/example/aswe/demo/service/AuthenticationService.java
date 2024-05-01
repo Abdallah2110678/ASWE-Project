@@ -17,20 +17,19 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationService {
 
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(User request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return new AuthenticationResponse(null, new User());
         }
-
         User user = new User();
         user.setFname(request.getFname());
         user.setLname(request.getLname());
