@@ -38,6 +38,31 @@ Administrators have administrative privileges to manage user accounts, courses, 
 
 Experience the convenience of online learning with LearningHub! Explore our platform to discover new courses, expand your knowledge, and achieve your learning goals.
 
+## Technology Stack Used in LearningHub
+
+LearningHub is built using a combination of frontend and backend technologies to provide users with a seamless and interactive online learning experience. Here's an overview of the technologies used in the project:
+
+### Frontend Technologies:
+
+- **React:** A JavaScript library for building user interfaces.
+- **React Router:** For client-side routing within the application.
+- **Axios:** A promise-based HTTP client for making AJAX requests.
+- **Bootstrap:** A front-end framework for designing and styling the user interface.
+
+### Backend Technologies:
+
+- **Spring Boot:** A Java-based framework for building robust web applications.
+- **Spring Data JPA:** For database access and manipulation.
+- **Spring Security:** For implementing authentication and authorization.
+- **MySQL:** The relational database management system used for data storage.
+
+### Other Technologies:
+
+- **JSON Web Tokens (JWT):** For implementing stateless authentication.
+- **Git:** For version control and collaboration on the project.
+
+By leveraging these technologies, LearningHub delivers a modern, scalable, and secure online learning platform that meets the needs of both learners and instructors.
+
 ## Contact Us
 
 For any inquiries or assistance, please feel free to reach out:
@@ -51,7 +76,5 @@ For any inquiries or assistance, please feel free to reach out:
 [![Abdelrahman Abdelmegeed](https://img.shields.io/badge/Abdelrahman%20Abdelmegeed-Contact-blue)](https://mail.google.com/mail/?view=cm&fs=1&to=abdelrahman2007781@miuegypt.edu.eg)
 
 [![Esraa Hassan](https://img.shields.io/badge/Esraa%20Hassan-Contact-blue)](https://mail.google.com/mail/?view=cm&fs=1&to=esraa2100758@miuegypt.edu.eg)
-
-
 
 Thank you for choosing LearningHub as your trusted online learning platform. We're committed to providing you with a seamless learning experience and empowering you on your educational journey.
