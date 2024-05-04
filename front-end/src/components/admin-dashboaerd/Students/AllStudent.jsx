@@ -38,7 +38,7 @@ const AllStudents = () => {
   };
 
   useEffect(() => {
-    fetch('${REST_API_BASE_URL}/user/allstudents')
+    fetch(`${REST_API_BASE_URL}/user/allstudents`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

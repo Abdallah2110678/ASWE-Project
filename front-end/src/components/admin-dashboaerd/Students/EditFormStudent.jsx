@@ -139,7 +139,7 @@ const EditFormStudent = () => {
 
   const handleStudentUpdate = () => {
     axios
-      .put(`/admin/students/update/${id}`, studentData)
+      .put(`${REST_API_BASE_URL}/user/students/update/${id}`, studentData)
       .then((response) => {
         console.log("Student updated successfully:", response.data);
         setSuccessMessage(
