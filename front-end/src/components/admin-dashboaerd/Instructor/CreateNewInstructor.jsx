@@ -123,7 +123,7 @@ const CreateNewInstructor = () => {
 
  const handleInstructorCreation = async () => {
     try {
-        const response = await axios.post("${REST_API_BASE_URL}/user/instructors/create", instructorData);
+        const response = await axios.post(`${REST_API_BASE_URL}/user/instructors/create`, instructorData);
         console.log("Instructor created:", response.data);
         setSuccessMessage("instructor Added successfully.");
         emptyinstructorData();

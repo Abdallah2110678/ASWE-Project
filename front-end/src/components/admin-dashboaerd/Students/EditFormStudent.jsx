@@ -126,7 +126,7 @@ const EditFormStudent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/admin/students/${id}`);
+        const response = await axios.get(`${REST_API_BASE_URL}/user/getstudent/${id}`);
         const updatedStudentData = { ...response.data, password: "" };
         setStudentData(updatedStudentData);
         setStudentInfo(updatedStudentData);

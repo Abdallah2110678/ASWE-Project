@@ -51,7 +51,7 @@ public class User implements UserDetails {
     private String gender;
 
     @Column(name = "phone")
-    private int phone;
+    private Long phone;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -62,7 +62,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(String fname, String lname, int phone, LocalDate dob, String gender, String email, String password,
+    public User(String fname, String lname, Long phone, LocalDate dob, String gender, String email, String password,
             Role role) {
         this.fname = fname;
         this.lname = lname;
