@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import Back from "../common/back/Back";
 import { REST_API_BASE_URL } from "./../../App";
 import "./Log-in.css";
 
 function LOGIN() {
-  const history = useHistory(); // Access the history object
+  const navigate = useNavigate();
   const [displayErrors, setDisplayErrors] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +21,7 @@ function LOGIN() {
       });
       setError("");
       localStorage.setItem("userInfo", JSON.stringify(data));
-      history.push("/"); // Navigate to the home page
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
       setError("Invalid email or password.");
