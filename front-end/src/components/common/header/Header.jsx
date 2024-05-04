@@ -1,26 +1,31 @@
-import React, { useState,useEffect } from "react"
-import { Link } from "react-router-dom"
-import Head from "./Head"
-import "./header.css"
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Head from "./Head";
+import "./header.css";
+import axios from "axios";
+import { REST_API_BASE_URL } from "./../../../App";
 
 const Header = () => {
   const [click, setClick] = useState(false);
-  
-
-  
-  const [str,setStr]=useState("")
+  const [str, setStr] = useState("");
 
   useEffect(() => {
-    fetch('/api')
-      .then(response => response.json())
-      .then(data => {
-        setStr(data.value); // Extract the value from the JSON object
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      axios.get(`${REST_API_BASE_URL}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+        .then(response => {
+          setStr(response.data.value);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
   }, []);
+
   return (
     <>
       <Head />
@@ -64,7 +69,7 @@ const Header = () => {
         </nav>
       </header>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
