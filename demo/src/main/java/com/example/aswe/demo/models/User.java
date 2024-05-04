@@ -38,36 +38,37 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="fname")
+    @Column(name = "fname")
     private String fname;
 
-    @Column(name="lname")
+    @Column(name = "lname")
     private String lname;
 
-    @Column(name="dob")
-    private LocalDate  dob;
+    @Column(name = "dob")
+    private LocalDate dob;
 
-    @Column(name="gender")
+    @Column(name = "gender")
     private String gender;
 
-    @Column(name="phone")
+    @Column(name = "phone")
     private int phone;
 
-    @Column(name="email",nullable = false,unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(String fname,String lname,int phone,LocalDate dob,String gender,String email, String password, Role role) {
-        this.fname=fname;
-        this.lname=lname;
-        this.phone=phone;
-        this.dob=dob;
-        this.gender=gender;
+    public User(String fname, String lname, int phone, LocalDate dob, String gender, String email, String password,
+            Role role) {
+        this.fname = fname;
+        this.lname = lname;
+        this.phone = phone;
+        this.dob = dob;
+        this.gender = gender;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -76,11 +77,12 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == Role.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else if (this.role == Role.INSTRUCTOR) {
             return List.of(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
         }
-        return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
     }
 
     @Override

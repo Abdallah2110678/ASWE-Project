@@ -14,8 +14,8 @@ import Blog from "./components/blog/Blog";
 import Contact from "./components/contact/Contact";
 import Footer from "./components/common/footer/Footer";
 import Home from "./components/home/Home";
-import SIGNUP, { LOGIN } from "./components/sign-up/Sign-up";
-
+import SIGNUP from "./components/sign-up/Sign-up";
+import LOGIN from "./components/Log-in/Log-in";
 import Aside_Instructor from "./components/common/asidebar-instructor/asidebar";
 import DASHBOARD from "./components/instructor-dashboard/Dashboard";
 
@@ -28,7 +28,7 @@ import CreateNewStudent from "./components/admin-dashboaerd/Students/CreateNewSt
 import All_Instructor from "./components/admin-dashboaerd/Instructor/All_Instructor";
 import CreateNewInstructor from "./components/admin-dashboaerd/Instructor/CreateNewInstructor";
 import EditFormInstructor from "./components/admin-dashboaerd/Instructor/EditFormInstructor";
-export const REST_API_BASE_URL = "http://localhost:8081/api";
+export const REST_API_BASE_URL = "http://localhost:9090/api";
 function App() {
   return (
     <>

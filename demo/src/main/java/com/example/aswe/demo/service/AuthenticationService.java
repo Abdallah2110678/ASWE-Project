@@ -10,20 +10,19 @@ import com.example.aswe.demo.models.Role;
 import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
+
 
 @Service
-@RequiredArgsConstructor
 public class AuthenticationService {
 
     @Autowired
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
-    private final JwtService jwtService;
+    private JwtService jwtService;
     @Autowired
-    private final AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(User request) {
 
@@ -35,8 +34,8 @@ public class AuthenticationService {
         user.setLname(request.getLname());
         user.setPhone(request.getPhone());
         user.setEmail(request.getEmail());
-        user.setGender(user.getGender());
-        user.setDob(user.getDob());
+        user.setGender(request.getGender());
+        user.setDob(request.getDob());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.STUDENT);
         user = userRepository.save(user);
@@ -53,7 +52,6 @@ public class AuthenticationService {
                         request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         String jwt = jwtService.generateToken(user);
-
         return new AuthenticationResponse(jwt, user);
     }
 

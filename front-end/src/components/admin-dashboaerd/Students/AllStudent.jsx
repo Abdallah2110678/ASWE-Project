@@ -18,7 +18,7 @@ const AllStudents = () => {
   const handleDelete = async (id) => {
     try {
       // Make a DELETE request to your server using Axios
-      const response = await axios.delete(`${REST_API_BASE_URL}/user/student/delete/${id}`);
+      const response = await axios.delete(`${REST_API_BASE_URL}/user/students/delete/${id}`);
 
       // Check if the request was successful
       if (response.status === 200) {

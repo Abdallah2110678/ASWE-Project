@@ -24,7 +24,7 @@ import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.UserRepository;
 import com.example.aswe.demo.service.AuthenticationService;
 
-@CrossOrigin(origins = "http://localhost:3030")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -107,9 +107,8 @@ public class UserController {
     // CRUD operations for students
 
     @GetMapping("/allstudents")
-    public List<HashMap<String, Object>> getAllStudents() {
-        Iterable<User> students = userRepository.findAllByRole(Role.STUDENT);
-        return convertUserListToHashMapList(students);
+    public List<User> getAllStudents() {
+        return userRepository.findAllByRole(Role.STUDENT);
     }
 
     @GetMapping("/getstudent/{id}")
@@ -131,7 +130,7 @@ public class UserController {
 
     @GetMapping("/check-email/students/{email}")
     public ResponseEntity<Boolean> checkStudentEmailExists(@PathVariable String email) {
-        Optional<User> student = userRepository.findByEmailAndRole(email, Role.STUDENT);
+        Optional<User> student = userRepository.findByEmail(email);
         return ResponseEntity.ok(student.isPresent());
     }
 

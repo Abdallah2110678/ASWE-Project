@@ -1,15 +1,25 @@
 package com.example.aswe.demo.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Optional;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
     private User user;
+
+    public AuthenticationResponse(String token, User user) {
+        this.token = token;
+        this.user = user;
+    }
+
+    public AuthenticationResponse(String jwt, Optional<User> user2) {
+
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }

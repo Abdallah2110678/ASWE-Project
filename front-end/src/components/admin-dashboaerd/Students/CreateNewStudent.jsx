@@ -158,7 +158,7 @@ export const FormCreateStudent = ({ state }) => {
 
   const handleStudentCreation = () => {
     axios
-      .post('${REST_API_BASE_URL}/user/register', studentData)
+      .post('${REST_API_BASE_URL}/user/students/create', studentData)
       .then((response) => {
         console.log("Student created:", response.data);
         setSuccessMessage("Student Added successfully.");
