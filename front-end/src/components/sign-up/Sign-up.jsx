@@ -1,224 +1,250 @@
 import React, { useState } from "react";
 import Back from "../common/back/Back";
-import "./Sign-up.css";
-import { Link } from "react-router-dom";
-import { FormCreateStudent } from "../admin-dashboaerd/Students/CreateNewStudent";
 import axios from "axios";
-import { REST_API_BASE_URL } from "./../../App";
+import { Link } from "react-router-dom";
+import {REST_API_BASE_URL} from "./../../App";
 
-export function LOGIN() {
+const SignUp = () => {
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [phone, setPhone] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Define validation rules for each field
+    const validationRules = {
+      fname: "First name",
+      lname: "Last name",
+      email: "Email",
+      password: "Password",
+      gender: "Gender",
+      dob: "Date of Birth",
+      phone: "Phone",
+    };
+
+    // Perform validation
+    let errorMessage = "";
+    if (!value.trim()) {
+      errorMessage = `${validationRules[name]} is required.`;
+    } else if (name === "dob") {
+      // Validate date of birth
+      const currentDate = new Date();
+      const selectedDate = new Date(value);
+      const age = currentDate.getFullYear() - selectedDate.getFullYear();
+      if (age < 15) {
+        errorMessage = "You must be at least 15 years old.";
+      }
+    }
+
+    // Update state with validation result
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMessage,
+    }));
+
+    // Update state with user input
+    switch (name) {
+      case "fname":
+        setFname(value);
+        break;
+      case "lname":
+        setLname(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "gender":
+        setGender(value);
+        break;
+      case "dob":
+        setDob(value);
+        break;
+      case "phone":
+        setPhone(value);
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if there are any error messages
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+    if (hasErrors) {
+      return; // Prevent form submission if there are errors
+    }
+
     try {
-      await axios.post("${REST_API_BASE_URL}/user/login", {
+      const response = await axios.post(`${REST_API_BASE_URL}/user/register`, {
+        fname,
+        lname,
         email,
         password,
+        gender,
+        dob,
+        phone,
+        role: "STUDENT",
       });
-
-      // Handle successful login, e.g., redirect to dashboard
-      setError("");
+      console.log(response.data);
+      setSuccessMessage("Sign up successful.");
+      setFname("");
+      setLname("");
+      setEmail("");
+      setPassword("");
+      setGender("");
+      setDob("");
+      setPhone("");
     } catch (error) {
-      console.error("Login failed:", error);
-      setError("Invalid email or password.");
+      console.error("Sign up failed:", error);
     }
   };
 
   return (
     <>
-      <Back title="LOG IN" />
-      <div className="Container">
-        <div className="Header">
-          <div className="Text">LOG IN</div>
-          <div className="underline"></div>
-        </div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="forgot-password">
-              Forgot password? <span>Click Here!</span>
-            </div>
-
-            <div className="create-account-link">
-              Don't have an account? <Link to="/sign-up">Create One Here</Link>
-            </div>
-
-            <button type="submit" className="btn btn-primary">
-              Login
-            </button>
-          </form>
-          {error && <div className="alert alert-danger">{error}</div>}{" "}
-          {/* Display error message */}
-        </div>
-      </div>
-    </>
-  );
-}
-const SIGNUP = () => {
-  const [action, setAction] = useState("Sign Up");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [gender, setGender] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [displayErrors, setDisplayErrors] = useState(false);
-  const [userType, setUserType] = useState("");
-
-  const handleSignup = () => {
-    setDisplayErrors(true);
-
-    if (firstName.trim() === "") {
-      return;
-    }
-
-    if (lastName.trim() === "") {
-      return;
-    }
-
-    // Date of Birth validation (you can add your own rules)
-    if (dateOfBirth === "") {
-      return;
-    }
-
-    // Gender validation (you can add your own rules)
-    if (gender === "") {
-      return;
-    }
-
-    // Email validation
-    if (!email.includes("@") || !email.includes(".com")) {
-      setEmailError("Invalid email format (e.g., user@example.com)");
-      return;
-    } else {
-      setEmailError("");
-    }
-
-    // Password validation
-    if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters");
-      return;
-    } else {
-      setPasswordError("");
-    }
-
-    // Phone number validation (add your validation rules)
-    if (!phoneNumber.match(/^\d{11}$/)) {
-      setPhoneError("Invalid phone number (11 digits required)");
-      return;
-    } else {
-      setPhoneError("");
-    }
-
-    if (userType === "") {
-      console.error("Please select a user type");
-      return;
-    }
-
-    // If email, password, and phone number are valid, proceed with signup
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Phone Number:", phoneNumber);
-    console.log("Date of Birth:", dateOfBirth);
-    console.log("Gender:", gender);
-    console.log("User Type:", userType);
-  };
-
-  const canSwitchToLogin = () => {
-    if (action === "Sign Up") {
-      // Check if all required fields are filled and error-free
-      return (
-        firstName.trim() !== "" &&
-        lastName.trim() !== "" &&
-        email.trim() !== "" &&
-        password.trim() !== "" &&
-        email.includes("@") &&
-        email.includes(".com") &&
-        password.length >= 8 &&
-        emailError === "" &&
-        passwordError === "" &&
-        phoneError === "" &&
-        (userType === "student" || userType === "instructor")
-      );
-    }
-    return (
-      email.trim() !== "" &&
-      password.trim() !== "" &&
-      email.includes("@") &&
-      email.includes(".com") &&
-      password.length >= 8 &&
-      emailError === "" &&
-      passwordError === "" &&
-      phoneError === "" &&
-      (userType === "student" || userType === "instructor")
-    );
-  };
-
-  const handleLogin = () => {
-    setDisplayErrors(true);
-
-    if (!canSwitchToLogin()) {
-      console.error("Please complete the required fields in the sign-up form");
-      return;
-    }
-
-    window.location.href = "/LOGIN";
-  };
-
-  return (
-    <>
-      <Back title="SIGN UP" />
+      <Back title="Sign Up" />
       <div className="Container">
         <div className="Header">
           <div className="Text">Sign Up</div>
           <div className="underline"></div>
         </div>
-
-        <FormCreateStudent state="Sign Up" />
-        <br />
-        <div className="submit-container">
-          <button className="btn " style={{ background: "#1eb2a6" }}>
-            <Link to="/login"> Login</Link>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="firstName" className="form-label">
+              First Name:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="firstName"
+              name="fname"
+              value={fname}
+              onChange={handleChange}
+            />
+            {errors.fname && (
+              <div className="error text-danger">{errors.fname}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="lastName" className="form-label">
+              Last Name:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="lastName"
+              name="lname"
+              value={lname}
+              onChange={handleChange}
+            />
+            {errors.lname && (
+              <div className="error text-danger">{errors.lname}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+            />
+            {errors.email && (
+              <div className="error text-danger">{errors.email}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password:
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              name="password"
+              value={password}
+              onChange={handleChange}
+            />
+            {errors.password && (
+              <div className="error text-danger">{errors.password}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="gender" className="form-label">
+              Gender:
+            </label>
+            <select
+              className="form-select"
+              id="gender"
+              name="gender"
+              value={gender}
+              onChange={handleChange}
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            {errors.gender && (
+              <div className="error text-danger">{errors.gender}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="dob" className="form-label">
+              Date of Birth:
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              id="dob"
+              name="dob"
+              value={dob}
+              onChange={handleChange}
+            />
+            {errors.dob && (
+              <div className="error text-danger">{errors.dob}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="phone" className="form-label">
+              Phone:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="phone"
+              name="phone"
+              value={phone}
+              onChange={handleChange}
+            />
+            {errors.phone && (
+              <div className="error text-danger">{errors.phone}</div>
+            )}
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Sign Up
           </button>
-        </div>
+          {successMessage && (
+            <div className="alert alert-success mt-3">{successMessage}</div>
+          )}
+        </form>
       </div>
     </>
   );
 };
 
-export default SIGNUP;
+export default SignUp;
