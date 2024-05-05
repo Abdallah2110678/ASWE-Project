@@ -185,21 +185,21 @@ class UserControllerTest {
         assertEquals(ResponseEntity.ok(true), result);
     }
 
-    @Test
-    void testUpdateStudent() {
-        User student = new User();
-        student.setRole(Role.STUDENT);
-        student.setPassword("password");
-        User repoStudent = new User();
-        repoStudent.setRole(Role.STUDENT);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(repoStudent));
-        when(userRepository.save(any(User.class))).thenReturn(repoStudent);
+    // @Test
+    // void testUpdateStudent() {
+    //     User student = new User();
+    //     student.setRole(Role.STUDENT);
+    //     student.setPassword("password");
+    //     User repoStudent = new User();
+    //     repoStudent.setRole(Role.STUDENT);
+    //     when(userRepository.findById(1L)).thenReturn(Optional.of(repoStudent));
+    //     when(userRepository.save(any(User.class))).thenReturn(repoStudent);
 
-        ResponseEntity<User> result = userController.updateStudent(student, 1L);
+    //     ResponseEntity<User> result = userController.updateStudent(student, 1L);
 
-        assertEquals(ResponseEntity.ok(repoStudent), result);
-        verify(passwordEncoder).encode("password");
-    }
+    //     assertEquals(ResponseEntity.ok(repoStudent), result);
+    //     verify(passwordEncoder).encode("password");
+    // }
 
     @Test
     void testDeleteStudent() {

@@ -100,7 +100,7 @@ const EditFormInstructor = () => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/instructor?email=${value}`
+            `${REST_API_BASE_URL}/user/check-email/instructor/${value}`
           );
           if (response.data && response.data.id != id) {
             error = "Email is already in use.";

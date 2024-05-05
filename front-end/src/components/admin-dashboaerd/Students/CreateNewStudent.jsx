@@ -122,7 +122,7 @@ export const FormCreateStudent = ({ state }) => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/students?email=${value}`
+            `${REST_API_BASE_URL}/user/check-email/students/${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
