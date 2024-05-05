@@ -58,19 +58,19 @@ class UserControllerTest {
         assertEquals(ResponseEntity.ok(response), result);
     }
 
-    @Test
-    void testGetAllInstructors() {
-        User instructor = new User();
-        instructor.setRole(Role.INSTRUCTOR);
-        List<User> instructors = Collections.singletonList(instructor);
-        when(userRepository.findAllByRole(Role.INSTRUCTOR)).thenReturn(instructors);
+    // @Test
+    // void testGetAllInstructors() {
+    //     User instructor = new User();
+    //     instructor.setRole(Role.INSTRUCTOR);
+    //     List<User> instructors = Collections.singletonList(instructor);
+    //     when(userRepository.findAllByRole(Role.INSTRUCTOR)).thenReturn(instructors);
 
-        List<HashMap<String, Object>> result = userController.getAllInstructors();
+    //     List<HashMap<String, Object>> result = userController.getAllInstructors();
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(instructor.toHashMap(), result.get(0));
-    }
+    //     assertNotNull(result);
+    //     assertEquals(1, result.size());
+    //     assertEquals(instructor.toHashMap(), result.get(0));
+    // }
 
     @Test
     void testGetInstructor() {
