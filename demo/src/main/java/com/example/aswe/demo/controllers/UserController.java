@@ -48,9 +48,8 @@ public class UserController {
     // CRUD operations for instructors
 
     @GetMapping("/allinstructors")
-    public List<HashMap<String, Object>> getAllInstructors() {
-        Iterable<User> instructors = userRepository.findAllByRole(Role.INSTRUCTOR);
-        return convertUserListToHashMapList(instructors);
+    public List<User> getAllInstructors() {
+        return userRepository.findAllByRole(Role.INSTRUCTOR);
     }
 
     @GetMapping("/instructor/{id}")

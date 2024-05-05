@@ -101,7 +101,7 @@ const EditFormStudent = () => {
         }
         try {
           const response = await axios.get(
-            `/students/checkEmail?email=${value}`
+            `${REST_API_BASE_URL}/check-email/students/${value}`
           );
           if (response.data && response.data.id != id) {
             error = "Email is already in use.";
@@ -143,7 +143,7 @@ const EditFormStudent = () => {
       .then((response) => {
         console.log("Student updated successfully:", response.data);
         setSuccessMessage(
-          `update student ${studentData.fname}  ${studentData.lname} in the system system.`
+          `update student ${studentData.fname}  ${studentData.lname} in the system.`
         );
         setStudentInfo(studentData);
       })
