@@ -16,6 +16,8 @@ import Footer from "./components/common/footer/Footer";
 import Home from "./components/home/Home";
 import SIGNUP from "./components/sign-up/Sign-up";
 import LOGIN from "./components/Log-in/Log-in";
+import UserProfile from './components/UserProfile/userProfile';
+
 import Aside_Instructor from "./components/common/asidebar-instructor/asidebar";
 import DASHBOARD from "./components/instructor-dashboard/Dashboard";
 
@@ -86,6 +88,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route exact path="/sign-up" element={<SIGNUP />} />
             <Route exact path="/login" element={<LOGIN />} />
+            <Route path="/userProfile" element={<UserProfile />} />
           </Route>
         </Routes>
       </Router>
