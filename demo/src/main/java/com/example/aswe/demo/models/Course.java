@@ -1,6 +1,5 @@
 // package com.example.aswe.demo.models;
 
-
 // import jakarta.persistence.Entity;
 // import jakarta.persistence.GeneratedValue;
 // import jakarta.persistence.GenerationType;
@@ -141,9 +140,6 @@
 //         setPrice(price);
 //         return this;
 //     }
-
-  
-
 //     public Course category(Category category) {
 //         setCategory(category);
 //         return this;

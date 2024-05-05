@@ -125,7 +125,7 @@ const EditFormInstructor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${REST_API_BASE_URL}/user/instructors/${id}`);
+        const response = await axios.get(`${REST_API_BASE_URL}/user/instructor/${id}`);
         const updatedInstructorData = { ...response.data, password: "" };
         setInstructorData(updatedInstructorData);
         setInstructorInfo(updatedInstructorData);
