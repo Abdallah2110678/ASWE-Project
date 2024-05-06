@@ -25,6 +25,7 @@ public class CourseMaterial {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String videoFileName;
+    private String title;
 
     @ManyToOne
     @JsonBackReference

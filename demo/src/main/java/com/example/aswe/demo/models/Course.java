@@ -38,7 +38,7 @@ public class Course {
     
     
     @ManyToOne
-    private User User;
+    private User user;
     
     @ManyToOne
     private Category category;
