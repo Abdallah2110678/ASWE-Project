@@ -28,6 +28,10 @@ import CreateNewStudent from "./components/admin-dashboaerd/Students/CreateNewSt
 import All_Instructor from "./components/admin-dashboaerd/Instructor/All_Instructor";
 import CreateNewInstructor from "./components/admin-dashboaerd/Instructor/CreateNewInstructor";
 import EditFormInstructor from "./components/admin-dashboaerd/Instructor/EditFormInstructor";
+import CreateCourse from "./components/course/AddCourse";
+import AllCourses from "./components/course/AllCourses";
+import UploadVideo from "./components/course/UploadVideo";
+import MyCourses from "./components/course/MyCourses";
 export const REST_API_BASE_URL = "http://localhost:9090/api";
 function App() {
   return (
@@ -43,16 +47,14 @@ function App() {
               </>
             }
           >
+          
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="students" element={<AllStudents />} />
             <Route path="student-add" element={<CreateNewStudent />} />
             <Route path="student-edit/:id" element={<EditFormStudent />} />
             <Route path="instructors" element={<All_Instructor />} />
             <Route path="instructor-add" element={<CreateNewInstructor />} />
-            <Route
-              path="instructor-edit/:id"
-              element={<EditFormInstructor />}
-            />
+            <Route path="instructor-edit/:id" element={<EditFormInstructor />}/>
           </Route>
 
           <Route
@@ -65,6 +67,10 @@ function App() {
             }
           >
             <Route path="dashboard" element={<DASHBOARD />} />
+            <Route path="createcourse" element={<CreateCourse />} />
+            <Route path="my-course/play/:id" element={<AllCourses />} />
+            <Route path="upload-video/:id" element={<UploadVideo />} />
+            <Route path="my-courses/:id" element={<MyCourses />} />
           </Route>
 
           <Route

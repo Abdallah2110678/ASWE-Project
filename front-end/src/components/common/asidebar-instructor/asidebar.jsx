@@ -43,21 +43,22 @@ const Aside_Instructor = () => {
             </a>
           </li>
           <li onClick={handleMouseOver}>
-            <a href="#">
+            <a href="/instructor/createcourse">
+              <span className="iconn">
+                <ion-icon name="log-out-outline"></ion-icon>
+              </span>
+              <span className="title">Add Course</span>
+            </a>
+          </li>
+          <li onClick={handleMouseOver}>
+            <a href="/instructor/my-courses">
               <span className="iconn">
                 <ion-icon name="people-outline"></ion-icon>
               </span>
               <span className="title">Courses</span>
             </a>
           </li>
-          <li onClick={handleMouseOver}>
-            <a href="#">
-              <span className="iconn">
-                <ion-icon name="log-out-outline"></ion-icon>
-              </span>
-              <span className="title">Students</span>
-            </a>
-          </li>
+          
           <li onClick={handleMouseOver}>
             <a href="#">
               <span className="iconn">

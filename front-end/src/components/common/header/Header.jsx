@@ -63,7 +63,7 @@ const Header = () => {
           <div className='start'>
             <div className='button'>GET CERTIFICATE</div>
           </div>
-          <button className='toggle' onClick={() => setClick(!click)}>
+          <button className='togglee' onClick={() => setClick(!click)}>
             {click ? <i className='fa fa-times'> </i> : <i className='fa fa-bars'></i>}
           </button>
         </nav>

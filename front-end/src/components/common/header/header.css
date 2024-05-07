@@ -29,6 +29,7 @@ header ul li a {
   color: #fff;
   font-weight: 500;
   transition: 0.5s;
+  text-decoration: none;
 }
 header ul li a:hover {
   color: #1eb2a6;
@@ -39,7 +40,7 @@ header ul li a:hover {
   color: #fff;
   clip-path: polygon(10% 0%, 100% 0, 100% 100%, 0% 100%);
 }
-.toggle {
+.togglee {
   display: none;
 }
 /*--------header------------*/
@@ -58,7 +59,7 @@ header ul li a:hover {
   header ul li {
     margin-bottom: 20px;
   }
-  .toggle {
+  .togglee {
     display: block;
     background: none;
     color: #fff;
