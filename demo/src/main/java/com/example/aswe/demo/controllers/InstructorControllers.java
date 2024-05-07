@@ -210,7 +210,7 @@ public ResponseEntity<?> deleteCourse(@PathVariable("id") Long id) {
 
 
 
-     @DeleteMapping("/{courseId}/materials/{materialId}")
+     @DeleteMapping("/{courseId}/material/{materialId}")
     public ResponseEntity<String> deleteCourseMaterial( @PathVariable("courseId") Long courseId, @PathVariable("materialId") Long materialId)
     throws Exception{
         // Check if the Course exists
