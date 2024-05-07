@@ -59,6 +59,9 @@ const Header = () => {
             <li>
               <Link to='/login'>Login</Link>
             </li>
+            <li>
+              <Link to='/userProfile'>User Profile</Link>
+            </li>
           </ul>
           <div className='start'>
             <div className='button'>GET CERTIFICATE</div>

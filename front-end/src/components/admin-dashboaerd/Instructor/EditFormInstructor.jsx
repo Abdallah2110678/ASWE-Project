@@ -100,7 +100,7 @@ const EditFormInstructor = () => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/instructor?email=${value}`
+            `${REST_API_BASE_URL}/user/check-email/instructor/${value}`
           );
           if (response.data && response.data.id != id) {
             error = "Email is already in use.";
@@ -125,7 +125,7 @@ const EditFormInstructor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${REST_API_BASE_URL}/user/instructors/${id}`);
+        const response = await axios.get(`${REST_API_BASE_URL}/user/instructor/${id}`);
         const updatedInstructorData = { ...response.data, password: "" };
         setInstructorData(updatedInstructorData);
         setInstructorInfo(updatedInstructorData);

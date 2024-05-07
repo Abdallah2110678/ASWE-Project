@@ -49,7 +49,7 @@ const All_Instructor = () => {
       .catch((error) => {
         console.error("Error fetching Instractor:", error);
       });
-  }, []);
+  }, [handleDelete]);
 
   const toggleMenu = () => {
     setActive(!active);

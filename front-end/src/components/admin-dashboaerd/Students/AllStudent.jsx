@@ -52,7 +52,7 @@ const AllStudents = () => {
       .catch((error) => {
         console.error("Error fetching students:", error);
       });
-  }, []);
+  }, [handleDelete]);
 
   const toggleMenu = () => {
     setActive(!active);

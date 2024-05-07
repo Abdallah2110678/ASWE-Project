@@ -69,7 +69,7 @@ public class UserController {
         return ResponseEntity.ok(savedInstructor);
     }
 
-    @PutMapping("/instructors/{id}")
+    @PutMapping("/instructors/update/{id}")
     public ResponseEntity<User> updateInstructor(@RequestBody User instructor, @PathVariable Long id) {
         User repoInstructor = userRepository.findById(id).orElse(null);
         if (repoInstructor != null && repoInstructor.getRole() == Role.INSTRUCTOR) {
@@ -134,7 +134,7 @@ public class UserController {
     }
 
     @PutMapping("/students/update/{id}")
-    public ResponseEntity<User> updateStudent(@RequestBody User student, @PathVariable Long id) {
+    public User updateStudent(@RequestBody User student, @PathVariable Long id) {
         User repoStudent = userRepository.findById(id).orElse(null);
         if (repoStudent != null && repoStudent.getRole() == Role.STUDENT) {
             repoStudent.setFname(student.getFname());
@@ -146,26 +146,26 @@ public class UserController {
                 repoStudent.setPassword(passwordEncoder.encode(student.getPassword()));
             }
             userRepository.save(repoStudent);
-            return ResponseEntity.ok(repoStudent);
+            return repoStudent;
         }
-        return ResponseEntity.notFound().build();
+        return null;
     }
 
     @DeleteMapping("/students/delete/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         User student = userRepository.findById(id).orElse(null);
         if (student != null && student.getRole() == Role.STUDENT) {
-            userRepository.delete(student);
+            this.userRepository.delete(student);
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.notFound().build();
+        return null;
     }
 
-    private List<HashMap<String, Object>> convertUserListToHashMapList(Iterable<User> users) {
-        List<HashMap<String, Object>> list = new ArrayList<>();
-        for (User user : users) {
-            list.add(user.toHashMap());
-        }
-        return list;
-    }
+    // private List<HashMap<String, Object>> convertUserListToHashMapList(Iterable<User> users) {
+    //     List<HashMap<String, Object>> list = new ArrayList<>();
+    //     for (User user : users) {
+    //         list.add(user.toHashMap());
+    //     }
+    //     return list;
+    // }
 }
