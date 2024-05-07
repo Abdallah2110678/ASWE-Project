@@ -62,27 +62,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(String fname, String lname, Long phone, LocalDate dob, String gender, String email, String password,
-            Role role) {
-        this.fname = fname;
-        this.lname = lname;
-        this.phone = phone;
-        this.dob = dob;
-        this.gender = gender;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == Role.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else if (this.role == Role.INSTRUCTOR) {
-            return List.of(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
-        } else {
-            return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
-        }
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

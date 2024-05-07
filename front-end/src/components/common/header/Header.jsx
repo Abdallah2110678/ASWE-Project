@@ -12,7 +12,7 @@ const Header = () => {
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
-      axios.get(`${REST_API_BASE_URL}`, {
+      axios.get(`${REST_API_BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${authToken}`
         }

@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.aswe.demo.annotations.AdminAction;
 import com.example.aswe.demo.models.AuthenticationResponse;
 import com.example.aswe.demo.models.Role;
 import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.UserRepository;
 import com.example.aswe.demo.service.AuthenticationService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -76,6 +79,7 @@ public class UserController {
             repoInstructor.setFname(instructor.getFname());
             repoInstructor.setLname(instructor.getLname());
             repoInstructor.setGender(instructor.getGender());
+            repoInstructor.setPhone(instructor.getPhone());
             repoInstructor.setEmail(instructor.getEmail());
             repoInstructor.setDob(instructor.getDob());
             if (!instructor.getPassword().isEmpty()) {
@@ -161,6 +165,23 @@ public class UserController {
         return null;
     }
 
+     public User getUserFromToken(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String jwtToken = authHeader.substring(7); // Remove "Bearer " prefix
+            return authService.getUserFromToken(jwtToken);
+        } else {
+            return null;
+        }
+    }
+
+    @AdminAction
+    @GetMapping("/jwt")
+    public ResponseEntity<HashMap<String, Object>> AngetMethodName(HttpServletRequest request) {
+        User user = getUserFromToken(request);
+        return ResponseEntity.ok(user.toHashMap());
+    }
+    
     // private List<HashMap<String, Object>> convertUserListToHashMapList(Iterable<User> users) {
     //     List<HashMap<String, Object>> list = new ArrayList<>();
     //     for (User user : users) {

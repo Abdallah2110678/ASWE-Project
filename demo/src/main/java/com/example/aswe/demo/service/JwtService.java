@@ -27,12 +27,18 @@ public class JwtService {
     }
 
     public String generateToken(User user) {
-        return Jwts.builder()
+        return Jwts
+                .builder()
                 .subject(user.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSigninKey())
                 .compact();
+    }
+
+    public boolean isValid(String token, UserDetails user) {
+        String username = extractUsername(token);
+        return (username.equals(user.getUsername())) && !isTokenExpired(token);
     }
 
     private Claims extractAllClaims(String token) {
