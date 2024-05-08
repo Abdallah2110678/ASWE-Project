@@ -14,16 +14,17 @@ const Header = () => {
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
-      axios.get(`${REST_API_BASE_URL}/user`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`
-        }
-      })
-        .then(response => {
+      axios
+        .get(`${REST_API_BASE_URL}/user`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .then((response) => {
           setStr(response.data.value);
         })
-        .catch(error => {
-          console.error('Error fetching data:', error);
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
     }
   }, []);
@@ -106,8 +107,8 @@ function CartItems() {
         `${REST_API_BASE_URL}/student/cart/delete/${cartItemId}`
       );
       if (response.status === 200) {
-        // Call onDelete to update UI or perform any necessary action
-        onDelete(cartItemId);
+        // Call onDelete to update UI or perforDm any necessary action
+        // onDelete(cartItemId);
         console.log(`Cart item with ID ${cartItemId} deleted successfully.`);
       }
     } catch (error) {
@@ -164,7 +165,9 @@ function CartItems() {
                 <hr className="dropdown-divider" />
               </li>
               <li> Total Price: ${calculateTotalPrice()}</li>
-              <Link to="#"><button className=" btn btn-primary"> Go to The Cart </button></Link>
+              <Link to="#">
+                <button className=" btn btn-primary"> Go to The Cart </button>
+              </Link>
             </>
           ) : (
             <li> Not Found Item in Cart</li>

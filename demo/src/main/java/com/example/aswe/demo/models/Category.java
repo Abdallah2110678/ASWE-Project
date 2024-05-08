@@ -1,4 +1,4 @@
-package  com.example.aswe.demo.models;
+package com.example.aswe.demo.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -67,10 +67,9 @@ public class Category {
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", name='" + getName() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", name='" + getName() + "'" +
+                "}";
     }
-    
 
 }
