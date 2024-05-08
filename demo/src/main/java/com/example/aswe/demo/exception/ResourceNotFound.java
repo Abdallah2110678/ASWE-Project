@@ -1,7 +1,8 @@
 package com.example.aswe.demo.exception;
+
 import java.util.Objects;
 
-public class ResourceNotFound  extends RuntimeException{
+public class ResourceNotFound extends RuntimeException {
     private Boolean status;
     private String message;
 
@@ -62,9 +63,9 @@ public class ResourceNotFound  extends RuntimeException{
     @Override
     public String toString() {
         return "{" +
-            " status='" + isStatus() + "'" +
-            ", message='" + getMessage() + "'" +
-            "}";
+                " status='" + isStatus() + "'" +
+                ", message='" + getMessage() + "'" +
+                "}";
     }
-    
+
 }
