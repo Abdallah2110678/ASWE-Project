@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Back from "../common/back/Back";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {REST_API_BASE_URL} from "./../../App";
+import { REST_API_BASE_URL } from "./../../App";
 
 const SignUp = () => {
   const [fname, setFname] = useState("");
@@ -12,6 +12,7 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [phone, setPhone] = useState("");
+  const [role, setRole] = useState(""); // Added state for role
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -27,6 +28,7 @@ const SignUp = () => {
       gender: "Gender",
       dob: "Date of Birth",
       phone: "Phone",
+      role: "Role", // Added rule for role
     };
 
     // Perform validation
@@ -72,6 +74,9 @@ const SignUp = () => {
       case "phone":
         setPhone(value);
         break;
+      case "role": 
+        setRole(value);
+        break;
       default:
         break;
     }
@@ -79,7 +84,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Check if there are any error messages
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
@@ -95,7 +100,7 @@ const SignUp = () => {
         gender,
         dob,
         phone,
-        role: "STUDENT",
+        role, // Include role in request payload
       });
       console.log(response.data);
       setSuccessMessage("Sign up successful.");
@@ -106,6 +111,7 @@ const SignUp = () => {
       setGender("");
       setDob("");
       setPhone("");
+      setRole(""); 
     } catch (error) {
       console.error("Sign up failed:", error);
     }
@@ -233,6 +239,25 @@ const SignUp = () => {
             />
             {errors.phone && (
               <div className="error text-danger">{errors.phone}</div>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">
+              Role:
+            </label>
+            <select
+              className="form-select"
+              id="role"
+              name="role"
+              value={role}
+              onChange={handleChange}
+            >
+              <option value="">Select Role</option>
+              <option value="STUDENT">Student</option>
+              <option value="INSTRUCTOR">Instructor</option>
+            </select>
+            {errors.role && (
+              <div className="error text-danger">{errors.role}</div>
             )}
           </div>
           <button type="submit" className="btn btn-primary">
