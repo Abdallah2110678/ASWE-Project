@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Back from "../common/back/Back";
 import axios from "axios";
-import { Link,useNavigate } from "react-router-dom";
-import { REST_API_BASE_URL } from "./../../App";
+import { Link } from "react-router-dom";
+import {REST_API_BASE_URL} from "./../../App";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [phone, setPhone] = useState("");
-  const [role, setRole] = useState(""); // State for role selection
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -30,6 +29,7 @@ const SignUp = () => {
       gender: "Gender",
       dob: "Date of Birth",
       phone: "Phone",
+      role: "Role", // Added rule for role
     };
 
     // Perform validation
@@ -75,9 +75,6 @@ const SignUp = () => {
       case "phone":
         setPhone(value);
         break;
-      case "role": // Update role state
-        setRole(value);
-        break;
       default:
         break;
     }
@@ -101,7 +98,7 @@ const SignUp = () => {
         gender,
         dob,
         phone,
-        role,
+        role: "STUDENT",
       });
       console.log(response.data);
       setSuccessMessage("Sign up successful.");
@@ -112,8 +109,6 @@ const SignUp = () => {
       setGender("");
       setDob("");
       setPhone("");
-      setRole("");
-      navigate("/login");
     } catch (error) {
       console.error("Sign up failed:", error);
     }
@@ -242,37 +237,6 @@ const SignUp = () => {
             {errors.phone && (
               <div className="error text-danger">{errors.phone}</div>
             )}
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Role:</label>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="role"
-                id="studentRole"
-                value="STUDENT"
-                checked={role === "STUDENT"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="studentRole">
-                Student
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="role"
-                id="instructorRole"
-                value="INSTRUCTOR"
-                checked={role === "INSTRUCTOR"}
-                onChange={handleChange}
-              />
-              <label className="form-check-label" htmlFor="instructorRole">
-                Instructor
-              </label>
-            </div>
           </div>
           <button type="submit" className="btn btn-primary">
             Sign Up
