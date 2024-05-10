@@ -34,21 +34,38 @@ import CreateCourse from "./components/course/AddCourse";
 import AllCourses from "./components/course/AllCourses";
 import UploadVideo from "./components/course/UploadVideo";
 import MyCourses from "./components/course/MyCourses";
+
 export const REST_API_BASE_URL = "http://localhost:9090/api";
+
+import { QueryClient, QueryClientProvider } from 'react-query'; // Import QueryClient and QueryClientProvider
+import { StoreProvider } from "./store";
+import ProtectedRoute from "./ProtectedRoute";
+
+// Create a new queryClient instance
+
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <>
-      <Router>
+    <> <Router>
+    <QueryClientProvider client={queryClient}>
+      <StoreProvider>
+
         <Routes>
-          <Route
+        <Route
             path="/admin"
-            element={
-              <>
-                <Aside_Admin />
-                <Outlet />
-              </>
-            }
-          >
+            element=
+            {
+            <ProtectedRoute
+              element={
+                <>
+                  <Aside_Admin />
+                  <Outlet />
+                </>
+              }
+              allowedRoles={["ADMIN"]}
+            />
+          }
+        >
           
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="students" element={<AllStudents />} />
@@ -62,10 +79,15 @@ function App() {
           <Route
             path="/instructor"
             element={
-              <>
-                <Aside_Instructor />
-                <Outlet />
-              </>
+              <ProtectedRoute
+              element={
+                <>
+                  <Aside_Instructor />
+                  <Outlet />
+                </>
+              }
+              allowedRoles={["INSTRUCTOR"]}
+            />
             }
           >
             <Route path="dashboard" element={<DASHBOARD />} />
@@ -97,7 +119,10 @@ function App() {
             <Route path="/userProfile" element={<UserProfile />} />
           </Route>
         </Routes>
-      </Router>
+     
+      </StoreProvider>
+      </QueryClientProvider>
+    </Router>
     </>
   );
 }

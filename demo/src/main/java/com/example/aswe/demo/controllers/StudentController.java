@@ -51,7 +51,7 @@ public class StudentController {
         }
     }
 
-    @PostMapping("/cart/addCourse/{userId}/{courseId}")
+    @PostMapping("/cart/addcourse/{userId}/{courseId}")
     public ResponseEntity<String> addCourseToCartByUserId(@PathVariable Long userId, @PathVariable Long courseId) {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<Course> courseOptional = courseRepository.findById(courseId);
@@ -67,7 +67,7 @@ public class StudentController {
                 return ResponseEntity.ok("Course added to the cart successfully.");
             
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + userId +  " or " + courseId + " not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + userId +  " or Course with Id" + courseId + " not found.");
         }
     }
 

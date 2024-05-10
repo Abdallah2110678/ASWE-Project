@@ -1,10 +1,12 @@
 .coursesCard {
   padding: 50px 0;
+  
 }
 .coursesCard .items {
   background-color: #fff;
   padding: 30px;
   text-align: center;
+  border: solid #1eb2a6;
 }
 .coursesCard .img {
   width: 80px;
@@ -28,7 +30,7 @@
   line-height: 45px;
 }
 .coursesCard .rate {
-  margin: 20px 0;
+  margin: 5px 0;
   color: #1eb2a6;
 }
 .coursesCard .rate i {
@@ -52,7 +54,7 @@
   font-size: 14px;
 }
 .coursesCard .price {
-  margin: 30px 0;
+  margin: 10px 0;
   background-color: #f8f8f8;
   padding: 10px;
 }

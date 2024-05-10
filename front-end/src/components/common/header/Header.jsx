@@ -107,7 +107,7 @@ function CartItems() {
       );
       if (response.status === 200) {
         // Call onDelete to update UI or perform any necessary action
-        onDelete(cartItemId);
+        
         console.log(`Cart item with ID ${cartItemId} deleted successfully.`);
       }
     } catch (error) {
@@ -134,10 +134,10 @@ function CartItems() {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faShoppingCart} />
+          <FontAwesomeIcon icon={faShoppingCart} size="lg"/>
           <span className="badge ">{cartItems.length}</span>
         </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1"  style={{ maxHeight: "400px", overflowY: "auto" }}>
           {cartItems.map((cartItem, index) => (
             <li
               key={cartItem.id}
@@ -148,7 +148,7 @@ function CartItems() {
                 <br />
                 Price: ${cartItem.course.price}
                 <br />
-                Author: {cartItem.course.user.fname}
+                By: {""}
               </div>
               <button
                 className="btn btn-danger"

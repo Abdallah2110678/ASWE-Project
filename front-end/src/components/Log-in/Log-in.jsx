@@ -1,33 +1,50 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link ,useNavigate } from "react-router-dom";
 import Back from "../common/back/Back";
 import { REST_API_BASE_URL } from "./../../App";
 import "./Log-in.css";
 
+import { useEffect } from "react";
+import { Store } from "../../store";
 function LOGIN() {
   const navigate = useNavigate();
-  const [displayErrors, setDisplayErrors] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${REST_API_BASE_URL}/user/login`, {
-        email,
-        password,
+      const response = await fetch(`${REST_API_BASE_URL}/user/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
-      setError("");
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      navigate("/");
+
+      if (response.ok) {
+        const data = await response.json();
+
+        const { user, token } = data;
+
+        ctxDispatch({ type: "USER_SIGNIN", payload: user });
+        localStorage.setItem("userInfo", JSON.stringify(user));
+        console.log(user)
+        
+      } else {
+        const errorMessage = await response.text();
+        throw new Error(`Login failed: ${errorMessage}`);
+      }
     } catch (error) {
-      console.error("Login failed:", error);
-      setError("Invalid email or password.");
+      console.error('Login failed:', error);
+      setError('Login failed. Please try again.');
     }
   };
-
   return (
     <>
       <Back title="LOG IN" />

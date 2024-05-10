@@ -1,8 +1,28 @@
-import React from "react"
+import React, { useContext } from "react"
 import "./courses.css"
-import { coursesCard } from "../../dummydata"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons"
+import { REST_API_BASE_URL } from "./../../App";
+import axios from "axios";
+import { Store } from "../../store"
 
 const CoursesCard = ({courses}) => {
+  const { state } = useContext(Store);
+  const { userInfo } = state;
+  console.log(userInfo);
+
+  const addCourseToCart = async ( courseId) => {
+    try {
+      const response = await axios.post(`${REST_API_BASE_URL}/student/cart/addcourse/2/${courseId}`);
+      alert(response.data);
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      } else {
+        console.error('An error occurred:', error.message);
+      }
+    }
+  };
 
   return (
     <>
@@ -69,6 +89,8 @@ const CoursesCard = ({courses}) => {
                   </h3>
                 )}
               </div>
+              <button className='outline-btn' style={{marginBottom: "5px"}}  onClick={() => addCourseToCart( course.id)}>Add To Cart <FontAwesomeIcon icon={faShoppingCart} size="lg" /></button>
+              
               <button className='outline-btn'>ENROLL NOW !</button>
             </div>
           ))}
