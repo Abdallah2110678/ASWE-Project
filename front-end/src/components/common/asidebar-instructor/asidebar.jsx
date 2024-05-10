@@ -1,6 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Store } from "../../../store";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Aside_Instructor = () => {
+  const navigate = useNavigate();
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+  const signoutHandler = () => {
+    ctxDispatch({ type: "USER_SIGNOUT" });
+    localStorage.removeItem("userInfo");
+    navigate("/login");
+  };
   const [active, setActive] = useState(false);
 
   const toggleMenu = () => {
@@ -21,51 +34,51 @@ const Aside_Instructor = () => {
       <div className={`navigation ${active ? "active" : ""}`}>
         <ul>
           <li onClick={handleMouseOver}>
-            <a href="#">
+            <Link to="#">
               <span className="iconn">
                 <ion-icon name="logo-apple"></ion-icon>
               </span>
               <span className="title">e-learning</span>
-            </a>
+            </Link>
           </li>
           <li onClick={handleMouseOver}>
-            <a href="/instructor/dashboard">
+            <Link to="/instructor/dashboard">
               <span className="iconn"></span>
               <span className="title">Dashboard</span>
-            </a>
+            </Link>
           </li>
           <li onClick={handleMouseOver}>
-            <a href="#">
+            <Link to="#">
               <span className="iconn">
                 <ion-icon name="document-text-outline"></ion-icon>
               </span>
               <span className="title">Profile</span>
-            </a>
+            </Link>
           </li>
           <li onClick={handleMouseOver}>
-            <a href="/instructor/createcourse">
+            <Link to="/instructor/createcourse">
               <span className="iconn">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
               <span className="title">Add Course</span>
-            </a>
+            </Link>
           </li>
           <li onClick={handleMouseOver}>
-            <a href="/instructor/my-courses">
+            <Link to={`/instructor/my-courses/${userInfo.id}`}>
               <span className="iconn">
                 <ion-icon name="people-outline"></ion-icon>
               </span>
               <span className="title">Courses</span>
-            </a>
+            </Link>
           </li>
-          
+
           <li onClick={handleMouseOver}>
-            <a href="#">
+            <button onClick={() => signoutHandler()}>
               <span className="iconn">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
               <span className="title">Log Out</span>
-            </a>
+            </button>
           </li>
         </ul>
       </div>

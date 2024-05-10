@@ -31,6 +31,7 @@ import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.CategoryRepository;
 import com.example.aswe.demo.repository.CourseMaterialRepository;
 import com.example.aswe.demo.repository.CourseRepository;
+import com.example.aswe.demo.repository.UserRepository;
 import com.example.aswe.demo.service.CourseService;
 import com.example.aswe.demo.service.MaterialService;
 
@@ -60,9 +61,17 @@ public class InstructorControllers {
     @Autowired
     private CategoryRepository categoryRepository;
 
+
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("createcourse")
-    public ResponseEntity<?> save(@RequestParam("categoryId") Long categoryId, @RequestBody Course course) {
+    public ResponseEntity<?> save(@RequestParam("categoryId") Long categoryId,
+     @RequestParam("useId") Long useId,
+     @RequestBody Course course) {
         Category category = categoryRepository.findById(categoryId).get();
+        User user =  userRepository.findById(useId).get();
+        course.setUser(user);
         course.setCategory(category);
         return new ResponseEntity<Course>(courseService.createPost(course), HttpStatus.OK);
     }

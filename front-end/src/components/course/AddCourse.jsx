@@ -1,9 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
     import {REST_API_BASE_URL} from "./../../App";
+import { Store } from "../../store";
 
 const CreateCourse =() =>{
+
+
+  
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
     const [courseData, setCourseData] = useState({
         title: "",
         description: "",
@@ -73,7 +79,7 @@ const CreateCourse =() =>{
           return;
         }
         try {
-          const response = await axios.post(`${REST_API_BASE_URL}/instructor/createcourse?categoryId=${courseData.categoryId}`, courseData);
+          const response = await axios.post(`${REST_API_BASE_URL}/instructor/createcourse?categoryId=${courseData.categoryId}&useId=${userInfo.id}`, courseData);
           console.log("Course created:", response.data);
           setSuccessMessage("Course added successfully.");
           setCourseData({
@@ -94,7 +100,7 @@ return (
         <div className="recentOrderss">
           <div className="cardHeader">
             <h2>Create New Course</h2>
-            <Link to="/instructor/my-courses/" className="btn">
+            <Link to={`/instructor/my-courses/${userInfo.id}`} className="btn">
               All Courses
             </Link>
           </div>

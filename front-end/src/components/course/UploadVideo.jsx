@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import {REST_API_BASE_URL} from "./../../App";
+import { Store } from "../../store";
 
 const UploadVideo =()=>{
-
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
     const {id} =useParams();
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -59,7 +61,7 @@ const UploadVideo =()=>{
           <div className="recentOrders">
           <div className="cardHeader">
             <h2>Upload New video</h2>
-            <Link to="/instructor/my-courses" className="btn">
+            <Link to={`/instructor/my-courses/${userInfo.id}`} className="btn">
               Back To Courses
             </Link>
           </div>

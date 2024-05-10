@@ -35,6 +35,7 @@ function LOGIN() {
         ctxDispatch({ type: "USER_SIGNIN", payload: user });
         localStorage.setItem("userInfo", JSON.stringify(user));
         console.log(user)
+        navigate("/");
         
       } else {
         const errorMessage = await response.text();

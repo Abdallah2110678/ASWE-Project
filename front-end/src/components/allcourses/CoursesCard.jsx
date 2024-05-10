@@ -5,23 +5,35 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons"
 import { REST_API_BASE_URL } from "./../../App";
 import axios from "axios";
 import { Store } from "../../store"
+import { useNavigate } from "react-router-dom";
 
 const CoursesCard = ({courses}) => {
+  const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
   console.log(userInfo);
 
   const addCourseToCart = async ( courseId) => {
-    try {
-      const response = await axios.post(`${REST_API_BASE_URL}/student/cart/addcourse/2/${courseId}`);
-      alert(response.data);
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      } else {
-        console.error('An error occurred:', error.message);
+    if (!userInfo ) {
+      alert("Please login to add course to cart");
+      navigate("/login");
+      
+    }else if(userInfo.role != "STUDENT"){
+      alert("Student only can Add to cart");
+      return;
+    }else{
+      try {
+        const response = await axios.post(`${REST_API_BASE_URL}/student/cart/addcourse/${userInfo.id}/${courseId}`);
+        alert(response.data);
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data);
+        } else {
+          console.error('An error occurred:', error.message);
+        }
       }
     }
+   
   };
 
   return (

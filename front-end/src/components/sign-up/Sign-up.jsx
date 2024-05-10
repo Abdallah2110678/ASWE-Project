@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Back from "../common/back/Back";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -113,6 +113,7 @@ const SignUp = () => {
       setDob("");
       setPhone("");
       setRole("");
+      navigate("/login");
     } catch (error) {
       console.error("Sign up failed:", error);
     }
