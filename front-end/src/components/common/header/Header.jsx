@@ -107,8 +107,7 @@ function CartItems() {
         `${REST_API_BASE_URL}/student/cart/delete/${cartItemId}`
       );
       if (response.status === 200) {
-        // Call onDelete to update UI or perform any necessary action
-        onDelete(cartItemId);
+
         console.log(`Cart item with ID ${cartItemId} deleted successfully.`);
       }
     } catch (error) {

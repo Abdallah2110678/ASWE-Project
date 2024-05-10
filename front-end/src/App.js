@@ -6,6 +6,9 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from 'react-query'; // Import QueryClient and QueryClientProvider
+import { StoreProvider } from "./store";
+import ProtectedRoute from "./ProtectedRoute";
 import About from "./components/about/About";
 import CourseHome from "./components/allcourses/CourseHome";
 import Team from "./components/team/Team";
@@ -37,9 +40,7 @@ import MyCourses from "./components/course/MyCourses";
 
 export const REST_API_BASE_URL = "http://localhost:9090/api";
 
-import { QueryClient, QueryClientProvider } from 'react-query'; // Import QueryClient and QueryClientProvider
-import { StoreProvider } from "./store";
-import ProtectedRoute from "./ProtectedRoute";
+
 
 // Create a new queryClient instance
 

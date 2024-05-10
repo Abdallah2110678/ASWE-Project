@@ -1,10 +1,4 @@
-
-
-
-
-
 package com.example.aswe.demo.models;
-
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,10 +11,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Date;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Getter
@@ -53,5 +45,3 @@ public class Course {
     @JsonManagedReference
     private List<CourseMaterial> courseMaterials;
 }
-
-
