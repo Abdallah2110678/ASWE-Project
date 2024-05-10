@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Back from "../common/back/Back";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { REST_API_BASE_URL } from "./../../App";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [phone, setPhone] = useState("");
-  const [role, setRole] = useState(""); // Added state for role
+  const [role, setRole] = useState(""); // Added role state
   const [successMessage, setSuccessMessage] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -21,14 +22,14 @@ const SignUp = () => {
 
     // Define validation rules for each field
     const validationRules = {
-      fname: "First name",
-      lname: "Last name",
-      email: "Email",
-      password: "Password",
-      gender: "Gender",
-      dob: "Date of Birth",
-      phone: "Phone",
-      role: "Role", // Added rule for role
+      fname: "fname",
+      lname: "lname",
+      email: "email",
+      password: "password",
+      gender: "gender",
+      dob: "dob",
+      phone: "phone",
+      role: "role", // Added rule for role
     };
 
     // Perform validation
@@ -74,9 +75,9 @@ const SignUp = () => {
       case "phone":
         setPhone(value);
         break;
-      case "role": 
+      case "role":
         setRole(value);
-        break;
+        break; // Added case for role
       default:
         break;
     }
@@ -100,7 +101,7 @@ const SignUp = () => {
         gender,
         dob,
         phone,
-        role, // Include role in request payload
+        role,
       });
       console.log(response.data);
       setSuccessMessage("Sign up successful.");
@@ -111,7 +112,7 @@ const SignUp = () => {
       setGender("");
       setDob("");
       setPhone("");
-      setRole(""); 
+      setRole("");
     } catch (error) {
       console.error("Sign up failed:", error);
     }
@@ -241,6 +242,7 @@ const SignUp = () => {
               <div className="error text-danger">{errors.phone}</div>
             )}
           </div>
+          {/* New field for role */}
           <div className="mb-3">
             <label htmlFor="role" className="form-label">
               Role:
@@ -260,6 +262,7 @@ const SignUp = () => {
               <div className="error text-danger">{errors.role}</div>
             )}
           </div>
+          {/* Rest of the form */}
           <button type="submit" className="btn btn-primary">
             Sign Up
           </button>

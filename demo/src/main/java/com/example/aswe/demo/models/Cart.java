@@ -1,7 +1,5 @@
 package com.example.aswe.demo.models;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,16 +18,15 @@ import lombok.Setter;
 @Builder
 @Entity
 public class Cart {
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
-    
+
     @ManyToOne
     private User user;
-    
+
     @ManyToOne
-    private Course course; 
+    private Course course;
 }

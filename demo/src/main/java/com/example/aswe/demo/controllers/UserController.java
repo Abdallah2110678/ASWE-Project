@@ -48,8 +48,6 @@ public class UserController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
-    // CRUD operations for instructors
-
     @GetMapping("/allinstructors")
     public List<User> getAllInstructors() {
         return userRepository.findAllByRole(Role.INSTRUCTOR);
@@ -101,14 +99,6 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/check-email/instructor/{email}")
-    public ResponseEntity<Boolean> checkInstructorEmailExists(@PathVariable String email) {
-        Optional<User> instructor = userRepository.findByEmailAndRole(email, Role.INSTRUCTOR);
-        return ResponseEntity.ok(instructor.isPresent());
-    }
-
-    // CRUD operations for students
-
     @GetMapping("/allstudents")
     public List<User> getAllStudents() {
         return userRepository.findAllByRole(Role.STUDENT);
@@ -129,12 +119,6 @@ public class UserController {
         student.setPassword(passwordEncoder.encode(student.getPassword()));
         User savedStudent = userRepository.save(student);
         return ResponseEntity.ok(savedStudent);
-    }
-
-    @GetMapping("/check-email/students/{email}")
-    public ResponseEntity<Boolean> checkStudentEmailExists(@PathVariable String email) {
-        Optional<User> student = userRepository.findByEmail(email);
-        return ResponseEntity.ok(student.isPresent());
     }
 
     @PutMapping("/students/update/{id}")
@@ -165,10 +149,16 @@ public class UserController {
         return null;
     }
 
-     public User getUserFromToken(HttpServletRequest request) {
+    @GetMapping("/check-email/{email}")
+    public ResponseEntity<Boolean> checkEmailExists(@PathVariable String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return ResponseEntity.ok(user.isPresent());
+    }
+
+    public User getUserFromToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String jwtToken = authHeader.substring(7); // Remove "Bearer " prefix
+            String jwtToken = authHeader.substring(7);
             return authService.getUserFromToken(jwtToken);
         } else {
             return null;
@@ -181,12 +171,4 @@ public class UserController {
         User user = getUserFromToken(request);
         return ResponseEntity.ok(user.toHashMap());
     }
-    
-    // private List<HashMap<String, Object>> convertUserListToHashMapList(Iterable<User> users) {
-    //     List<HashMap<String, Object>> list = new ArrayList<>();
-    //     for (User user : users) {
-    //         list.add(user.toHashMap());
-    //     }
-    //     return list;
-    // }
 }

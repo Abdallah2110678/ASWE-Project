@@ -10,8 +10,6 @@ import com.example.aswe.demo.models.Role;
 import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.UserRepository;
 
-
-
 @Service
 public class AuthenticationService {
 
@@ -37,7 +35,7 @@ public class AuthenticationService {
         user.setGender(request.getGender());
         user.setDob(request.getDob());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.STUDENT);
+        user.setRole(request.getRole());
         user = userRepository.save(user);
 
         String jwt = jwtService.generateToken(user);

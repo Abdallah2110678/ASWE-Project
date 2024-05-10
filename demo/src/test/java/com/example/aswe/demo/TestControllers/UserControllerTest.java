@@ -124,16 +124,16 @@ class UserControllerTest {
         verify(userRepository).delete(instructor);
     }
 
-    @Test
-    void testCheckInstructorEmailExists() {
-        User instructor = new User();
-        instructor.setRole(Role.INSTRUCTOR);
-        when(userRepository.findByEmailAndRole("email", Role.INSTRUCTOR)).thenReturn(Optional.of(instructor));
+    // @Test
+    // void testCheckInstructorEmailExists() {
+    //     User instructor = new User();
+    //     instructor.setRole(Role.INSTRUCTOR);
+    //     when(userRepository.findByEmailAndRole("email", Role.INSTRUCTOR)).thenReturn(Optional.of(instructor));
 
-        ResponseEntity<Boolean> result = userController.checkInstructorEmailExists("email");
+    //     ResponseEntity<Boolean> result = userController.checkInstructorEmailExists("email");
 
-        assertEquals(ResponseEntity.ok(true), result);
-    }
+    //     assertEquals(ResponseEntity.ok(true), result);
+    // }
 
     @Test
     void testGetAllStudents() {
@@ -174,16 +174,16 @@ class UserControllerTest {
         verify(passwordEncoder).encode("password");
     }
 
-    @Test
-    void testCheckStudentEmailExists() {
-        User student = new User();
-        student.setRole(Role.STUDENT);
-        when(userRepository.findByEmailAndRole("email", Role.STUDENT)).thenReturn(Optional.of(student));
+    // @Test
+    // void testCheckStudentEmailExists() {
+    //     User student = new User();
+    //     student.setRole(Role.STUDENT);
+    //     when(userRepository.findByEmailAndRole("email", Role.STUDENT)).thenReturn(Optional.of(student));
 
-        ResponseEntity<Boolean> result = userController.checkStudentEmailExists("email");
+    //     ResponseEntity<Boolean> result = userController.checkStudentEmailExists("email");
 
-        assertEquals(ResponseEntity.ok(true), result);
-    }
+    //     assertEquals(ResponseEntity.ok(true), result);
+    // }
 
     // @Test
     // void testUpdateStudent() {
