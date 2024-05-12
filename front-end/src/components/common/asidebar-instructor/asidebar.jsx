@@ -73,12 +73,13 @@ const Aside_Instructor = () => {
           </li>
 
           <li onClick={handleMouseOver}>
-            <button onClick={() => signoutHandler()}>
+          
+              <Link  onClick={() => signoutHandler()}>
               <span className="iconn">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
-              <span className="title">Log Out</span>
-            </button>
+              <span className="title">Log Out</span></Link>
+            
           </li>
         </ul>
       </div>

@@ -1,16 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./courses.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { REST_API_BASE_URL } from "./../../App";
 import axios from "axios";
 import { Store } from "../../store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CoursesCard = ({ courses }) => {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   const addCourseToCart = async (courseId) => {
     if (!userInfo) {
@@ -36,6 +37,19 @@ const CoursesCard = ({ courses }) => {
     }
    
   };
+
+  const checkEnrollmentStatus = async (courseId) => {
+    try {
+      const response = await axios.get(`${REST_API_BASE_URL}/student/enrollment/${userInfo.id}/${courseId}/check`);
+     if(response.data){
+      alert("Already enrolled to this course.")
+     }
+     else{
+      navigate(`/enroll/${courseId}`)
+     };
+    } catch (error) {
+      console.error('Error checking enrollment:', error);
+    }}
 
   return (
     <>
@@ -91,23 +105,6 @@ const CoursesCard = ({ courses }) => {
                     
                   </div>
                 </div>
-                <div className="price">
-                  {course.price ? (
-                    <h3>$ {course.price} All Course</h3>
-                  ) : (
-                    <h3>Free Course</h3>
-                  )}
-                </div>
-                <button
-                  className="outline-btn"
-                  style={{ marginBottom: "5px" }}
-                  onClick={() => addCourseToCart(course.id)}
-                >
-                  Add To Cart{" "}
-                  <FontAwesomeIcon icon={faShoppingCart} size="lg" />
-                </button>
-
-                <button className="outline-btn">ENROLL NOW !</button>
               </div>
               <div className='price'>
               {course.price ?(
@@ -121,7 +118,7 @@ const CoursesCard = ({ courses }) => {
               </div>
               <button className='outline-btn' style={{marginBottom: "5px"}}  onClick={() => addCourseToCart( course.id)}>Add To Cart <FontAwesomeIcon icon={faShoppingCart} size="lg" /></button>
               
-              <button className='outline-btn'>ENROLL NOW !</button>
+             <button className='outline-btn'onClick={()=>checkEnrollmentStatus(course.id)} >ENROLL NOW !</button>
             </div>
           ))}
         </div>

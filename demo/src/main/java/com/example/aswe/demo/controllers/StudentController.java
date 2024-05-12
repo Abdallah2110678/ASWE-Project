@@ -3,8 +3,10 @@ package com.example.aswe.demo.controllers;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -118,5 +120,31 @@ public class StudentController {
                     .body("User with ID " + userId + " or Course with ID " + courseId + " not found.");
         }
     }
+
+    @GetMapping("/courses/enrolled/{userId}")
+  public ResponseEntity<?> getCoursesEnrolledByUser(@PathVariable Long userId) {
+    Optional<User> userOptional = userRepository.findById(userId);
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+        List<Course> enrolledCourses = enrollments.stream().map(Enrollment::getCourse).collect(Collectors.toList());
+        return ResponseEntity.ok(enrolledCourses);
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("User with ID " + userId + " not found.");
+    }
+}
+@GetMapping("/enrollment/{userId}/{courseId}/check")
+public boolean checkEnrollment(@PathVariable Long userId, @PathVariable Long courseId) {
+    Optional<User> userOptional = userRepository.findById(userId);
+    Optional<Course> courseOptional = courseRepository.findById(courseId);
+    if (userOptional.isPresent() && courseOptional.isPresent()) {
+        User user = userOptional.get();
+        Course course = courseOptional.get();
+        return enrollmentRepository.existsByUserAndCourse(user, course);
+    } else {
+        return false;
+    }
+}
 
 }
