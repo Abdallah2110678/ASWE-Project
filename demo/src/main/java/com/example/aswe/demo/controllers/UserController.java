@@ -3,6 +3,7 @@ package com.example.aswe.demo.controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.example.aswe.demo.annotations.AdminAction;
 import com.example.aswe.demo.models.AuthenticationResponse;
 import com.example.aswe.demo.models.Role;
 import com.example.aswe.demo.models.User;
+import com.example.aswe.demo.repository.CourseRepository;
 import com.example.aswe.demo.repository.UserRepository;
 import com.example.aswe.demo.service.AuthenticationService;
 
@@ -37,6 +39,8 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
@@ -46,6 +50,23 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody User request) {
         return ResponseEntity.ok(authService.authenticate(request));
+    }
+
+
+    @GetMapping("/statistics")
+    public Map<String, Integer> getStatistics() {
+        Map<String, Integer> statistics = new HashMap<>();
+
+        // Get the count of students, instructors, and courses
+        int studentCount = userRepository.countUsersByRole(Role.STUDENT);
+        int instructorCount = userRepository.countUsersByRole(Role.INSTRUCTOR);
+        int courseCount = courseRepository.findAll().size();
+
+        statistics.put("studentCount", studentCount);
+        statistics.put("instructorCount", instructorCount);
+        statistics.put("courseCount", courseCount);
+
+        return statistics;
     }
 
     @GetMapping("/allinstructors")

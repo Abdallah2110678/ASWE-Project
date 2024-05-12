@@ -16,8 +16,9 @@ const CoursesCard = ({ courses }) => {
     if (!userInfo) {
       alert("Please login to add course to cart");
       navigate("/login");
-    } else if (userInfo.role !== "STUDENT") {
-      alert("Only students can add courses to cart");
+      
+    }else if(userInfo.role != "STUDENT"){
+      alert("Student only can Add to cart");
       return;
     } else {
       try {
@@ -33,98 +34,94 @@ const CoursesCard = ({ courses }) => {
         }
       }
     }
-  };
-
-  const enrollToCourse = async (courseId) => {
-    try {
-      const response = await axios.post(
-        `${REST_API_BASE_URL}/student/enroll/${userInfo.id}/${courseId}`
-      );
-      alert(response.data);
-      // Optionally, you can redirect the user to a success page or refresh the course list
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      } else {
-        console.error("An error occurred:", error.message);
-      }
-    }
+   
   };
 
   return (
     <>
-      <section className="coursesCard">
-        <div className="container grid2">
+      <section className='coursesCard'>
+        <div className='container grid2'>
           {courses.map((course) => (
-            <div className="items" key={course.id}>
-              <div className="content flex">
-                <div className="left">
-                  <div className="img">
-                    <img src={""} alt="" />
+            <div className='items'>
+              <div className='content flex'>
+                <div className='left'>
+                  <div className='img'>
+                    {/* picture of course */}
+                    <img src={""} alt='' />
                   </div>
                 </div>
-                <div className="text">
+                <div className='text'>
                   <h1>{course.title}</h1>
-                  <div className="rate">
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <label htmlFor="">(5.0)</label>
+                  <div className='rate'>
+                    <i className='fa fa-star'></i>
+                    <i className='fa fa-star'></i>
+                    <i className='fa fa-star'></i>
+                    <i className='fa fa-star'></i>
+                    <i className='fa fa-star'></i>
+                    <label htmlFor=''>(5.0)</label>
                   </div>
-                  <div className="details">
-                    <>
-                      {course.user ? (
-                        <div className="box">
-                          <div className="dimg">
-                            <img src={""} alt="" />
-                          </div>
-                          <div className="para">
-                            <h4>By {course.user.fname}</h4>
-                          </div>
+                  <div className='details'>
+                    
+                      <> {course.user ? (
+                      <div className='box'>
+                        <div className='dimg'>
+                          {/* display user image here */}
+                          <img src={""} alt='' />
                         </div>
-                      ) : (
-                        <div className="box">
-                          <div className="dimg">
-                            <img src={""} alt="" />
-                          </div>
-                          <div className="para">
-                            <h4>By Admin</h4>
-                          </div>
+                        <div className='para'>
+                          <h4>By {course.user.fname}</h4>
                         </div>
-                      )}
-                      {course.courseMaterials.length ? (
-                        <span>({course.courseMaterials.length}) Video</span>
-                      ) : (
-                        <span>
-                          ({course.courseMaterials.length}) Videos Not Found
-                        </span>
-                      )}
-                    </>
+                      </div>
+                    ):(<div className='box'>
+                    <div className='dimg'>
+                      {/* display user image here */}
+                      <img src={""} alt='' />
+                    </div>
+                    <div className='para'>
+                      <h4>By Admin</h4>
+                    </div>
+                  </div>)}
+                    {course.courseMaterials.length ?(
+                      <span>({course.courseMaterials.length}) Video</span>
+                    ):(
+                        <span>({course.courseMaterials.length}) Videos Not Found</span>
+                        )}
+                      
+                      </>
+                    
                   </div>
                 </div>
+                <div className="price">
+                  {course.price ? (
+                    <h3>$ {course.price} All Course</h3>
+                  ) : (
+                    <h3>Free Course</h3>
+                  )}
+                </div>
+                <button
+                  className="outline-btn"
+                  style={{ marginBottom: "5px" }}
+                  onClick={() => addCourseToCart(course.id)}
+                >
+                  Add To Cart{" "}
+                  <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+                </button>
+
+                <button className="outline-btn">ENROLL NOW !</button>
               </div>
-              <div className="price">
-                {course.price ? (
-                  <h3>$ {course.price} All Course</h3>
-                ) : (
-                  <h3>Free Course</h3>
+              <div className='price'>
+              {course.price ?(
+                <h3>
+                 $ {course.price} All Course
+                </h3>):(
+                  <h3>
+                   Free Course
+                  </h3>
                 )}
               </div>
-              <button
-                className="outline-btn"
-                style={{ marginBottom: "5px" }}
-                onClick={() => addCourseToCart(course.id)}
-              >
-                Add To Cart <FontAwesomeIcon icon={faShoppingCart} size="lg" />
-              </button>
-              <button
-                className="outline-btn"
-                onClick={() => enrollToCourse(course.id)}
-              >
-                ENROLL NOW !
-              </button>
+              <button className='outline-btn' style={{marginBottom: "5px"}}  onClick={() => addCourseToCart( course.id)}>Add To Cart <FontAwesomeIcon icon={faShoppingCart} size="lg" /></button>
+              
+              <button className='outline-btn'>ENROLL NOW !</button>
             </div>
           ))}
         </div>

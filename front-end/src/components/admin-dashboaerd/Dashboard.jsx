@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./style.css"
 import ReactApexChart from 'react-apexcharts';
+import { REST_API_BASE_URL } from "./../../App";
+import axios from 'axios';
 
 function ApexChartt() {
   const series = [30, 20, 15]; 
@@ -118,6 +120,23 @@ function ApexChart() {
 const Dashboard = () => {
   const [active, setActive] = useState(false);
 
+  const [statistics, setStatistics] = useState(null);
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      try {
+        const response = await axios.get(`${REST_API_BASE_URL}/user/statistics`);
+        setStatistics(response.data);
+      } catch (error) {
+        console.error('Error fetching statistics:', error);
+      }
+    };
+
+    fetchStatistics();
+  }, []);
+
+  console.log(statistics)
+
   const toggleMenu = () => {
     setActive(!active);
   };
@@ -146,7 +165,7 @@ const Dashboard = () => {
         <div class="cardBox">
                 <div class="card">
                     <div>
-                        <div class="numbers">1,504</div>
+                       {statistics && <div class="numbers">  { statistics.studentCount}</div>}
                         <div class="cardName">Total Student</div>
                     </div>
 
@@ -157,7 +176,7 @@ const Dashboard = () => {
 
                 <div class="card">
                     <div>
-                        <div class="numbers">80</div>
+                    {statistics && <div class="numbers">  { statistics.instructorCount}</div>}
                         <div class="cardName">Total Instractor</div>
                     </div>
 
@@ -168,7 +187,7 @@ const Dashboard = () => {
 
                 <div class="card">
                     <div>
-                        <div class="numbers">284</div>
+                    {statistics && <div class="numbers">{statistics.courseCount}</div>}
                         <div class="cardName">Courses</div>
                     </div>
 
