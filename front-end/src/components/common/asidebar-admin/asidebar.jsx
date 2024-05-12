@@ -54,6 +54,14 @@ const Aside_Admin = () => {
     </Link>
   </li>
   <li onClick={handleMouseOver}>
+    <Link to="/admin/allusers">
+      <span className="iconn">
+        <ion-icon name="home-outline"></ion-icon>
+      </span>
+      <span className="title">All Users</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
     <Link to="/admin/students">
       <span className="iconn">
         <ion-icon name="home-outline"></ion-icon>

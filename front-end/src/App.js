@@ -27,6 +27,7 @@ import Aside_Admin from "./components/common/asidebar-admin/asidebar";
 import Dashboard from "./components/admin-dashboaerd/Dashboard";
 import EditFormStudent from "./components/admin-dashboaerd/Students/EditFormStudent";
 import AllStudents from "./components/admin-dashboaerd/Students/AllStudent";
+import AllUsers from "./components/admin-dashboaerd/Users/AllUsers";
 import CreateNewStudent from "./components/admin-dashboaerd/Students/CreateNewStudent";
 
 import All_Instructor from "./components/admin-dashboaerd/Instructor/All_Instructor";
@@ -65,6 +66,7 @@ function App() {
                 }
               >
                 <Route path="dashboard" element={<Dashboard />} />
+                <Route path="allusers" element={<AllUsers />} />
                 <Route path="students" element={<AllStudents />} />
                 <Route path="student-add" element={<CreateNewStudent />} />
                 <Route path="student-edit/:id" element={<EditFormStudent />} />

@@ -52,12 +52,38 @@ public class UserController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+    @GetMapping("/allusers")
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @DeleteMapping("/users/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            userRepository.delete(userOptional.get());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/promote-to-admin/{id}")
+public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
+    Optional<User> userOptional = userRepository.findById(id);
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        user.setRole(Role.ADMIN);
+        userRepository.save(user);
+        return ResponseEntity.ok().build();
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
 
     @GetMapping("/statistics")
     public Map<String, Integer> getStatistics() {
         Map<String, Integer> statistics = new HashMap<>();
-
-        // Get the count of students, instructors, and courses
         int studentCount = userRepository.countUsersByRole(Role.STUDENT);
         int instructorCount = userRepository.countUsersByRole(Role.INSTRUCTOR);
         int courseCount = courseRepository.findAll().size();
