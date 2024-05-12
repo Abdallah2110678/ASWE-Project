@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import {REST_API_BASE_URL} from "./../../../App"
+import { REST_API_BASE_URL } from "./../../../App";
 
 const EditFormStudent = () => {
   const { id } = useParams();
@@ -126,7 +126,9 @@ const EditFormStudent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${REST_API_BASE_URL}/user/getstudent/${id}`);
+        const response = await axios.get(
+          `${REST_API_BASE_URL}/user/getstudent/${id}`
+        );
         const updatedStudentData = { ...response.data, password: "" };
         setStudentData(updatedStudentData);
         setStudentInfo(updatedStudentData);
@@ -316,13 +318,33 @@ const EditFormStudent = () => {
 
 const StudentInfo = ({ studentData }) => {
   const { fname, lname, phone, email } = studentData;
+  const { id } = useParams();
+
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      try {
+        const response = await axios.get(`${REST_API_BASE_URL}/student/courses/enrolled/${id}`);
+        setEnrolledCourses(response.data);
+
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+      }
+    };
+
+    fetchEnrolledCourses();
+  }, []);
+
+  
 
   return (
     <div className="recentCustomerss">
-      <div className="cardHeader">
+    <div className="card">
+      <div className="card-header">
         <h2>Student Info</h2>
       </div>
-      <div className="cardBody">
+      <div className="card-body">
         <p>
           <strong>First Name:</strong> {fname}
         </p>
@@ -336,14 +358,16 @@ const StudentInfo = ({ studentData }) => {
           <strong>Email:</strong> {email}
         </p>
         <div>
-          <h3>Courses Enrolled:</h3>
-          <ol>
-            <li>SWE</li>
-            <li>OS</li>
-          </ol>
+          <h2>Enrolled Courses</h2>
+          <ul className="list-group">
+            {enrolledCourses.length !=0 ?(enrolledCourses.map((course, index) => (
+              <li key={course.id} className="list-group-item">{index+1}- {course.title} <br /> By {course.user.fname}</li>
+            ))):( <li  className="list-group-item">The student not enrolled to any Course</li>)}
+          </ul>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
