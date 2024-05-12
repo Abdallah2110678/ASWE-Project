@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.aswe.demo.models.Category;
 import com.example.aswe.demo.models.Course;
 import com.example.aswe.demo.models.CourseMaterial;
+import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.CategoryRepository;
 import com.example.aswe.demo.repository.CourseMaterialRepository;
 import com.example.aswe.demo.repository.CourseRepository;
@@ -36,7 +37,7 @@ import com.example.aswe.demo.service.MaterialService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/instructor")
 public class InstructorControllers {
@@ -59,16 +60,15 @@ public class InstructorControllers {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
     @Autowired
     private UserRepository userRepository;
 
     @PostMapping("createcourse")
     public ResponseEntity<?> save(@RequestParam("categoryId") Long categoryId,
-     @RequestParam("useId") Long useId,
-     @RequestBody Course course) {
+            @RequestParam("useId") Long useId,
+            @RequestBody Course course) {
         Category category = categoryRepository.findById(categoryId).get();
-        User user =  userRepository.findById(useId).get();
+        User user = userRepository.findById(useId).get();
         course.setUser(user);
         course.setCategory(category);
         return new ResponseEntity<Course>(courseService.createPost(course), HttpStatus.OK);

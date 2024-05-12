@@ -6,7 +6,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.aswe.demo.models.AuthenticationResponse;
-import com.example.aswe.demo.models.Role;
 import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.UserRepository;
 

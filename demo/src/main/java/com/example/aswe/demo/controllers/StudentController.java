@@ -24,7 +24,7 @@ import com.example.aswe.demo.repository.CourseRepository;
 import com.example.aswe.demo.repository.EnrollmentRepository;
 import com.example.aswe.demo.repository.UserRepository;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/student")
 public class StudentController {

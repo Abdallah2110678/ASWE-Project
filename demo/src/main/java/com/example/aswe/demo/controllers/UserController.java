@@ -27,7 +27,7 @@ import com.example.aswe.demo.service.AuthenticationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {

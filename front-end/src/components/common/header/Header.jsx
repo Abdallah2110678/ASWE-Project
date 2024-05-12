@@ -21,8 +21,6 @@ const Header = () => {
     navigate("/login");
   };
 
-
-
   const renderNavigationItems = () => {
     if (userInfo) {
       switch (userInfo.role) {
@@ -42,7 +40,7 @@ const Header = () => {
           return (
             <>
               <li>
-                <Link to="/instructor/dashboard">Dashboard</Link>
+                <Link to="/student/dashboard">Dashboard</Link>
               </li>
               <li>
                 <CartItems />
@@ -91,24 +89,18 @@ const Header = () => {
             <li>
               <Link to="/userProfile">User Profile</Link>
             </li>
-           
+
             {userInfo ? (
               <li>
-                <button 
-                 
-                 onClick={() => signoutHandler()}
-               >
-                 <FontAwesomeIcon icon={faSignOutAlt} />
-               </button>
+                <button onClick={() => signoutHandler()}>
+                  <FontAwesomeIcon icon={faSignOutAlt} />
+                </button>
               </li>
             ) : (
               <li>
                 <Link to="/login">Login</Link>
               </li>
             )}
-
-
-
           </ul>
           <div className="start">
             <div className="button">GET CERTIFICATE</div>
@@ -125,6 +117,5 @@ const Header = () => {
     </>
   );
 };
-
 
 export default Header;
