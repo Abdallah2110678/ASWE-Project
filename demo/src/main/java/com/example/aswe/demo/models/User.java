@@ -50,6 +50,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "reset_token")
+    private String resetToken;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
