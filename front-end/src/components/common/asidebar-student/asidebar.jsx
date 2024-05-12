@@ -52,6 +52,14 @@ const Aside_Instructor = () => {
           <li onClick={handleMouseOver}>
             <a href="#">
               <span className="iconn">
+                <ion-icon name="people-outline"></ion-icon>
+              </span>
+              <span className="title">Enroll</span>
+            </a>
+          </li>
+          <li onClick={handleMouseOver}>
+            <a href="#">
+              <span className="iconn">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>
               <span className="title">Log Out</span>
