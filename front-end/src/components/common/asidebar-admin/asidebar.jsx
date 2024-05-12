@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
@@ -19,80 +20,81 @@ const Aside_Admin = () => {
     <div>
       {/* Navigation */}
       <div className={`navigation ${active ? "active" : ""}`}>
-        <ul>
-          <li onClick={handleMouseOver}>
-            <a href="">
-              <span className="iconn">
-                <ion-icon name="logo-apple"></ion-icon>
-              </span>
-              <span className="title">e-learning</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/">
-              <span className="iconn">
-                
-              </span>
-              <span className="title">Home</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/admin/dashboard">
-              <span className="iconn">
-                
-              </span>
-              <span className="title">Dashboard</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="#">
-              <span className="iconn">
-                <ion-icon name="document-text-outline"></ion-icon>
-              </span>
-              <span className="title">Profile</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/admin/students">
-              <span className="iconn">
-                <ion-icon name="home-outline"></ion-icon>
-              </span>
-              <span className="title">Students</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/admin/student-add">
-              <span className="iconn">
-                <ion-icon name="home-outline"></ion-icon>
-              </span>
-              <span className="title">Add Student</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/admin/instructors">
-              <span className="iconn">
-                <ion-icon name="home-outline"></ion-icon>
-              </span>
-              <span className="title">Instructors</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/admin/instructor-add">
-              <span className="iconn">
-                <ion-icon name="home-outline"></ion-icon>
-              </span>
-              <span className="title">Add Instructor</span>
-            </a>
-          </li>
-          <li onClick={handleMouseOver}>
-            <a href="/">
-              <span className="iconn">
-                <ion-icon name="log-out-outline"></ion-icon>
-              </span>
-              <span className="title">Log Out</span>
-            </a>
-          </li>
-        </ul>
+<ul>
+  <li onClick={handleMouseOver}>
+    <Link to="/">
+      <span className="iconn">
+        <ion-icon name="logo-apple"></ion-icon>
+      </span>
+      <span className="title">e-learning</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/">
+      <span className="iconn">
+        
+      </span>
+      <span className="title">Home</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/admin/dashboard">
+      <span className="iconn">
+        
+      </span>
+      <span className="title">Dashboard</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="#">
+      <span className="iconn">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </span>
+      <span className="title">Profile</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/admin/students">
+      <span className="iconn">
+        <ion-icon name="home-outline"></ion-icon>
+      </span>
+      <span className="title">Students</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/admin/student-add">
+      <span className="iconn">
+        <ion-icon name="home-outline"></ion-icon>
+      </span>
+      <span className="title">Add Student</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/admin/instructors">
+      <span className="iconn">
+        <ion-icon name="home-outline"></ion-icon>
+      </span>
+      <span className="title">Instructors</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/admin/instructor-add">
+      <span className="iconn">
+        <ion-icon name="home-outline"></ion-icon>
+      </span>
+      <span className="title">Add Instructor</span>
+    </Link>
+  </li>
+  <li onClick={handleMouseOver}>
+    <Link to="/">
+      <span className="iconn">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </span>
+      <span className="title">Log Out</span>
+    </Link>
+  </li>
+</ul>
+
       </div>
     </div>
   );

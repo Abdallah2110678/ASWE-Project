@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.aswe.demo.models.Cart;
@@ -47,12 +48,14 @@ public class StudentController {
         try {
             List<Cart> cartItems = cartRepository.findByUserId(userId);
             return ResponseEntity.ok(cartItems);
-        } catch (Exception e) {
-            // Log the exception
+        } catch (Exception e) {  
             e.printStackTrace();
-            // Return a response with an error status
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+     @GetMapping("/search")
+    public List<Course> searchCoursesByTitle(@RequestParam String title) {
+        return courseRepository.findByTitleContainingIgnoreCase(title);
     }
 
     @PostMapping("/cart/addcourse/{userId}/{courseId}")
