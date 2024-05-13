@@ -4,7 +4,6 @@ import CoursesCard from "./CoursesCard"
 import OnlineCourses from "./OnlineCourses"
 import { REST_API_BASE_URL } from "./../../App";
 import axios from "axios";
-import $ from 'jquery';
 const CourseHome = () => {
 
 
