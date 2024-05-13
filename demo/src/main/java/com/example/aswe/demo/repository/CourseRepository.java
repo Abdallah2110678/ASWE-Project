@@ -7,4 +7,5 @@ import com.example.aswe.demo.models.Course;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findAllByUserId(Long id);
+    List<Course> findByTitleContainingIgnoreCase(String title);
 }

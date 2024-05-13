@@ -1,4 +1,4 @@
-package  com.example.aswe.demo.models;
+package com.example.aswe.demo.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Getter 
+@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import "./style.css"
+import React, { useState } from "react";
+import "./style.css";
 
 const Dashboard = () => {
   const [active, setActive] = useState(false);
@@ -22,44 +22,42 @@ const Dashboard = () => {
             </label>
           </div>
 
-          <div className="user">
-           
-          </div>
+          <div className="user"></div>
         </div>
 
         <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">5</div>
-                        <div class="cardName">Course Enrolled</div>
-                    </div>
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">2</div>
-                        <div class="cardName">Courses completed</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">$2</div>
-                        <div class="cardName">Certificates</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
+          <div class="card">
+            <div>
+              <div class="numbers">5</div>
+              <div class="cardName">Course Enrolled</div>
             </div>
+            <div class="iconBx">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="numbers">2</div>
+              <div class="cardName">Courses completed</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="chatbubbles-outline"></ion-icon>
+            </div>
+          </div>
+
+          <div class="card">
+            <div>
+              <div class="numbers">$2</div>
+              <div class="cardName">Certificates</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="cash-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

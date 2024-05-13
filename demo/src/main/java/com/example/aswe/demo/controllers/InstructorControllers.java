@@ -30,6 +30,7 @@ import com.example.aswe.demo.models.User;
 import com.example.aswe.demo.repository.CategoryRepository;
 import com.example.aswe.demo.repository.CourseMaterialRepository;
 import com.example.aswe.demo.repository.CourseRepository;
+import com.example.aswe.demo.repository.EnrollmentRepository;
 import com.example.aswe.demo.repository.UserRepository;
 import com.example.aswe.demo.service.CourseService;
 import com.example.aswe.demo.service.MaterialService;
@@ -37,7 +38,7 @@ import com.example.aswe.demo.service.MaterialService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/instructor")
 public class InstructorControllers {
@@ -60,16 +61,18 @@ public class InstructorControllers {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
 
     @PostMapping("createcourse")
     public ResponseEntity<?> save(@RequestParam("categoryId") Long categoryId,
-     @RequestParam("useId") Long useId,
-     @RequestBody Course course) {
+            @RequestParam("useId") Long useId,
+            @RequestBody Course course) {
         Category category = categoryRepository.findById(categoryId).get();
-        User user =  userRepository.findById(useId).get();
+        User user = userRepository.findById(useId).get();
         course.setUser(user);
         course.setCategory(category);
         return new ResponseEntity<Course>(courseService.createPost(course), HttpStatus.OK);
@@ -161,9 +164,21 @@ public class InstructorControllers {
         if (!courseRepository.existsById(courseId)) {
             return new ResponseEntity<>("Course not found with id: " + courseId, HttpStatus.NOT_FOUND);
         }
-
         CourseMaterial course = courseMaterialRepository.findCourseMaterialByIdAndCourseId(materialId, courseId);
         courseMaterialRepository.delete(course);
         return new ResponseEntity<>("CourseMaterial deleted successfully", HttpStatus.OK);
     }
+
+    @GetMapping("/course/{courseId}/students/count")
+public ResponseEntity<Integer> getNumberOfStudentsEnrolled(@PathVariable Long courseId) {
+    Optional<Course> courseOptional = courseRepository.findById(courseId);
+    if (courseOptional.isPresent()) {
+        Course course = courseOptional.get();
+        int numberOfStudentsEnrolled = enrollmentRepository.countByCourse(course);
+        return ResponseEntity.ok(numberOfStudentsEnrolled);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
 }

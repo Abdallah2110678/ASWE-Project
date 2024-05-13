@@ -1,100 +1,103 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-    import {REST_API_BASE_URL} from "./../../App";
+import { REST_API_BASE_URL } from "./../../App";
 import { Store } from "../../store";
 
-const CreateCourse =() =>{
-
-
-  
+const CreateCourse = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
-    const [courseData, setCourseData] = useState({
+  const [courseData, setCourseData] = useState({
+    title: "",
+    description: "",
+    tags: "",
+    price: "",
+    categoryId: "", // Assuming categoryId is the ID of the category for the course
+  });
+
+  // Define predefined categories directly in the frontend
+  const [categories, setCategories] = useState([
+    { id: 1, name: "Computer Science" },
+    { id: 2, name: "UI/UX Design" },
+    { id: 3, name: "Art & Design" },
+    { id: 4, name: "History & Archeology" },
+    { id: 5, name: "Software Engineering" },
+    { id: 6, name: "Information Software" },
+    { id: 7, name: "Health & Fitness" },
+    { id: 8, name: "Marketing" },
+    { id: 9, name: "Graphic Design" },
+    { id: 10, name: "Music" },
+    { id: 11, name: "Business Administration" },
+    { id: 12, name: "Web Management" },
+    // Add more categories as needed
+  ]);
+  
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSuccessMessage("");
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [successMessage]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCourseData({ ...courseData, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "title":
+        return !value.trim() ? "Title is required." : "";
+      case "description":
+        return !value.trim() ? "Description is required." : "";
+      case "tags":
+        return !value.trim() ? "Tags are required." : "";
+      case "price":
+        return isNaN(value) ? "Price must be a number." : "";
+      case "categoryId":
+        return !value ? "Category is required." : "";
+      default:
+        return "";
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formErrors = {};
+    for (const key in courseData) {
+      if (courseData.hasOwnProperty(key)) {
+        formErrors[key] = validateField(key, courseData[key]);
+      }
+    }
+    if (Object.values(formErrors).some((error) => error)) {
+      setErrors(formErrors);
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${REST_API_BASE_URL}/instructor/createcourse?categoryId=${courseData.categoryId}&useId=${userInfo.id}`,
+        courseData
+      );
+      console.log("Course created:", response.data);
+      setSuccessMessage("Course added successfully.");
+      setCourseData({
         title: "",
         description: "",
         tags: "",
         price: "",
-        categoryId: "", // Assuming categoryId is the ID of the category for the course
+        categoryId: "",
       });
-    
-      const [categories, setCategories] = useState([]);
-      const [errors, setErrors] = useState({});
-      const [successMessage, setSuccessMessage] = useState("");
-    
-      useEffect(() => {
-        fetchCategories();
-      }, []);
+    } catch (error) {
+      console.error("Error creating course:", error);
+      // Handle specific errors or display a generic error message
+    }
+  };
 
-      useEffect(() => {
-        const timer = setTimeout(() => {
-          setSuccessMessage("");
-        }, 4000);
-        return () => clearTimeout(timer);
-      }, [successMessage]);
-    
-      const fetchCategories = async () => {
-        try {
-          const response = await axios.get(`${REST_API_BASE_URL}/instructor/categories`);
-          setCategories(response.data);
-        } catch (error) {
-          console.error("Error fetching categories:", error);
-          // Handle specific errors or display a generic error message
-        }
-      };
-    
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setCourseData({ ...courseData, [name]: value });
-        setErrors({ ...errors, [name]: validateField(name, value) });
-      };
-    
-      const validateField = (name, value) => {
-        switch (name) {
-          case "title":
-            return !value.trim() ? "Title is required." : "";
-          case "description":
-            return !value.trim() ? "Description is required." : "";
-          case "tags":
-            return !value.trim() ? "Tags are required." : "";
-          case "price":
-            return isNaN(value) ? "Price must be a number." : "";
-          case "categoryId":
-            return !value ? "Category is required." : "";
-          default:
-            return "";
-        }
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formErrors = {};
-        for (const key in courseData) {
-          if (courseData.hasOwnProperty(key)) {
-            formErrors[key] = validateField(key, courseData[key]);
-          }
-        }
-        if (Object.values(formErrors).some((error) => error)) {
-          setErrors(formErrors);
-          return;
-        }
-        try {
-          const response = await axios.post(`${REST_API_BASE_URL}/instructor/createcourse?categoryId=${courseData.categoryId}&useId=${userInfo.id}`, courseData);
-          console.log("Course created:", response.data);
-          setSuccessMessage("Course added successfully.");
-          setCourseData({
-            title: "",
-            description: "",
-            tags: "",
-            price: "",
-            categoryId: "",
-          });
-        } catch (error) {
-          console.error("Error creating course:", error);
-          // Handle specific errors or display a generic error message
-        }
-      };
-return (
+  return (
     <div className="main">
       <div className="detailss">
         <div className="recentOrderss">
@@ -190,6 +193,5 @@ return (
     </div>
   );
 };
-     
 
 export default CreateCourse;

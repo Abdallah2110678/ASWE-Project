@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD) // Targeting methods only
 public @interface AdminAction {
-    // Define properties here if needed
+    
 }

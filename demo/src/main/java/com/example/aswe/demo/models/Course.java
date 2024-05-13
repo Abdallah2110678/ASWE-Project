@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class Course {
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,14 +31,12 @@ public class Course {
     private String tags;
     private Double price;
     private Date date;
-    
-    
+
     @ManyToOne
     private User user;
-    
+
     @ManyToOne
     private Category category;
-
 
     @OneToMany(mappedBy = "course")
     @JsonManagedReference
