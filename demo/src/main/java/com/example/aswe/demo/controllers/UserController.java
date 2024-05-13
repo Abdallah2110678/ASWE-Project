@@ -1,6 +1,6 @@
 package com.example.aswe.demo.controllers;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,5 +217,9 @@ public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
     public ResponseEntity<HashMap<String, Object>> AngetMethodName(HttpServletRequest request) {
         User user = getUserFromToken(request);
         return ResponseEntity.ok(user.toHashMap());
+    }
+
+    public void setUserRepository(UserRepository userRepository2) {
+        throw new UnsupportedOperationException("Unimplemented method 'setUserRepository'");
     }
 }
