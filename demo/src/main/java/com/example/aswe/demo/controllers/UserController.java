@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -212,46 +210,47 @@ public class UserController {
         }
     }
 
-
-    @PostMapping("/forgot-password")
-public ResponseEntity<Void> forgotPassword(@RequestBody Map<String, String> request) {
-    String email = request.get("email");
-    Optional<User> userOptional = userRepository.findByEmail(email);
-    if (userOptional.isPresent()) {
-        User user = userOptional.get();
-        String resetToken = UUID.randomUUID().toString();
-        user.setResetToken(resetToken);
-        userRepository.save(user);
-        // Send the password reset email (implementation depends on your email service)
-        return ResponseEntity.ok().build();
-    } else {
-        // User not found, return 404
-        return ResponseEntity.notFound().build();
-    }
-}
-
-@PostMapping("/reset-password")
-public ResponseEntity<Void> resetPassword(@RequestBody Map<String, String> request) {
-    String resetToken = request.get("resetToken");
-    String newPassword = request.get("newPassword");
-    Optional<User> userOptional = userRepository.findByResetToken(resetToken);
-    if (userOptional.isPresent()) {
-        User user = userOptional.get();
-        user.setPassword(passwordEncoder.encode(newPassword));
-        user.setResetToken(null);
-        userRepository.save(user);
-        return ResponseEntity.ok().build();
-    } else {
-        // Token not found or expired, return 404
-        return ResponseEntity.notFound().build();
-    }
-}
-
-
     @AdminAction
     @GetMapping("/jwt")
     public ResponseEntity<HashMap<String, Object>> AngetMethodName(HttpServletRequest request) {
         User user = getUserFromToken(request);
         return ResponseEntity.ok(user.toHashMap());
     }
+
+    // @PostMapping("/forgot-password")
+    // public ResponseEntity<Void> forgotPassword(@RequestBody Map<String, String>
+    // request) {
+    // String email = request.get("email");
+    // Optional<User> userOptional = userRepository.findByEmail(email);
+    // if (userOptional.isPresent()) {
+    // User user = userOptional.get();
+    // String resetToken = UUID.randomUUID().toString();
+    // user.setResetToken(resetToken);
+    // userRepository.save(user);
+    // // Send the password reset email (implementation depends on your email
+    // service)
+    // return ResponseEntity.ok().build();
+    // } else {
+    // // User not found, return 404
+    // return ResponseEntity.notFound().build();
+    // }
+    // }
+
+    // @PostMapping("/reset-password")
+    // public ResponseEntity<Void> resetPassword(@RequestBody Map<String, String>
+    // request) {
+    // String resetToken = request.get("resetToken");
+    // String newPassword = request.get("newPassword");
+    // Optional<User> userOptional = userRepository.findByResetToken(resetToken);
+    // if (userOptional.isPresent()) {
+    // User user = userOptional.get();
+    // user.setPassword(passwordEncoder.encode(newPassword));
+    // user.setResetToken(null);
+    // userRepository.save(user);
+    // return ResponseEntity.ok().build();
+    // } else {
+    // // Token not found or expired, return 404
+    // return ResponseEntity.notFound().build();
+    // }
+    // }
 }
