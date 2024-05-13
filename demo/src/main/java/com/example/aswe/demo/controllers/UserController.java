@@ -170,5 +170,35 @@ public class UserController {
     public ResponseEntity<HashMap<String, Object>> AngetMethodName(HttpServletRequest request) {
         User user = getUserFromToken(request);
         return ResponseEntity.ok(user.toHashMap());
+    }  
+
+    @PutMapping("/updateProfile/{id}")
+    public ResponseEntity<User> updateUserProfile(@RequestBody User updatedProfile, @PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setFname(updatedProfile.getFname());
+            user.setLname(updatedProfile.getLname());
+            user.setEmail(updatedProfile.getEmail());
+            user.setGender(updatedProfile.getGender());
+            user.setDob(updatedProfile.getDob());
+            // Check if the password is provided and update it if not empty
+            if (updatedProfile.getPassword() != null && !updatedProfile.getPassword().isEmpty()) {
+                user.setPassword(passwordEncoder.encode(updatedProfile.getPassword()));
+            }
+            userRepository.save(user);
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/deleteProfile/{id}")
+    public ResponseEntity<Void> deleteUserProfile(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            userRepository.delete(user);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

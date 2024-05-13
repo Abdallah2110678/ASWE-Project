@@ -37,7 +37,7 @@ import CreateCourse from "./components/course/AddCourse";
 import AllCourses from "./components/course/AllCourses";
 import UploadVideo from "./components/course/UploadVideo";
 import MyCourses from "./components/course/MyCourses";
-
+import EditProfile from "./components/UserProfile/UpdateProfile"
 export const REST_API_BASE_URL = "http://localhost:9090/api";
 
 
@@ -118,6 +118,7 @@ function App() {
             <Route exact path="/sign-up" element={<SIGNUP />} />
             <Route exact path="/login" element={<LOGIN />} />
             <Route path="/userProfile" element={<UserProfile />} />
+            <Route path="/UpdateProfile" element={<EditProfile/>}/>
           </Route>
         </Routes>
      

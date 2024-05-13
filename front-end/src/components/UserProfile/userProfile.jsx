@@ -1,94 +1,60 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
 import Back from '../common/back/Back';
-import axios from 'axios';
-import { REST_API_BASE_URL } from './../../App';
+import { Store } from './../../store';
+import Sidebar from '../common/asidebar-profile/asidebar'; // Importing the Sidebar component
 import "./userProfile.css";
 
 const UserProfile = () => {
-    const [user, setUser] = useState({
-        name: '',
-        email: '',
-        profilePicture: 'https://example.com/profile.jpg',
-    });
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errors, setErrors] = useState({});
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;     
-        let errorMessage = '';
-        if (!value.trim()) {
-            errorMessage = `${name} is required.`;
-        }
-
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: errorMessage,
-        }));
-
-        setUser((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        const hasErrors = Object.values(errors).some((error) => error !== '');
-        if (hasErrors) {
-            return; 
-        }
-
-        try {
-            const response = await axios.put(`${REST_API_BASE_URL}/user/profile`, user);
-            console.log('Profile updated:', response.data);
-            setSuccessMessage('Profile updated successfully.');
-        } catch (error) {
-            console.error('Profile update failed:', error);
-        }
-    };
+    const { state } = useContext(Store); // Accessing state from StoreProvider
+    const { userInfo } = state; // Destructuring userInfo from state
 
     return (
-        <>
+        <div className="main-content">
             <Back title="User Profile" />
-            <div className="user-profile-container">
-                <div className="Header">
-                <div className="Text">User Profile</div>
-                <div className="underline"></div>
-            </div>       
-            <form onSubmit={handleFormSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Name:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        name="name"
-                        value={user.name}
-                        onChange={handleInputChange}
-                    />
-                    {errors.name && <div className="error text-danger">{errors.name}</div>}
+            <div className="user-profile-page">
+                <Sidebar /> {/* Adding the Sidebar component */}
+                <div className="user-profile-container">
+                    <div className="Header">
+                        <div className="Text">User Profile</div>
+                        <div className="underline"></div>
+                    </div>       
+                    <table className="table">
+                        <tbody>
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr>
+                                <td>First Name:</td>
+                                <td>{userInfo && userInfo.fname}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Name:</td>
+                                <td>{userInfo && userInfo.lname}</td>
+                            </tr>
+                            <tr>
+                                <td>Data of birth:</td>
+                                <td>{userInfo && userInfo.dob}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender:</td>
+                                <td>{userInfo && userInfo.gender}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone:</td>
+                                <td>{userInfo && userInfo.phone}</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>{userInfo && userInfo.email}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {/* Password field not displayed for security reasons */}
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email:</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        name="email"
-                        value={user.email}
-                        onChange={handleInputChange}
-                    />
-                    {errors.email && <div className="error text-danger">{errors.email}</div>}
-                </div>
-
-                    <button type="submit" className="btn btn-primary">Update Profile</button>
-                    {successMessage && (
-                        <div className="alert alert-success mt-3">{successMessage}</div>
-                    )}
-                </form>
             </div>
-        </>
+        </div>
     );
 };
 
