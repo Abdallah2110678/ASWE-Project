@@ -1,5 +1,6 @@
 package com.example.aswe.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,17 +68,17 @@ public class UserController {
     }
 
     @PutMapping("/promote-to-admin/{id}")
-    public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setRole(Role.ADMIN);
-            userRepository.save(user);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
+    Optional<User> userOptional = userRepository.findById(id);
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        user.setRole(Role.ADMIN);
+        userRepository.save(user);
+        return ResponseEntity.ok().build();
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
     @GetMapping("/statistics")
     public Map<String, Integer> getStatistics() {
