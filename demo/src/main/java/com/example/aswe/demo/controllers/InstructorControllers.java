@@ -63,7 +63,7 @@ public class InstructorControllers {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private EnrollmentRepository enrollmentRepository;
 
@@ -170,15 +170,15 @@ public class InstructorControllers {
     }
 
     @GetMapping("/course/{courseId}/students/count")
-public ResponseEntity<Integer> getNumberOfStudentsEnrolled(@PathVariable Long courseId) {
-    Optional<Course> courseOptional = courseRepository.findById(courseId);
-    if (courseOptional.isPresent()) {
-        Course course = courseOptional.get();
-        int numberOfStudentsEnrolled = enrollmentRepository.countByCourse(course);
-        return ResponseEntity.ok(numberOfStudentsEnrolled);
-    } else {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Integer> getNumberOfStudentsEnrolled(@PathVariable Long courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            int numberOfStudentsEnrolled = enrollmentRepository.countByCourse(course);
+            return ResponseEntity.ok(numberOfStudentsEnrolled);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
 }

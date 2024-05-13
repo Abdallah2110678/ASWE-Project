@@ -68,17 +68,17 @@ public class UserController {
     }
 
     @PutMapping("/promote-to-admin/{id}")
-public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
-    Optional<User> userOptional = userRepository.findById(id);
-    if (userOptional.isPresent()) {
-        User user = userOptional.get();
-        user.setRole(Role.ADMIN);
-        userRepository.save(user);
-        return ResponseEntity.ok().build();
-    } else {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRole(Role.ADMIN);
+            userRepository.save(user);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
     @GetMapping("/statistics")
     public Map<String, Integer> getStatistics() {
@@ -216,7 +216,7 @@ public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
     public ResponseEntity<HashMap<String, Object>> AngetMethodName(HttpServletRequest request) {
         User user = getUserFromToken(request);
         return ResponseEntity.ok(user.toHashMap());
-    }  
+    }
 
     @PutMapping("/updateProfile/{id}")
     public ResponseEntity<User> updateUserProfile(@RequestBody User updatedProfile, @PathVariable Long id) {
@@ -237,7 +237,6 @@ public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
         return ResponseEntity.notFound().build();
     }
 
-<<<<<<< HEAD
     @DeleteMapping("/deleteProfile/{id}")
     public ResponseEntity<Void> deleteUserProfile(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
@@ -248,7 +247,6 @@ public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
         return ResponseEntity.notFound().build();
     }
 
-=======
     // @PostMapping("/forgot-password")
     // public ResponseEntity<Void> forgotPassword(@RequestBody Map<String, String>
     // request) {
@@ -285,5 +283,4 @@ public ResponseEntity<Void> promoteUserToAdmin(@PathVariable Long id) {
     // return ResponseEntity.notFound().build();
     // }
     // }
->>>>>>> b3ff400b9ebb3389d9948ae8be20413accbab498
 }

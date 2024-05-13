@@ -50,12 +50,13 @@ public class StudentController {
         try {
             List<Cart> cartItems = cartRepository.findByUserId(userId);
             return ResponseEntity.ok(cartItems);
-        } catch (Exception e) {  
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-     @GetMapping("/search")
+
+    @GetMapping("/search")
     public List<Course> searchCoursesByTitle(@RequestParam String title) {
         return courseRepository.findByTitleContainingIgnoreCase(title);
     }
@@ -122,29 +123,30 @@ public class StudentController {
     }
 
     @GetMapping("/courses/enrolled/{userId}")
-  public ResponseEntity<?> getCoursesEnrolledByUser(@PathVariable Long userId) {
-    Optional<User> userOptional = userRepository.findById(userId);
-    if (userOptional.isPresent()) {
-        User user = userOptional.get();
-        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
-        List<Course> enrolledCourses = enrollments.stream().map(Enrollment::getCourse).collect(Collectors.toList());
-        return ResponseEntity.ok(enrolledCourses);
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("User with ID " + userId + " not found.");
+    public ResponseEntity<?> getCoursesEnrolledByUser(@PathVariable Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+            List<Course> enrolledCourses = enrollments.stream().map(Enrollment::getCourse).collect(Collectors.toList());
+            return ResponseEntity.ok(enrolledCourses);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User with ID " + userId + " not found.");
+        }
     }
-}
-@GetMapping("/enrollment/{userId}/{courseId}/check")
-public boolean checkEnrollment(@PathVariable Long userId, @PathVariable Long courseId) {
-    Optional<User> userOptional = userRepository.findById(userId);
-    Optional<Course> courseOptional = courseRepository.findById(courseId);
-    if (userOptional.isPresent() && courseOptional.isPresent()) {
-        User user = userOptional.get();
-        Course course = courseOptional.get();
-        return enrollmentRepository.existsByUserAndCourse(user, course);
-    } else {
-        return false;
+
+    @GetMapping("/enrollment/{userId}/{courseId}/check")
+    public boolean checkEnrollment(@PathVariable Long userId, @PathVariable Long courseId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (userOptional.isPresent() && courseOptional.isPresent()) {
+            User user = userOptional.get();
+            Course course = courseOptional.get();
+            return enrollmentRepository.existsByUserAndCourse(user, course);
+        } else {
+            return false;
+        }
     }
-}
 
 }
