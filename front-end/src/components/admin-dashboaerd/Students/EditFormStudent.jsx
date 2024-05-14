@@ -139,19 +139,16 @@ const EditFormStudent = () => {
     fetchData();
   }, []);
 
-  const handleStudentUpdate = () => {
-    axios
-      .put(`${REST_API_BASE_URL}/user/students/update/${id}`, studentData)
-      .then((response) => {
-        console.log("Student updated successfully:", response.data);
-        setSuccessMessage(
-          `update student ${studentData.fname}  ${studentData.lname} in the system.`
-        );
-        setStudentInfo(studentData);
-      })
-      .catch((error) => {
-        console.error("Error updating student:", error);
-      });
+  const handleStudentUpdate = async () => {
+    console.log(studentData);
+    try {
+      const response = await axios.put(`${REST_API_BASE_URL}/user/students/update/${id}`, studentData);
+      console.log("Student updated successfully:", response.data);
+      setSuccessMessage(`Updated student ${studentData.fname} ${studentData.lname} in the system.`);
+      setStudentInfo(studentData);
+    } catch (error) {
+      console.error("Error updating student:", error);
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();

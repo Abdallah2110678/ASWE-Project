@@ -26,6 +26,7 @@ import com.example.aswe.demo.repository.CartRepository;
 import com.example.aswe.demo.repository.CourseRepository;
 import com.example.aswe.demo.repository.EnrollmentRepository;
 import com.example.aswe.demo.repository.UserRepository;
+import com.example.aswe.demo.service.CourseService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -43,6 +44,8 @@ public class StudentController {
 
     @Autowired
     private EnrollmentRepository enrollmentRepository;
+    @Autowired
+    private CourseService courseService;
     // Get all cart items by user id
 
     @GetMapping("/cart/{userId}")
@@ -59,6 +62,12 @@ public class StudentController {
     @GetMapping("/search")
     public List<Course> searchCoursesByTitle(@RequestParam String title) {
         return courseRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    
+    @GetMapping("course/{id}")
+    public Course getCourseById(@PathVariable("id") Long id) {
+        return courseService.getPost(id);
     }
 
     @PostMapping("/cart/addcourse/{userId}/{courseId}")

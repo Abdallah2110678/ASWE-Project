@@ -61,8 +61,8 @@ const UploadVideo =()=>{
           <div className="recentOrders">
           <div className="cardHeader">
             <h2>Upload New video</h2>
-            <Link to={`/instructor/my-courses/${userInfo.id}`} className="btn">
-              Back To Courses
+            <Link to={`/instructor/my-course/play/${id}`} className="btn">
+              Back To Videos
             </Link>
           </div>
           <form>

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import { REST_API_BASE_URL } from "./../../App";
+import  axios from "axios";
+import { REST_API_BASE_URL } from "../../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
@@ -10,38 +10,23 @@ import {
   faEdit,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
+import { Store } from "../../store";
 
-const MyCourses = () => {
-  const { id } = useParams();
+const StudentCourse = () => {
+  const { state } = useContext(Store);
+  const { userInfo } = state;
+
   const [courses, setCourses] = useState([]);
-
-
-
-  const handleDelete = async (id) => {
-    try {
-      const response = await axios.delete(`${REST_API_BASE_URL}/instructor/delete/course/${id}`);
-
-      if (response.status === 200) {
-        // setSuccessMessage(`Instractor deleted successfully`);
-
-       // console.log("Instractor deleted successfully");
-        
-       // setInstractor(Instractor.filter((Student) => Student.id !== id));
-      } else {
-        console.error("Failed to delete item");
-      }
-    } catch (error) {
-      console.error("Error deleting item:", error.message);
-    }
-  };
 
 
   const handleCourseFetch = async () => {
     try {
       const response = await axios.get(
-        `${REST_API_BASE_URL}/instructor/courses/${id}`
+        `${REST_API_BASE_URL}/student/courses/enrolled/${userInfo.id}`
       );
       const courseData = response.data;
+      console.log(courseData)
+      console.log(userInfo.id)
       setCourses(courseData);
     } catch (error) {
       console.error("Error fetching course data:", error);
@@ -71,21 +56,18 @@ const MyCourses = () => {
       </div>
       <div className="detailss ">
         <div className="recentOrderss">
-          <div style={{ padding: "5px" }}>
-            {/* Your message alert */}
-            <Link to="/instructor/createcourse" className="btn btn-dark mb-3">
-              Add New Course
-            </Link>
+        <div className="cardHeader">
+            <h2>{userInfo.fname}`s Courses</h2>
+          </div>
 
             <table className="table table-hover text-center">
               <thead className="table-dark">
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Title</th>
-                  <th scope="col">Price</th>
+                  <th scope="col">Athor</th>
                   <th scope="col">Category</th>
-                  <th scope="col"># Videos</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Learn </th>
                 </tr>
               </thead>
               <tbody>
@@ -98,35 +80,17 @@ const MyCourses = () => {
                     <tr key={course.id}>
                       <td>{index + 1}</td>
                       <td> {course.title}</td>
-                      <td>$ {course.price}</td>
+                      <td>{course.user.fname} {course.user.fname}</td>
                       <td>{course.category.name}</td>
                       <td>
                       <Link
-                          to={`/instructor/my-course/play/${course.id}`}
+                          to={`/student/my-course/play/${course.id}`}
                            className="link-dark me-3"
                         >
-                          {course.courseMaterials.length}
                             <FontAwesomeIcon icon={faEye} />
                         </Link>
                      </td>
-                      <td>
-                        <Link
-                          to={`/instructor/upload-video/${course.id}`}
-                          className="link-dark me-3"
-                        >
-                          <FontAwesomeIcon icon={faPencilAlt} />
-                        </Link>
-                        <Link
-                          to={`/admin/course-edit/${course.id}`}
-                          className="link-dark me-3"
-                        >
-                          <FontAwesomeIcon icon={faEdit} />
-                        </Link>
-                        <button className="btn"
-                          onClick={() => handleDelete(course.id)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </td>
+                      
                     </tr>
                   ))
                 )}
@@ -138,8 +102,8 @@ const MyCourses = () => {
         )}*/}
         </div>
       </div>
-    </div>
+    
   );
 };
 
-export default MyCourses;
+export default StudentCourse;

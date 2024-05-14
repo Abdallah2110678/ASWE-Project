@@ -1,45 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
-import { REST_API_BASE_URL } from "./../../App";
+import { REST_API_BASE_URL } from "../../App";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const AllCourses = () => {
+const Videos = () => {
+
   const { id } = useParams();
   const [selectedVideo, setSelectedVideo] = useState();
   const [course, setCourse] = useState([{}]);
   const [courseName, setCourseName] = useState("");
-  const [idCourse, setIdCourse] = useState(null);
-  
 
-  const handleDelete = async (idVideo) => {
-    try {
-      const response = await axios.delete(`${REST_API_BASE_URL}/instructor/${id}/material/${idVideo}`);
-
-      if (response.status === 200) {
-        // setSuccessMessage(`Instractor deleted successfully`);
-
-       // console.log("Instractor deleted successfully");
-        
-       // setInstractor(Instractor.filter((Student) => Student.id !== id));
-      } else {
-        console.error("Failed to delete item");
-      }
-    } catch (error) {
-      console.error("Error deleting item:", error.message);
-    }
-  };
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(
-          `${REST_API_BASE_URL}/instructor/course/${id}`
+          `${REST_API_BASE_URL}/student/course/${id}`
         );
         setCourse(response.data.courseMaterials);
-        setIdCourse(response.data.id)
         setCourseName(response.data.title);
         console.log(response.data.courseMaterials);
       } catch (error) {
@@ -75,8 +56,8 @@ const AllCourses = () => {
         <div className="recentOrderss">
           <div style={{ padding: "5px" }}>
             {/* Your message alert */}
-            <Link to={`/instructor/upload-video/${idCourse}`} className="btn btn-dark mb-3">
-              Add New Video
+            <Link to="/student/mycourses" className="btn btn-dark mb-3">
+              Back
             </Link>
 
             <div>
@@ -101,7 +82,7 @@ const AllCourses = () => {
                       <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Action</th>
+                        <th>Watch</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -121,10 +102,7 @@ const AllCourses = () => {
                           onClick={() => handleVideoSelect(video.id)}>
                           <FontAwesomeIcon icon={faEye} />
                             </button>
-                            <button className="btn"
-                          onClick={() => handleDelete(video.id)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
+                            
                             </td>
                           </tr>
                         ))
@@ -182,4 +160,4 @@ const AllCourses = () => {
 //     )
 // }
 
-export default AllCourses;
+export default Videos;
