@@ -18,8 +18,13 @@ const CourseHome = () => {
     const fetchCourses = async () => {
         try {
             const response = await axios.get(`${REST_API_BASE_URL}/instructor/allcourse`);
-            setCourses(response.data);
-            console.log(courses);
+            const courseData = response.data;
+      // For each course, fetch the number of students enrolled
+      const coursesWithStudentCount = await Promise.all(courseData.map(async (course) => {
+        const studentCountResponse = await axios.get(`${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`);
+        return { ...course, studentCount: studentCountResponse.data };
+      }));
+      setCourses(coursesWithStudentCount);
         } catch (error) {
             console.error('Error fetching courses:', error);
         }
@@ -27,15 +32,21 @@ const CourseHome = () => {
     const [searchQuery, setSearchQuery] = useState('');
    
   
-    const handleSearch = () => {
+    const handleSearch = async () => {
       if (searchQuery.trim() !== '') {
-        axios.get(`${REST_API_BASE_URL}/student/search?title=${searchQuery}`)
-          .then(response => {
-            setCourses(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching courses:', error);
-          });
+        try {
+          const response = await axios.get(`${REST_API_BASE_URL}/student/search?title=${searchQuery}`);
+          const courseData = response.data;
+          // For each course, fetch the number of students enrolled
+          const coursesWithStudentCount = await Promise.all(courseData.map(async (course) => {
+            
+              const studentCountResponse = await axios.get(`${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`);
+              return { ...course, studentCount: studentCountResponse.data };
+          }));
+          setCourses(coursesWithStudentCount);
+        } catch (error) {
+          console.error('Error fetching courses:', error);
+        }
       }
     };
   

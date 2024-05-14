@@ -315,13 +315,35 @@ const EditFormInstructor = () => {
 
 const Ins = ({ InstructorData }) => {
   const { fname, lname, phone, email } = InstructorData;
+  const { id } = useParams();
+const [courses, setCourses] = useState([]);
 
-  return (
-    <div className="recentCustomerss">
-      <div className="cardHeader">
+const handleCourseFetch = async () => {
+  try {
+    const response = await axios.get(`${REST_API_BASE_URL}/instructor/courses/${id}`);
+    const courseData = response.data;
+    // For each course, fetch the number of students enrolled
+    const coursesWithStudentCount = await Promise.all(courseData.map(async (course) => {
+      const studentCountResponse = await axios.get(`${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`);
+      return { ...course, studentCount: studentCountResponse.data };
+    }));
+    setCourses(coursesWithStudentCount);
+  } catch (error) {
+    console.error("Error fetching course data:", error);
+  }
+};
+
+useEffect(() => {
+  handleCourseFetch();
+}, []);
+
+return (
+  <div className="recentCustomerss">
+    <div className="card">
+      <div className="card-header">
         <h2>Instructor Info</h2>
       </div>
-      <div className="cardBody">
+      <div className="card-body">
         <p>
           <strong>First Name:</strong> {fname}
         </p>
@@ -335,14 +357,25 @@ const Ins = ({ InstructorData }) => {
           <strong>Email:</strong> {email}
         </p>
         <div>
-          <h3>Courses :</h3>
-          <ol>
-            <li>SWE</li>
-            <li>OS</li>
-          </ol>
+          <h2>Courses</h2>
+          <ul className="list-group">
+            {courses.length !== 0 ? (
+              courses.map((course, index) => (
+                <li key={course.id} className="list-group-item">
+                  <strong>{index + 1}-</strong> {course.title} <br />
+                  <strong>Category:</strong> {course.category.name} <br />
+                  <strong>Price:</strong> {course.price === 0 ? "Free" : `$${course.price}`} <br />
+                  <strong>Number of Students Enrolled:</strong> {course.studentCount}
+                </li>
+              ))
+            ) : (
+              <li className="list-group-item">The Instructor has not created any courses</li>
+            )}
+          </ul>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

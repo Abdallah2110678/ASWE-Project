@@ -82,10 +82,11 @@ const Header = () => {
             </li>
 
             {userInfo ? (
-              <li>
-                <button onClick={() => signoutHandler()}>
-                  <FontAwesomeIcon icon={faSignOutAlt} />
-                </button>
+              <li onClick={() => signoutHandler()}>
+                
+                  {/* <FontAwesomeIcon icon={faSignOutAlt} /> */}
+                  <Link to="#">Logout</Link>
+                
               </li>
             ) : (
               <li>

@@ -39,6 +39,14 @@ const CoursesCard = ({ courses }) => {
   };
 
   const checkEnrollmentStatus = async (courseId) => {
+    if (!userInfo) {
+      alert("Please login to enroll");
+      navigate("/login");
+      
+    }else if(userInfo.role != "STUDENT"){
+      alert("Student only can enroll courses");
+      return;
+    } else {
     try {
       const response = await axios.get(`${REST_API_BASE_URL}/student/enrollment/${userInfo.id}/${courseId}/check`);
      if(response.data){
@@ -50,6 +58,7 @@ const CoursesCard = ({ courses }) => {
     } catch (error) {
       console.error('Error checking enrollment:', error);
     }}
+  }
 
   return (
     <>
@@ -67,12 +76,7 @@ const CoursesCard = ({ courses }) => {
                 <div className='text'>
                   <h1>{course.title}</h1>
                   <div className='rate'>
-                    <i className='fa fa-star'></i>
-                    <i className='fa fa-star'></i>
-                    <i className='fa fa-star'></i>
-                    <i className='fa fa-star'></i>
-                    <i className='fa fa-star'></i>
-                    <label htmlFor=''>(5.0)</label>
+                   <h5>Category: </h5><h6>{course.category.name} </h6>
                   </div>
                   <div className='details'>
                     
@@ -102,7 +106,7 @@ const CoursesCard = ({ courses }) => {
                         )}
                       
                       </>
-                    
+                    <strong >Total Enrolled </strong>({course.studentCount})
                   </div>
                 </div>
               </div>
