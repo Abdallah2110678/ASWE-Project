@@ -11,31 +11,48 @@ const CourseHome = () => {
     fetchCourses();
     console.log(courses);
   }, []);
-
-<<<<<<< HEAD
   const fetchCourses = async () => {
     try {
       const response = await axios.get(
         `${REST_API_BASE_URL}/instructor/allcourse`
       );
-      setCourses(response.data);
-      console.log(courses);
+      const courseData = response.data;
+      // For each course, fetch the number of students enrolled
+      const coursesWithStudentCount = await Promise.all(
+        courseData.map(async (course) => {
+          const studentCountResponse = await axios.get(
+            `${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`
+          );
+          return { ...course, studentCount: studentCountResponse.data };
+        })
+      );
+      setCourses(coursesWithStudentCount);
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
   };
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchQuery.trim() !== "") {
-      axios
-        .get(`${REST_API_BASE_URL}/student/search?title=${searchQuery}`)
-        .then((response) => {
-          setCourses(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching courses:", error);
-        });
+      try {
+        const response = await axios.get(
+          `${REST_API_BASE_URL}/student/search?title=${searchQuery}`
+        );
+        const courseData = response.data;
+        // For each course, fetch the number of students enrolled
+        const coursesWithStudentCount = await Promise.all(
+          courseData.map(async (course) => {
+            const studentCountResponse = await axios.get(
+              `${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`
+            );
+            return { ...course, studentCount: studentCountResponse.data };
+          })
+        );
+        setCourses(coursesWithStudentCount);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
     }
   };
 
@@ -48,52 +65,6 @@ const CourseHome = () => {
       handleSearch();
     }
   };
-=======
-    const fetchCourses = async () => {
-        try {
-            const response = await axios.get(`${REST_API_BASE_URL}/instructor/allcourse`);
-            const courseData = response.data;
-      // For each course, fetch the number of students enrolled
-      const coursesWithStudentCount = await Promise.all(courseData.map(async (course) => {
-        const studentCountResponse = await axios.get(`${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`);
-        return { ...course, studentCount: studentCountResponse.data };
-      }));
-      setCourses(coursesWithStudentCount);
-        } catch (error) {
-            console.error('Error fetching courses:', error);
-        }
-    };
-    const [searchQuery, setSearchQuery] = useState('');
-   
-  
-    const handleSearch = async () => {
-      if (searchQuery.trim() !== '') {
-        try {
-          const response = await axios.get(`${REST_API_BASE_URL}/student/search?title=${searchQuery}`);
-          const courseData = response.data;
-          // For each course, fetch the number of students enrolled
-          const coursesWithStudentCount = await Promise.all(courseData.map(async (course) => {
-            
-              const studentCountResponse = await axios.get(`${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`);
-              return { ...course, studentCount: studentCountResponse.data };
-          }));
-          setCourses(coursesWithStudentCount);
-        } catch (error) {
-          console.error('Error fetching courses:', error);
-        }
-      }
-    };
-  
-    const handleChange = event => {
-      setSearchQuery(event.target.value);
-    };
-  
-    const handleKeyPress = event => {
-      if (event.key === 'Enter') {
-        handleSearch();
-      }
-    };
->>>>>>> e8c96d4a500fde3a8682dbd6a42f548ce7aa21e1
   return (
     <>
       <Back title="Explore Courses" />
