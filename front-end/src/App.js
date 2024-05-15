@@ -99,8 +99,8 @@ function App() {
               >
                 <Route path="dashboard" element={<DASHBOARD />} />
                 <Route path="mycourses" element={<StudentCourse />} />
-                <Route path="my-course/play/:id" element={<Videos/>}/>
-                </Route>
+                <Route path="my-course/play/:id" element={<Videos />} />
+              </Route>
 
               <Route
                 path="/instructor"
@@ -123,30 +123,29 @@ function App() {
                 <Route path="my-courses/:id" element={<MyCourses />} />
               </Route>
 
-          <Route
-            path="/"
-            element={
-              <>
-                <Header />
-                <Outlet />
-                <Footer />
-              </>
-            }
-          >
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/courses" element={<CourseHome />} />  
-            <Route path="/contact" element={<Contact />} />
-            <Route exact path="/sign-up" element={<SIGNUP />} />
-            <Route exact path="/login" element={<LOGIN />} />
-            <Route path="/userProfile" element={<UserProfile />} />
-            <Route path="/enroll/:id" element={<Enrolle />} />
-          </Route>
-        </Routes>
-     
-      </StoreProvider>
-      </QueryClientProvider>
-    </Router>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Header />
+                    <Outlet />
+                    <Footer />
+                  </>
+                }
+              >
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/courses" element={<CourseHome />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route exact path="/sign-up" element={<SIGNUP />} />
+                <Route exact path="/login" element={<LOGIN />} />
+                <Route path="/userProfile" element={<UserProfile />} />
+                <Route path="/enroll/:id" element={<Enrolle />} />
+              </Route>
+            </Routes>
+          </StoreProvider>
+        </QueryClientProvider>
+      </Router>
     </>
   );
 }
