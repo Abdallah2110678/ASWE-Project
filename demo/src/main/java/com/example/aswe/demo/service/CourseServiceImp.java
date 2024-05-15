@@ -28,9 +28,7 @@ public class CourseServiceImp implements CourseService {
         try {
             course.setDate(new Date());
             Course saveVideo = courseRepository.save(course);
-
             return saveVideo;
-
         } catch (Exception e) {
             throw new ResourceNotFound(false, "something is worng");
         }
