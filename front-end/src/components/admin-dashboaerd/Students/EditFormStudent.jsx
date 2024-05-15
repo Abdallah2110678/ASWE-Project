@@ -358,7 +358,8 @@ const StudentInfo = ({ studentData }) => {
           <h2>Enrolled Courses</h2>
           <ul className="list-group">
             {enrolledCourses.length !=0 ?(enrolledCourses.map((course, index) => (
-              <li key={course.id} className="list-group-item">{index+1}- {course.title} <br /> By {course.user.fname}</li>
+              <li key={course.id} className="list-group-item"> <strong>{index+1}-</strong>  {course.title} <br /> <strong>By</strong> {course.user.fname}<br/>
+               <strong>Category</strong> {course.category.name}</li>
             ))):( <li  className="list-group-item">The student not enrolled to any Course</li>)}
           </ul>
         </div>

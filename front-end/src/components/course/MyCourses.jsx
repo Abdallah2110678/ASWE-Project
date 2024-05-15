@@ -35,18 +35,21 @@ const MyCourses = () => {
     }
   };
 
-
   const handleCourseFetch = async () => {
     try {
-      const response = await axios.get(
-        `${REST_API_BASE_URL}/instructor/courses/${id}`
-      );
+      const response = await axios.get(`${REST_API_BASE_URL}/instructor/courses/${id}`);
       const courseData = response.data;
-      setCourses(courseData);
+      // For each course, fetch the number of students enrolled
+      const coursesWithStudentCount = await Promise.all(courseData.map(async (course) => {
+        const studentCountResponse = await axios.get(`${REST_API_BASE_URL}/instructor/course/${course.id}/students/count`);
+        return { ...course, studentCount: studentCountResponse.data };
+      }));
+      setCourses(coursesWithStudentCount);
     } catch (error) {
       console.error("Error fetching course data:", error);
     }
   };
+
 
   useEffect(() => {
     handleCourseFetch();
@@ -84,6 +87,7 @@ const MyCourses = () => {
                   <th scope="col">Title</th>
                   <th scope="col">Price</th>
                   <th scope="col">Category</th>
+                  <th scope="col"># Student</th>
                   <th scope="col"># Videos</th>
                   <th scope="col">Actions</th>
                 </tr>
@@ -98,8 +102,9 @@ const MyCourses = () => {
                     <tr key={course.id}>
                       <td>{index + 1}</td>
                       <td> {course.title}</td>
-                      <td>$ {course.price}</td>
+                      <td>{course.price === 0 ? "Free" : `$${course.price}`}</td>
                       <td>{course.category.name}</td>
+                      <td>{course.studentCount}</td>
                       <td>
                       <Link
                           to={`/instructor/my-course/play/${course.id}`}
