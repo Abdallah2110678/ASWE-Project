@@ -23,18 +23,12 @@ public class DataLoader implements CommandLineRunner {
         categoryRepository.save(new Category("Big Data"));
         categoryRepository.save(new Category("Natural Language Processing (NLP)"));
         categoryRepository.save(new Category("Robotics"));
-        categoryRepository.save(new Category("Bioinformatics"));
-        categoryRepository.save(new Category("E-commerce"));
-        categoryRepository.save(new Category("Fintech"));
-        categoryRepository.save(new Category("Healthcare IT"));
-        categoryRepository.save(new Category("Environmental Science"));
-        categoryRepository.save(new Category("Renewable Energy"));
-        categoryRepository.save(new Category("Astronomy"));
-        categoryRepository.save(new Category("Geology"));
+        categoryRepository.save(new Category("Game Development"));
+        categoryRepository.save(new Category("Cloud Computing"));
         categoryRepository.save(new Category("UI & UX Design"));
-        categoryRepository.save(new Category("Art & Design"));
-        categoryRepository.save(new Category("Computer Science"));
-        categoryRepository.save(new Category("History & Archeologic"));
+        categoryRepository.save(new Category("Virtual Reality (VR)"));
+        categoryRepository.save(new Category("Augmented Reality (AR)"));
+        categoryRepository.save(new Category("Quantum Computing"));
         categoryRepository.save(new Category("Software Engineering"));
         categoryRepository.save(new Category("Information Software"));
         categoryRepository.save(new Category("Health & Fitness"));
@@ -50,10 +44,5 @@ public class DataLoader implements CommandLineRunner {
         categoryRepository.save(new Category("Cybersecurity"));
         categoryRepository.save(new Category("Internet of Things (IoT)"));
         categoryRepository.save(new Category("Mobile Development"));
-        categoryRepository.save(new Category("Game Development"));
-        categoryRepository.save(new Category("Cloud Computing"));
-        categoryRepository.save(new Category("Virtual Reality (VR)"));
-        categoryRepository.save(new Category("Augmented Reality (AR)"));
-        categoryRepository.save(new Category("Quantum Computing"));
     }
 }
