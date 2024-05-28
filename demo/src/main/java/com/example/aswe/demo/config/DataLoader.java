@@ -19,41 +19,30 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        categoryRepository.save(new Category("DevOps"));
-        categoryRepository.save(new Category("Big Data"));
-        categoryRepository.save(new Category("Natural Language Processing (NLP)"));
-        categoryRepository.save(new Category("Robotics"));
-        categoryRepository.save(new Category("Bioinformatics"));
-        categoryRepository.save(new Category("E-commerce"));
-        categoryRepository.save(new Category("Fintech"));
-        categoryRepository.save(new Category("Healthcare IT"));
-        categoryRepository.save(new Category("Environmental Science"));
-        categoryRepository.save(new Category("Renewable Energy"));
-        categoryRepository.save(new Category("Astronomy"));
-        categoryRepository.save(new Category("Geology"));
-        categoryRepository.save(new Category("UI & UX Design"));
-        categoryRepository.save(new Category("Art & Design"));
         categoryRepository.save(new Category("Computer Science"));
-        categoryRepository.save(new Category("History & Archeologic"));
-        categoryRepository.save(new Category("Software Engineering"));
-        categoryRepository.save(new Category("Information Software"));
+        categoryRepository.save(new Category("Engineering"));
+        categoryRepository.save(new Category("UI & UX Design"));
+        categoryRepository.save(new Category("Quantum Computing"));
         categoryRepository.save(new Category("Health & Fitness"));
         categoryRepository.save(new Category("Marketing"));
         categoryRepository.save(new Category("Graphic Design"));
         categoryRepository.save(new Category("Music"));
         categoryRepository.save(new Category("Business Administration"));
-        categoryRepository.save(new Category("Web Development"));
-        categoryRepository.save(new Category("Data Science"));
-        categoryRepository.save(new Category("Machine Learning"));
-        categoryRepository.save(new Category("Artificial Intelligence"));
         categoryRepository.save(new Category("Blockchain"));
-        categoryRepository.save(new Category("Cybersecurity"));
-        categoryRepository.save(new Category("Internet of Things (IoT)"));
-        categoryRepository.save(new Category("Mobile Development"));
-        categoryRepository.save(new Category("Game Development"));
-        categoryRepository.save(new Category("Cloud Computing"));
-        categoryRepository.save(new Category("Virtual Reality (VR)"));
-        categoryRepository.save(new Category("Augmented Reality (AR)"));
-        categoryRepository.save(new Category("Quantum Computing"));
+        categoryRepository.save(new Category("Art & Design"));
+        categoryRepository.save(new Category("History"));
+        categoryRepository.save(new Category("Literature"));
+        categoryRepository.save(new Category("Mathematics"));
+        categoryRepository.save(new Category("Philosophy"));
+        categoryRepository.save(new Category("Psychology"));
+        categoryRepository.save(new Category("Sociology"));
+        categoryRepository.save(new Category("Economics"));
+        categoryRepository.save(new Category("Political Science"));
+        categoryRepository.save(new Category("Languages"));
+        categoryRepository.save(new Category("Geography"));
+        categoryRepository.save(new Category("Physics"));
+        categoryRepository.save(new Category("Medicine"));
+        categoryRepository.save(new Category("Dentistry"));
+        categoryRepository.save(new Category("Pharmacy"));
     }
 }

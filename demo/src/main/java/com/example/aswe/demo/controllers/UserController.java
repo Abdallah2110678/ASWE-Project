@@ -47,7 +47,6 @@ public class UserController {
     @Autowired
     private EnrollmentRepository enrollmentRepository;
 
-
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
         return ResponseEntity.ok(authService.register(request));
@@ -191,12 +190,13 @@ public class UserController {
         }
         return null;
     }
+
     @Transactional
     @DeleteMapping("/students/delete/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         try {
             Optional<User> userOptional = userRepository.findById(id);
-            
+
             if (userOptional.isPresent()) {
                 User student = userOptional.get();
                 enrollmentRepository.deleteAllByUser(student);
@@ -208,15 +208,16 @@ public class UserController {
         } catch (Exception e) {
             // Log the exception for troubleshooting
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete enrollments for user with ID: " + id);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete enrollments for user with ID: " + id);
         }
     }
-   
+
     @DeleteMapping("/cc/{id}")
     public ResponseEntity<?> deleteEnrollmentsByUserId(@PathVariable Long id) {
         try {
             Optional<User> userOptional = userRepository.findById(id);
-            
+
             if (userOptional.isPresent()) {
                 User student = userOptional.get();
                 enrollmentRepository.deleteAllByUser(student);
@@ -227,10 +228,10 @@ public class UserController {
         } catch (Exception e) {
             // Log the exception for troubleshooting
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete enrollments for user with ID: " + id);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete enrollments for user with ID: " + id);
         }
     }
-    
 
     @GetMapping("/check-email/{email}")
     public ResponseEntity<Boolean> checkEmailExists(@PathVariable String email) {

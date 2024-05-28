@@ -1,4 +1,5 @@
 package com.example.aswe.demo.filter;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,6 @@ import com.example.aswe.demo.service.JwtService;
 import com.example.aswe.demo.service.UserDetailsServiceImp;
 
 import java.io.IOException;
-
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
