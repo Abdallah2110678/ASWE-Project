@@ -120,7 +120,7 @@ export const SignUp = ({ state }) => {
 
   const handleStudentCreation = () => {
     axios
-      .post(`${REST_API_BASE_URL}/user/register`, Data)
+      .post(`http://localhost:8080/api/user-microservice/register`, Data)
       .then((response) => {
         console.log("Student created:", response.data);
         setSuccessMessage("Student Added successfully.");
