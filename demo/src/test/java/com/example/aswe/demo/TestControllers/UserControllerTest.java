@@ -53,6 +53,4 @@ class UserControllerTest {
         // Verify the response
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
-
-    // More tests for other controller methods can be added similarly
 }

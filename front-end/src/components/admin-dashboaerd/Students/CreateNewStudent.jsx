@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {REST_API_BASE_URL} from "./../../../App";
@@ -122,7 +121,7 @@ export const FormCreateStudent = ({ state }) => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/students/${value}`
+            `${REST_API_BASE_URL}/user/check-email/${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
