@@ -19,7 +19,7 @@ function LOGIN() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${REST_API_BASE_URL}/user/login`, {
+      const response = await fetch(`http://localhost:8080/api/user-microservice/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

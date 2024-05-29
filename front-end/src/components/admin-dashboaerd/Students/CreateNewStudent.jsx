@@ -121,7 +121,7 @@ export const FormCreateStudent = ({ state }) => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/${value}`
+            `http://localhost:8080/api/user-microservice/check-email/${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
@@ -157,7 +157,7 @@ export const FormCreateStudent = ({ state }) => {
 
   const handleStudentCreation = () => {
     axios
-      .post(`${REST_API_BASE_URL}/user/students/create`, studentData)
+      .post(`http://localhost:8080/api/user-microservice/students/create`, studentData)
       .then((response) => {
         console.log("Student created:", response.data);
         setSuccessMessage("Student Added successfully.");

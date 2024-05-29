@@ -87,7 +87,7 @@ const CreateNewInstructor = () => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/${value}`
+            `http://localhost:8080/api/user-microservice/check-email/${value}`
           );
           if (response.data) {
             error = "Email is already in use.";
@@ -123,7 +123,7 @@ const CreateNewInstructor = () => {
 
  const handleInstructorCreation = async () => {
     try {
-        const response = await axios.post(`${REST_API_BASE_URL}/user/instructors/create`, instructorData);
+        const response = await axios.post(`http://localhost:8080/api/user-microservice/instructors/create`, instructorData);
         console.log("Instructor created:", response.data);
         setSuccessMessage("instructor Added successfully.");
         emptyinstructorData();

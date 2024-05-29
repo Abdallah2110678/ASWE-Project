@@ -20,7 +20,7 @@ const AllUsers = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `${REST_API_BASE_URL}/user/users/delete/${id}`
+        `http://localhost:8080/api/user-microservice/users/delete/${id}`
       );
 
       if (response.status === 200) {
@@ -37,7 +37,7 @@ const AllUsers = () => {
   const handlePromoteToAdmin = async (id) => {
     try {
       const response = await axios.put(
-        `${REST_API_BASE_URL}/user/promote-to-admin/${id}`
+        `http://localhost:8080/api/user-microservice/promote-to-admin/${id}`
       );
 
       if (response.status === 200) {
@@ -53,7 +53,7 @@ const AllUsers = () => {
   };
 
   const fetchAllUsers = () => {
-    fetch(`${REST_API_BASE_URL}/user/allusers`)
+    fetch(`http://localhost:8080/api/user-microservice/allusers`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

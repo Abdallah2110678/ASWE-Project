@@ -84,7 +84,7 @@ export const SignUp = ({ state }) => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/user/check-email/${value}`
+            `http://localhost:8080/api/user-microservice/check-email/${value}`
           );
           if (response.data) {
             error = "Email is already in use.";

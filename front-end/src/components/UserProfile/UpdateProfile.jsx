@@ -22,7 +22,7 @@ const UpdateProfile = () => {
 
   const handleUpdateProfile = () => {
     axios
-      .put(`${REST_API_BASE_URL}/user/updateProfile/${userInfo.id}`, formData)
+      .put(`http://localhost:8080/api/user-microservice/updateProfile/${userInfo.id}`, formData)
       .then((response) => {
         console.log("Profile updated successfully:", response.data);
         setSuccessMessage("Profile updated successfully.");

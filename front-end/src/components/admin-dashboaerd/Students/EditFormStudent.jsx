@@ -101,7 +101,7 @@ const EditFormStudent = () => {
         }
         try {
           const response = await axios.get(
-            `${REST_API_BASE_URL}/check-email/students/${value}`
+            `http://localhost:8080/api/user-microservice/check-email/${value}`
           );
           if (response.data && response.data.id != id) {
             error = "Email is already in use.";
@@ -127,7 +127,7 @@ const EditFormStudent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${REST_API_BASE_URL}/user/getstudent/${id}`
+          `http://localhost:8080/api/user-microservice/getstudent/${id}`
         );
         const updatedStudentData = { ...response.data, password: "" };
         setStudentData(updatedStudentData);
@@ -142,9 +142,14 @@ const EditFormStudent = () => {
   const handleStudentUpdate = async () => {
     console.log(studentData);
     try {
-      const response = await axios.put(`${REST_API_BASE_URL}/user/students/update/${id}`, studentData);
+      const response = await axios.put(
+        `http://localhost:8080/api/user-microservice/students/update/${id}`,
+        studentData
+      );
       console.log("Student updated successfully:", response.data);
-      setSuccessMessage(`Updated student ${studentData.fname} ${studentData.lname} in the system.`);
+      setSuccessMessage(
+        `Updated student ${studentData.fname} ${studentData.lname} in the system.`
+      );
       setStudentInfo(studentData);
     } catch (error) {
       console.error("Error updating student:", error);
@@ -321,10 +326,12 @@ const StudentInfo = ({ studentData }) => {
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       try {
-        const response = await axios.get(`${REST_API_BASE_URL}/student/courses/enrolled/${id}`);
+        const response = await axios.get(
+          `${REST_API_BASE_URL}/student/courses/enrolled/${id}`
+        );
         setEnrolledCourses(response.data);
 
-        console.log(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching enrolled courses:", error);
       }
@@ -333,39 +340,48 @@ const StudentInfo = ({ studentData }) => {
     fetchEnrolledCourses();
   }, []);
 
-  
-
   return (
     <div className="recentCustomerss">
-    <div className="card">
-      <div className="card-header">
-        <h2>Student Info</h2>
-      </div>
-      <div className="card-body">
-        <p>
-          <strong>First Name:</strong> {fname}
-        </p>
-        <p>
-          <strong>Last Name:</strong> {lname}
-        </p>
-        <p>
-          <strong>Phone:</strong> {phone}
-        </p>
-        <p>
-          <strong>Email:</strong> {email}
-        </p>
-        <div>
-          <h2>Enrolled Courses</h2>
-          <ul className="list-group">
-            {enrolledCourses.length !=0 ?(enrolledCourses.map((course, index) => (
-              <li key={course.id} className="list-group-item"> <strong>{index+1}-</strong>  {course.title} <br /> <strong>By</strong> {course.user.fname}<br/>
-               <strong>Category</strong> {course.category.name}</li>
-            ))):( <li  className="list-group-item">The student not enrolled to any Course</li>)}
-          </ul>
+      <div className="card">
+        <div className="card-header">
+          <h2>Student Info</h2>
+        </div>
+        <div className="card-body">
+          <p>
+            <strong>First Name:</strong> {fname}
+          </p>
+          <p>
+            <strong>Last Name:</strong> {lname}
+          </p>
+          <p>
+            <strong>Phone:</strong> {phone}
+          </p>
+          <p>
+            <strong>Email:</strong> {email}
+          </p>
+          <div>
+            <h2>Enrolled Courses</h2>
+            <ul className="list-group">
+              {enrolledCourses.length != 0 ? (
+                enrolledCourses.map((course, index) => (
+                  <li key={course.id} className="list-group-item">
+                    {" "}
+                    <strong>{index + 1}-</strong> {course.title} <br />{" "}
+                    <strong>By</strong> {course.user.fname}
+                    <br />
+                    <strong>Category</strong> {course.category.name}
+                  </li>
+                ))
+              ) : (
+                <li className="list-group-item">
+                  The student not enrolled to any Course
+                </li>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 
